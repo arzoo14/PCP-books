@@ -6,21 +6,21 @@
 Welcome to pcp's documentation!
 ===============================
 
+User's and Administrator's Guide
+*********************************
+
+* :doc:`UAG/IntroductionToPcp` 
+* :doc:`UAG/InstallingAndConfiguringPcp`
+
+
 .. toctree::
    :caption: User's and Administrator's Guide
    :numbered:
+   :hidden:
    :maxdepth: 2
- 
-    about this guide
-    introduction to pcp
-    installing and configuring pcp
-    common conventions and arguments
-    monitoring system performance
-    performance metrics inference engine
-    archive logging
-    pcp deployment strategies
-    customizing and extending pcp services
-    appendix
+    
+   UAG/IntroductionToPcp
+   UAG/InstallingAndConfiguringPcp
     
 
 
