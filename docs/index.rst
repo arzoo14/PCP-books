@@ -3,25 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pcp's documentation!
-===============================
-
-User's and Administrator's Guide
-*********************************
-
-* :doc:`UAG/IntroductionToPcp` 
-* :doc:`UAG/InstallingAndConfiguringPcp`
+Performance Co-Pilot Books
+###########################
 
 
 .. toctree::
    :caption: User's and Administrator's Guide
    :numbered:
-   :hidden:
    :maxdepth: 2
-    
+
+   UAG/AboutThisGuide
    UAG/IntroductionToPcp
    UAG/InstallingAndConfiguringPcp
-    
+   UAG/CommonConventionsAndArguments
+   
 
 
 
