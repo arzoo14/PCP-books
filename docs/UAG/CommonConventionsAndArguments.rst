@@ -22,9 +22,11 @@ Section 3.6, “`Transient Problems with Performance Metric Values`_”, covers 
 Many of the utilities provided with PCP conform to a common set of naming and syntactic conventions for command line arguments and options. 
 This section outlines these conventions and their meaning. The options may be generally assumed to be honored for all utilities supporting the 
 corresponding functionality.
+
 In all cases, the man pages for each utility fully describe the supported command arguments and options.
+
 Command line options are also relevant when starting PCP applications from the desktop using the **Alt** double-click method. This technique 
-launches the pmrun program to collect additional arguments to pass along when starting a PCP application.
+launches the **pmrun** program to collect additional arguments to pass along when starting a PCP application.
 
 Alternate Metrics Source Options
 **********************************
@@ -35,7 +37,7 @@ if the platform supports that, else a localhost Inet socket connection is made. 
 Fetching Metrics from Another Host
 ====================================
 
-The option **-h** host directs any PCP utility (such as **pmchart** or **pmie**) to make a connection with the PMCD instance running on *host*. 
+The option **-h** *host* directs any PCP utility (such as **pmchart** or **pmie**) to make a connection with the PMCD instance running on *host*. 
 Once established, this connection serves as the principal real-time source of performance metrics and metadata. The *host* specification may be more than 
 a simple host name or address - it can also contain decorations specifying protocol type (secure or not), authentication information, and other connection 
 attributes. Refer to the **PCPIntro(1)** man page for full details of these, and examples of use of these specifications can also be found in the 
@@ -51,18 +53,21 @@ PCP archive logs are created with **pmlogger**. Most PCP utilities operate with 
 feed via PMCD on some host, or for historical data from a set of PCP archive logs. For more information on archive logs and their use, see Chapter 6, Archive Logging.
 
 The list of names (**archive**) used with the **-a** option implies the existence of the files created automatically by **pmlogger**, as listed in Table 3.1, “Physical Filenames for Components of a PCP Archive Log”.
-⁠
-Table 3.1. Physical Filenames for Components of a PCP Archive Log
 
-+=====================+==============================================================================================+
-| Filename	          | Contents                                                                                     |
-+=====================+==============================================================================================+
-| **archive.** index  | Temporal index for rapid access to archive contents                                          |
-+---------------------+----------------------------------------------------------------------------------------------+
-| **archive.** meta	  | Metadata descriptions for performance metrics and instance domains appearing in the archive  |
-+---------------------+----------------------------------------------------------------------------------------------+
-| **archive.N**       | Volumes of performance metrics values, for **N** = 0,1,2,...                                 |
-+---------------------+----------------------------------------------------------------------------------------------+
+**Table 3.1. Physical Filenames for Components of a PCP Archive Log**
+
+
++-----------------------+--------------------------------------------------------------------------------------------+
+| Filename              | Contents                                                                                   |
++=======================+============================================================================================+
+| **archive.** *index*  | Temporal index for rapid access to archive contents                                        |
++-----------------------+--------------------------------------------------------------------------------------------+
+| **archive.** *meta*   | Metadata descriptions for performance metrics and instance domains appearing in the archive|
++-----------------------+--------------------------------------------------------------------------------------------+
+| **archive.N**         | Volumes of performance metrics values, for **N** = 0,1,2,...                               |
++-----------------------+--------------------------------------------------------------------------------------------+
+
+
 
 Most tools are able to concurrently process multiple PCP archive logs (for example, for retrospective analysis of performance across multiple hosts), 
 and accept either multiple **-a** options or a comma separated list of archive names following the **-a** option.
@@ -184,18 +189,18 @@ mode, the **-S** option may be used to specify a later time for the start of sam
 seconds.
 
 To specify an offset from the beginning of a set of PCP archives (in archive mode) simply specify the offset as the *duration*. For example, the following 
-entry retrieves the first sample of data at exactly 30 minutes from the beginning of a set of PCP archives.: 
+entry retrieves the first sample of data at exactly 30 minutes from the beginning of a set of PCP archives::
 
  -S 30min
 
 To specify an offset from the end of a set of PCP archives, prefix the *duration* with a minus sign. In this case, the first sample time precedes 
 the end of archived data by the given *duration*. For example, the following entry retrieves the first sample exactly one hour preceding the last sample 
-in a set of PCP archives.: 
+in a set of PCP archives::
 
  -S -1hour
 
 To specify the calendar date and time (local time in the reporting timezone) for the first sample, use the **ctime(3)** syntax preceded by an "at" 
-sign (@). For example, the following entry specifies the date and time to be used.: 
+sign (@). For example, the following entry specifies the date and time to be used::
 
  -S '@ Mon Mar 4 13:07:47 2017'
 
@@ -217,7 +222,7 @@ option. For example, these options define a time window that spans 45 minutes, a
 
 **-O**  *duration*
 
-By default, samples are fetched from the start time (see the description of the **-S** option) to the terminate time (see the description of the ***-T** 
+By default, samples are fetched from the start time (see the description of the **-S** option) to the terminate time (see the description of the **-T** 
 option). The offset **-O** option allows the specification of a time between the start time and the terminate time where the tool should position its 
 initial sample time. This option is useful when initial attention is focused at some point within a larger time window of interest, or when one PCP tool 
 wishes to launch another PCP tool with a common current point of time within a shared time window.
@@ -245,9 +250,9 @@ Obviously the time window may be overspecified by using multiple options from th
 may shrink to nothing by injudicious choice of options.
 
 In all cases, the parsing of these options applies heuristics guided by the principal of "least surprise"; the time window is always well-defined (with the end never earlier than the start), but may shrink to nothing in the extreme.
-⁠
+
 Timezone Options
-=================
+================
 
 All utilities that report time of day use the local timezone by default. The following timezone options are available:
 
@@ -359,9 +364,9 @@ Performance metrics are usually expressed as numbers with finite precision. For 
 
 Because the value of these counter metrics is computed from the rate of change with respect to the previous sample, this may result in a transient 
 condition where the rate of change is an unknown value. If the **PCP_COUNTER_WRAP** environment variable is set, this condition is treated as an overflow, and speculative rate calculations are made. In either case, the correct rate calculation for the metric returns with the next sample.
-⁠
+
 Time Dilation and Time Skew
-=============================
+===========================
 
 If a PMDA is tardy in returning results, or the PCP monitoring tool is connected to PMCD via a slow or congested network, an error might be introduced in rate calculations due to a difference between the time the metric was sampled and the time PMCD sends the result to the monitoring tool.
 
