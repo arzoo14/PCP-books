@@ -23,6 +23,8 @@ Section 4.5, “`The pmstore Command`_”, describes the use of the **pmstore** 
 
 The following sections describe the various graphical and text-based PCP tools used to monitor local or remote system performance.
 
+.. contents::
+
 The pmstat Command
 ******************
 

@@ -13,6 +13,8 @@ Section 2.3, “`Managing Optional PMDAs`_”, describes the basics of installin
 
 Section 2.4, “`Troubleshooting`_”, offers advice on problems involving the PMCD.
 
+.. contents::
+
 Product Structure
 ******************
 

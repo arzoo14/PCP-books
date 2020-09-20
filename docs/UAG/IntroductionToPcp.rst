@@ -133,9 +133,13 @@ By default, the collection time for a performance metric is the current time of 
 Sources of Performance Metrics and Their Domains
 ================================================
 
-Instrumentation for the purpose of performance monitoring typically consists of counts of activity or events, attribution of resource consumption, and service-time or response-time measures. This instrumentation may exist in one or more of the functional domains as shown in Figure 1.1, “Performance Metric Domains as Autonomous Collections of Data”.  
+Instrumentation for the purpose of performance monitoring typically consists of counts of activity or events, attribution of resource consumption, and service-time or response-time measures. This instrumentation may exist in one or more of the functional domains as shown in :ref:`Figure 1.1. Performance Metric Domains as Autonomous Collections of Data`.  
 
-Figure 1.1. Performance Metric Domains as Autonomous Collections of Data
+.. _Figure 1.1. Performance Metric Domains as Autonomous Collections of Data:
+
+.. figure:: ../images/metric-domains.png
+
+   Figure 1.1. Performance Metric Domains as Autonomous Collections of Data
 
 Each domain has an associated access method:
 
@@ -159,9 +163,13 @@ Each performance metrics domain on a particular host must be assigned a unique P
 Distributed Collection
 =======================
 
-The performance metrics collection architecture is distributed, in the sense that any performance tool may be executing remotely. However, a PMDA usually runs on the system for which it is collecting performance measurements. In most cases, connecting these tools together on the collector host is the responsibility of the PMCD process, as shown in Figure 1.2, “Process Structure for Distributed Operation”.  
+The performance metrics collection architecture is distributed, in the sense that any performance tool may be executing remotely. However, a PMDA usually runs on the system for which it is collecting performance measurements. In most cases, connecting these tools together on the collector host is the responsibility of the PMCD process, as shown in :ref:`Figure 1.2. Process Structure for Distributed Operation`.  
 
-Figure 1.2. Process Structure for Distributed Operation
+.. _Figure 1.2. Process Structure for Distributed Operation:
+
+.. figure:: ../images/remote-collector.svg
+
+    Figure 1.2. Process Structure for Distributed Operation
 
 The host running the monitoring tools does not require any collection tools, including **pmcd**, because all requests for metrics are sent to the **pmcd** process on the collector host. These requests are then forwarded to the appropriate PMDAs, which respond with metric descriptions, help text, and most importantly, metric values.
 
@@ -179,9 +187,13 @@ Performance Metrics Name Space Diagram
 
 Each node in the PMNS tree is assigned a label that must begin with an alphabet character, and be followed by zero or more alphanumeric characters or the underscore (_) character. The root node of the tree has the special label of **root**.  
 
-A metric name is formed by traversing the tree from the root to a leaf node with each node label on the path separated by a period. The common prefix **root.** is omitted from all names. For example, Figure 1.3, “Small Performance Metrics Name Space (PMNS) ” shows the nodes in a small subsection of a PMNS.  
+A metric name is formed by traversing the tree from the root to a leaf node with each node label on the path separated by a period. The common prefix **root.** is omitted from all names. For example, :ref:`Figure 1.3. Small Performance Metrics Name Space (PMNS)` shows the nodes in a small subsection of a PMNS.  
 
-Figure 1.3. Small Performance Metrics Name Space (PMNS)  
+.. _Figure 1.3. Small Performance Metrics Name Space (PMNS):
+
+.. figure:: ../images/pmns-small.png
+
+    Figure 1.3. Small Performance Metrics Name Space (PMNS)
 
 In this subsection, the following are valid names for performance metrics:: 
  
@@ -260,9 +272,13 @@ Each PCP enabled host can operate as a collector, a monitor, or both.
 Retrospective Sources of Performance Metrics
 =============================================
 
-The PMAPI also supports delivery of performance metrics from a historical source in the form of a PCP archive log. Archive logs are created using the **pmlogger** utility, and are replayed in an architecture as shown in Figure 1.4, “Architecture for Retrospective Analysis”.  
+The PMAPI also supports delivery of performance metrics from a historical source in the form of a PCP archive log. Archive logs are created using the **pmlogger** utility, and are replayed in an architecture as shown in :ref:`Figure 1.4. Architecture for Retrospective Analysis`.  
 
-Figure 1.4. Architecture for Retrospective Analysis  
+.. _Figure 1.4. Architecture for Retrospective Analysis:
+
+.. figure:: ../images/retrospective-architecture.png
+
+            Figure 1.4. Architecture for Retrospective Analysis  
 
 The PMAPI has been designed to minimize the differences required for an application to process performance data from an archive or from a real-time source. As a result, most PCP tools support live and retrospective monitoring with equal facility.  
 
