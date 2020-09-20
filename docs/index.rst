@@ -16,6 +16,7 @@ Performance Co-Pilot Books
    UAG/IntroductionToPcp
    UAG/InstallingAndConfiguringPcp
    UAG/CommonConventionsAndArguments
+   UAG/MonitoringSystemPerformance
    
 
 
