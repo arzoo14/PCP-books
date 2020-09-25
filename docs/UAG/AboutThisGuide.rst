@@ -26,7 +26,7 @@ Chapter 3, :ref:`CommonConventionsAndArguments`, describes the user interface co
 
 Chapter 4, :ref:`MonitoringSystemPerformance`, describes the performance monitoring tools available in Performance Co-Pilot (PCP).
 
-Chapter 5, Performance Metrics Inference Engine, describes the Performance Metrics Inference Engine (pmie) tool that provides automated monitoring of, and reasoning about, system performance within the PCP framework.
+Chapter 5, :ref:`PerformanceMetricsInferenceEngine`, describes the Performance Metrics Inference Engine (pmie) tool that provides automated monitoring of, and reasoning about, system performance within the PCP framework.
 
 Chapter 6, Archive Logging, covers the PCP services and utilities that support archive logging for capturing accurate historical performance records.
 

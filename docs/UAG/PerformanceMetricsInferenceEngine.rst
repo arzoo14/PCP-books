@@ -117,17 +117,19 @@ PCP makes available thousands of performance metrics that you can use when formu
 
  pminfo
 
-Use the **pmie** command line arguments to find out more about a particular metric. In `Example 5.1. pmie with the -f Option`_, to fetch new metric values from host dove, you use the **-f** flag:
+Use the **pmie** command line arguments to find out more about a particular metric. In `Example 5.1. pmie with the -f Option`_, to fetch new metric values from host **dove**, you use the **-f** flag:
 
 .. _Example 5.1. pmie with the -f Option:
 
 **Example 5.1. pmie with the -f Option**
 
-::
+.. sourcecode:: c
   
  pminfo -f -h dove disk.dev.total
 
-This produces the following response::
+This produces the following response:
+
+.. sourcecode:: c
 
  disk.dev.total
      inst [0 or "xscsi/pci00.01.0/target81/lun0/disc"] value 131233
@@ -139,7 +141,9 @@ This produces the following response::
 
 This reveals that on the host **dove**, the metric **disk.dev.total** has six instances, one for each disk on the system.
 
-Use the following command to request help text (specified with the **-T** flag) to provide more information about performance metrics::
+Use the following command to request help text (specified with the **-T** flag) to provide more information about performance metrics:
+
+.. sourcecode:: c
 
  pminfo -T network.interface.in.packets
 
@@ -150,11 +154,13 @@ the metadata by using the **-d** flag for **pminfo**, as shown in `Example 5.2. 
 
 **Example 5.2. pmie with the -d and -h Options**
 
-::
+.. sourcecode:: c
 
  pminfo -d -h somehost mem.util.cached kernel.percpu.cpu.user
 
-In response, you see output similar to this::
+In response, you see output similar to this:
+
+.. sourcecode:: none
 
  mem.util.cached
      Data Type: 64-bit unsigned int  InDom: PM_INDOM_NULL 0xffffffff
@@ -239,7 +245,7 @@ The value is true if the number of writes exceeds the number of reads, and if th
 
 **Example 5.4. Printed pmie Output**
 
-::
+.. sourcecode:: c
 
  some_inst disk.dev.total > 60
            -> print "[%i] high disk i/o";
@@ -253,7 +259,7 @@ Using **pmie** to evaluate the above expressions every 3 seconds, you see output
 
 **Example 5.5. Labelled pmie Output**
 
-::
+.. sourcecode:: none
 
  pmie -v -t 3sec
  pct_wrt = (disk.all.write / disk.all.total) * 100;
@@ -320,11 +326,15 @@ All **pmie** expressions are composed of the following lexical elements:
 **Identifier**
 
 Begins with an alphabetic character (either upper or lowercase), followed by zero or more letters, the numeric digits, and the special characters period (.) and 
-underscore (_), as shown in the following example::
+underscore (_), as shown in the following example:
+
+.. sourcecode:: c
 
  x, disk.dev.total and my_stuff
 
-As a special case, an arbitrary sequence of letters enclosed by apostrophes (') is also interpreted as an *identifier*; for example::
+As a special case, an arbitrary sequence of letters enclosed by apostrophes (') is also interpreted as an *identifier*; for example:
+
+.. sourcecode:: c
 
  'vms$slow_response'
 
@@ -332,14 +342,17 @@ As a special case, an arbitrary sequence of letters enclosed by apostrophes (') 
 
 The aggregate operators, units, and predefined actions are represented by keywords; for example, **some_inst**, **print**, and **hour**.
 
-Numeric constant
+**Numeric constant**
+
 Any likely representation of a decimal integer or floating point number; for example, 124, 0.05, and -45.67
 
-String constant
+**String constant**
 
 An arbitrary sequence of characters, enclosed by double quotation marks (**"x"**).
 
-Within quotes of any sort, the backslash (\) may be used as an escape character as shown in the following example::
+Within quotes of any sort, the backslash (\) may be used as an escape character as shown in the following example:
+
+.. sourcecode:: c
 
  "A \"gentle\" reminder"
 
@@ -350,7 +363,7 @@ Comments
 Comments may be embedded anywhere in the source, in either of these forms:
 
 +--------------+---------------------------------------------------------------------------+
-| /* text */   | Comment, optionally spanning multiple lines, with no nesting of comments. |
+| /* text \*/  | Comment, optionally spanning multiple lines, with no nesting of comments. |
 +--------------+---------------------------------------------------------------------------+
 | // text      | Comment from here to the end of the line.                                 |
 +--------------+---------------------------------------------------------------------------+
@@ -400,8 +413,8 @@ The following are examples of units usage::
    ::
 
       mem.util.cached < 500
-
-⁠Setting Evaluation Frequency
+      
+Setting Evaluation Frequency
 =============================
 
 The identifier name **delta** is reserved to denote the interval of time between consecutive evaluations of one or more expressions. Set **delta** as follows::
@@ -411,13 +424,13 @@ The identifier name **delta** is reserved to denote the interval of time between
 If present, **units** must be one of the time units described in the preceding section. If absent, **units** are assumed to be **seconds**. For example, the following 
 expression has the effect that any subsequent expressions (up to the next expression that assigns a value to **delta**) are scheduled for evaluation at a fixed frequency, once every five minutes.
 
-::
+.. sourcecode:: c
 
  delta = 5 min;
 
 The default value for **delta** may be specified using the **-t** command line option; otherwise **delta** is initially set to be 10 seconds.
 
-⁠pmie Metric Expressions
+pmie Metric Expressions
 =========================
 
 The performance metrics namespace (PMNS) provides a means of naming performance metrics, for example, **disk.dev.read**. PCP allows an application to retrieve one or more values for a performance metric from a designated source (a collector host running PMCD, or a set of PCP archive logs). To specify a single value for some performance metric requires the metric name to be associated with all three of the following:
@@ -435,7 +448,7 @@ This scheme is illustrated by the time line shown in `Figure 5.1. Sampling Time 
 
 .. _Figure 5.1. Sampling Time Line:
 
-.. figure:: ../images/
+.. figure:: ../images/sampling-timeline.png
 
     Figure 5.1. Sampling Time Line
 
@@ -447,15 +460,15 @@ For **pmie**, a metrics expression is the name of a metric, optionally qualified
 the qualifiers: colon (**:**) for hosts, hash or pound sign (**#**) for instances, and at (**@**) for sample times. The following expression refers to the previous 
 value (**@1**) of the counter for the disk read operations associated with the disk instance **#disk1** on the host **moomba**.
 
-::
+.. sourcecode:: c
 
  disk.dev.read :moomba #disk1 @1
 
 In fact, this expression defines a point in the three-dimensional (3D) parameter space of {**host**} x {**instance**} x {**sample time**} as shown in `Figure 5.2. Three-Dimensional Parameter Space`_.
 
 .. _Figure 5.2. Three-Dimensional Parameter Space:
-⁠
-.. figure:: ../images/
+
+.. figure:: ../images/parameter-space.png
 
     Figure 5.2. Three-Dimensional Parameter Space
 
@@ -463,7 +476,7 @@ A metric expression may also identify sets of values corresponding to one-, two-
 
 1. A metric expression consists of a PCP metric name, followed by optional host specifications, followed by optional instance specifications, and finally, optional sample time specifications.
 
-2. A host specification consists of one or more host names, each prefixed by a colon (**:**). For example: ** /:indy /:far.away.domain.com /:localhost**
+2. A host specification consists of one or more host names, each prefixed by a colon (**:**). For example: **:indy :far.away.domain.com :localhost**
 
 3. A missing host specification implies the default **pmie** source of metrics, as defined by a **-h** option on the command line, or the first named archive in an 
    **-a** option on the command line, or PMCD on the local host.
@@ -472,7 +485,7 @@ A metric expression may also identify sets of values corresponding to one-, two-
 
    Recall that you can discover the instance names for a particular metric, using the pminfo command. See Section 5.2.1, “`pmie use of PCP services`_”.
 
-  Within the **pmie** grammar, an instance name is an identifier. If the instance name contains characters other than alphanumeric characters, enclose the instance name in single quotes; for example, **#'/boot' #'/usr'**
+  Within the **pmie** grammar, an instance name is an identifier. If the instance name contains characters other than alphanumeric characters, enclose the instance name in single quotes; for example, **#\\'/boot\\'  #\\'/usr\\'**
 
 5. A missing instance specification implies all instances for the associated performance metric from each associated **pmie** source of metrics.
 
@@ -488,8 +501,8 @@ in the third dimension being determined by the number of configured disk spindle
 ::
 
  disk.dev.read :foo :bar @0..4
-
-⁠pmie Rate Conversion
+ 
+pmie Rate Conversion
 =====================
 
 Many of the metrics delivered by PCP are cumulative counters. Consider the following metric::
@@ -510,8 +523,8 @@ unconditionally converted to a rate by pmie.
 ::
 
  disk.all.total
-
-⁠pmie Arithmetic Expressions
+ 
+pmie Arithmetic Expressions
 ============================
 
 Within **pmie**, simple arithmetic expressions are constructed from metrics expressions (see Section 5.3.3, “`pmie Metric Expressions`_”) and numeric constants, 
@@ -539,7 +552,7 @@ Like in the C programming language, **pmie** interprets an arithmetic value of z
 ⁠Relational Expressions
 -----------------------
 
-Relational expressions are the simplest form of logical expression, in which values may be derived from arithmetic expressions using ***pmie** relational operators. 
+Relational expressions are the simplest form of logical expression, in which values may be derived from arithmetic expressions using **pmie** relational operators. 
 For example, the following is a relational expression that is true or false, depending on the aggregate total of disk read operations per second being greater than 50.
 
 ::
@@ -657,7 +670,7 @@ boolean expression. The result is the boolean AND of the expression and the resu
 
 For example, this rule evaluates error rates on various 10BaseT Ethernet network interfaces (such as ecN, ethN, or efN):
 
-::
+.. sourcecode:: none
 
  some_inst
          match_inst "^(ec|eth|ef)"
@@ -729,7 +742,7 @@ command line option to discover which subexpressions contributes to the %-token 
 
 **Example 5.7. Rule Expression Options**
 
-::
+.. sourcecode:: none
 
  some_inst ( disk.dev.total > 60 ) 
         -> syslog 10 mins "[%i] busy, %v IOPS " & 
@@ -740,7 +753,7 @@ command line option to discover which subexpressions contributes to the %-token 
 In this case, **%v** and **%i** are both associated with the instances for the metric **disk.dev.total** that make the expression true. If more than one instance 
 makes the expression true (more than one disk is busy), then the argument is formed by concatenating the result from each %-token binding. The text added to the 
 system log file might be as shown in `Example 5.8. System Log Text`_ :
-⁠
+
 .. _Example 5.8. System Log Text:
 
 **Example 5.8. System Log Text**
@@ -755,12 +768,12 @@ system log file might be as shown in `Example 5.8. System Log Text`_ :
    methods are modified to report a textual facsimile of the *action* on the standard output.
 
 Consider the rule in `Example 5.9. Standard Output`_ :
-⁠
+
 .. _Example 5.9. Standard Output:
 
 **Example 5.9. Standard Output**
 
-::
+.. sourcecode:: none
 
  delta = 2 sec;  // more often for demonstration purposes 
  percpu  = "kernel.percpu"; 
@@ -780,7 +793,7 @@ When evaluated against an archive, the following output is generated (the alarm 
  alarm Wed Aug  7 14:54:52 2012: Unusual sys time: cpu0 
  alarm Wed Aug  7 14:55:02 2012: Unusual sys time: cpu0 
  alarm Wed Aug  7 14:55:06 2012: Unusual sys time: cpu0
-⁠
+ 
 pmie Intrinsic Operators
 =========================
 
@@ -808,7 +821,7 @@ or *sample time* dimensions. For example, to aggregate in the *host* dimension, 
 | **max_host**   | Computes the maximum value across all *instances* for the same *host* and *sample time*          |
 +----------------+--------------------------------------------------------------------------------------------------+
 
-Ten additional operators correspond to the forms *_inst and *_sample.
+Ten additional operators correspond to the forms \*_inst and \*_sample.
 
 The following example illustrates the use of an aggregate operator in combination with an existential operator to answer the question “Does some host currently have 
 two or more busy processors?”
@@ -844,14 +857,14 @@ In some cases, an action needs to be triggered when an expression changes from t
 * **rising**: Has the value **true** when the operand transitions from **false** to **true** in consecutive samples.
 * **falling**: Has the value **false** when the operand transitions from **true** to **false** in consecutive samples.
 
-⁠pmie Examples
+pmie Examples
 **************
 
 The examples presented in this section are task-oriented and use the full power of the pmie specification language as described in Section 5.3, “`Specification Language for pmie`_”.
 
 Source code for the **pmie** examples in this chapter, and many more examples, is provided within the *PCP Tutorials and Case Studies*. 
 `Example 5.10. Monitoring CPU Utilization`_ and `Example 5.11. Monitoring Disk Activity`_ illustrate monitoring CPU utilization and disk activity.
-⁠
+
 .. _Example 5.10. Monitoring CPU Utilization:
 
 **Example 5.10. Monitoring CPU Utilization**
@@ -897,7 +910,7 @@ Source code for the **pmie** examples in this chapter, and many more examples, i
             $all.load $hosts #'1 minute' > 5 * hinv.ncpu
         )
             -> alarm "High Load Average? " "%h: %v ";
-⁠
+            
 .. _Example 5.11. Monitoring Disk Activity:
 
 **Example 5.11. Monitoring Disk Activity**
@@ -939,8 +952,8 @@ Source code for the **pmie** examples in this chapter, and many more examples, i
  //
  some_inst $disk.ctl.blktotal * 512 > 3 Mbyte/sec
             -> alarm "Busy Disk Controller: " "%i ";
-
-⁠Developing and Debugging pmie Rules
+            
+Developing and Debugging pmie Rules
 ************************************
 
 Given the **-d** command line option, **pmie** executes in interactive mode, and the user is presented with a menu of options::
@@ -980,7 +993,7 @@ of times per second, using small sample intervals creates unnecessary load on th
 ⁠pmie Instance Names
 ====================
 
-When you specify a metric instance name (#*identifier*) in a **pmie** expression, it is compared against the instance name looked up from either a live collector system or an archive as follows:
+When you specify a metric instance name (*#identifier*) in a **pmie** expression, it is compared against the instance name looked up from either a live collector system or an archive as follows:
 
 * If the given instance name and the looked up name are the same, they are considered to match.
 * Otherwise, the first two space separated tokens are extracted from the looked up name. If the given instance name is the same as either of these tokens, they are considered a match.
@@ -1014,7 +1027,7 @@ It is not always possible to detect semantic errors at parse time. This happens 
 A warning is issued, and the expression is put on a wait list. The wait list is checked periodically (about every five minutes) to see if the metric descriptor has 
 become available. If an error is detected at this time, a message is printed to the standard error stream (**stderr**) and the offending expression is set aside.
 
-⁠Creating pmie Rules with pmieconf
+Creating pmie Rules with pmieconf
 **********************************
 
 The **pmieconf** tool is a command line utility that is designed to aid the specification of **pmie** rules from parameterized versions of the rules. **pmieconf** is 
@@ -1036,7 +1049,7 @@ of the output file and is not interpreted by **pmie** itself.
 `Procedure 5.2. Modify pmieconf Rules and Generate a pmie File`_ introduce the **pmieconf** tool through a series of typical operations.
 
 .. _Procedure 5.1. Display pmieconf Rules:
-⁠
+
 **Procedure 5.1. Display pmieconf Rules**
 
 1. Start **pmieconf** interactively (as the superuser).
@@ -1054,34 +1067,38 @@ of the output file and is not interpreted by **pmie** itself.
 
 4. List only the enabled rules, using the **rules enabled** command.
 
-5. List a single rule::
+5. List a single rule:
 
- pmieconf> list memory.swap_low
-    rule: memory.swap_low  [Low free swap space]
-    help: There is only threshold percent swap space remaining - the system
-          may soon run out of virtual memory.  Reduce the number and size of
-          the running programs or add more swap(1) space before it
- completely
-          runs out.
-          predicate =
-            some_host (
-                ( 100 * ( swap.free $hosts$ / swap.length $hosts$ ) )
-                  < $threshold$
-                && swap.length $hosts$ > 0        // ensure swap in use
-             )
-    vars: enabled = no
-          threshold = 10%
+    .. sourcecode:: none
+
+      pmieconf> list memory.swap_low
+         rule: memory.swap_low  [Low free swap space]
+         help: There is only threshold percent swap space remaining - the system
+               may soon run out of virtual memory.  Reduce the number and size of
+               the running programs or add more swap(1) space before it
+      completely
+               runs out.
+               predicate =
+                 some_host (
+                     ( 100 * ( swap.free $hosts$ / swap.length $hosts$ ) )
+                       < $threshold$
+                     && swap.length $hosts$ > 0        // ensure swap in use
+                  )
+         vars: enabled = no
+               threshold = 10%
  
- pmieconf>
+      pmieconf>
 
-6. List one rule variable::
+6. List one rule variable:
 
- pmieconf> list memory.swap_low threshold
-    rule: memory.swap_low  [Low free swap space]
-          threshold = 10%
+    .. sourcecode:: none
 
- pmieconf>
-⁠
+      pmieconf> list memory.swap_low threshold
+         rule: memory.swap_low  [Low free swap space]
+               threshold = 10%
+
+      pmieconf>
+ 
 .. _Procedure 5.2. Modify pmieconf Rules and Generate a pmie File:
 
 **Procedure 5.2. Modify pmieconf Rules and Generate a pmie File**
@@ -1100,7 +1117,7 @@ of the output file and is not interpreted by **pmie** itself.
 
 2. Disable all of the rules except for the **memory.swap_low** rule so that you can see the effects of your change in isolation.
 
-   This produces a relatively simple pmie configuration file::
+   This produces a relatively simple **pmie** configuration file::
 
     pmieconf> disable all
 
@@ -1114,7 +1131,7 @@ of the output file and is not interpreted by **pmie** itself.
 
     pmieconf> quit
 
-You can also use the **status** command to verify that only one rule is enabled at the end of this step.
+  You can also use the **status** command to verify that only one rule is enabled at the end of this step.
 
 3. Run **pmie** with the new configuration file. Use a text editor to view the newly generated **pmie** configuration file (``${PCP_SYSCONF_DIR}/pmie/config.demo``), 
    and then run the command::
@@ -1154,19 +1171,23 @@ see Section 5.7, “`Creating pmie Rules with pmieconf`_”). `Procedure 5.3. Ad
 use these commands to start any number of **pmie** processes to monitor local or remote machines.
 
 .. _Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework:
-⁠
-Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework
 
-1. Use a text editor (as superuser) to edit the ``pmie${PCP_PMIECONTROL_PATH}`` and ``${PCP_PMIECONTROL_PATH}.d`` control files. Notice the default entry, which looks like this::
+**Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework**
 
-    #Host           P?  S?  Log File                                  Arguments
-    LOCALHOSTNAME   y   n   PCP_LOG_DIR/pmie/LOCALHOSTNAME/pmie.log   -c config.default
+1. Use a text editor (as superuser) to edit the ``pmie${PCP_PMIECONTROL_PATH}`` and ``${PCP_PMIECONTROL_PATH}.d`` control files. Notice the default entry, which looks like this:
+
+   .. sourcecode:: none
+   
+     #Host           P?  S?  Log File                                  Arguments
+     LOCALHOSTNAME   y   n   PCP_LOG_DIR/pmie/LOCALHOSTNAME/pmie.log   -c config.default
 
    This entry is used to enable a local **pmie** process. Add a new entry for a remote host on your local network (for example, **venus**), by using your pmie 
-   configuration file (see Section 5.7, “`Creating pmie Rules with pmieconf`_”)::
+   configuration file (see Section 5.7, “`Creating pmie Rules with pmieconf`_”):
 
-    #Host           P?  S?  Log File                                  Arguments
-    venus           n   n   PCP_LOG_DIR/pmie/venus/pmie.log           -c config.demo
+   .. sourcecode:: none
+
+     #Host           P?  S?  Log File                                  Arguments
+     venus           n   n   PCP_LOG_DIR/pmie/venus/pmie.log           -c config.demo
 
    .. note::
       Without an absolute path, the configuration file (**-c** above) will be resolved using ``${PCP_SYSCONF_DIR}/pmie`` - if **config.demo** was created in 
@@ -1179,10 +1200,12 @@ Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework
 
 This simple step allows **pmie** to be started as part of your machine's boot process.
 
-3. Start the two **pmie** daemons. At the end of this step, you should see two new **pmie** processes monitoring the local and remote hosts::
+3. Start the two **pmie** daemons. At the end of this step, you should see two new **pmie** processes monitoring the local and remote hosts:
 
- ${PCP_RC_DIR}/pmie start
- Performance Co-Pilot starting inference engine(s) ...
+   .. sourcecode:: c
+
+     ${PCP_RC_DIR}/pmie start
+     Performance Co-Pilot starting inference engine(s) ...
 
 Wait a few moments while the startup scripts run. The **pmie** start script uses the **pmie_check** script to do most of its work.
 
@@ -1204,34 +1227,40 @@ memory resources. To counter these adverse cases, it can be useful to have a **c
 ensures that if one of the configured **pmie** processes exits, it is automatically restarted.
 
 .. note::
-   Depending on your platform, the **crontab** entry discussed here may already have been installed for you, as part of the package installation process. In this case, the file /etc/cron.d/pcp-pmie will exist, and the rest of this section can be skipped.
-⁠
+   Depending on your platform, the **crontab** entry discussed here may already have been installed for you, as part of the package installation process. In this case, the file **/etc/cron.d/pcp-pmie** will exist, and the rest of this section can be skipped.
+   
 Add a pmie crontab Entry
--------------------------
+==========================
 
 To activate the maintenance and housekeeping scripts for a collection of inference engines, execute the following tasks while logged into the local host as the superuser (**root**):
 
-1. Augment the **crontab** file for the **pcp** user. For example::
-
- crontab -l -u pcp > ${HOME}/crontab.txt
+1. Augment the **crontab** file for the **pcp** user. For example:
+ 
+  .. sourcecode:: none
+    
+     crontab -l -u pcp > ${HOME}/crontab.txt
 
 2. Edit ``${HOME}/crontab.txt``, adding lines similar to those from the sample ``${PCP_VAR_DIR}/config/pmie/crontab`` file for **pmie_daily** and **pmie_check**; 
-   for example::
+   for example:
 
- # daily processing of pmie logs
- 10     0     *     *     *    ${PCP_BINADM_DIR}/pmie_daily
- # every 30 minutes, check pmie instances are running
- 25,55  *     *     *     *    ${PCP_BINADM_DIR}/pmie_check
+   .. sourcecode:: c
 
-3. Make these changes permanent with this command::
+      # daily processing of pmie logs
+      10     0     *     *     *    ${PCP_BINADM_DIR}/pmie_daily
+      # every 30 minutes, check pmie instances are running
+      25,55  *     *     *     *    ${PCP_BINADM_DIR}/pmie_check
 
- crontab -u pcp < ${HOME}/crontab.txt
+3. Make these changes permanent with this command:
+
+   .. sourcecode:: c
+
+      crontab -u pcp < ${HOME}/crontab.txt
 
 ⁠Global Files and Directories
------------------------------
+=============================
 
 The following global files and directories influence the behavior of **pmie** and the **pmie** management scripts:
-⁠
+
 ``${PCP_DEMOS_DIR}/pmie/*``
 
 Contains sample **pmie** rules that may be used as a basis for developing local rules.
@@ -1257,12 +1286,12 @@ for verifying that **pmie** instances are running. Only for platforms where a de
 ``${PCP_LOG_DIR}/pmie/*``
 
 Contains the **pmie** log files for the host. These files are created by the default behavior of the ``${PCP_RC_DIR}/pmie`` startup scripts.
-⁠
+
 pmie Instances and Their Progress
-----------------------------------
+===================================
 
 The PMCD PMDA exports information about executing **pmie** instances and their progress in terms of rule evaluations and action execution rates.
-⁠
+
 ``pmie_check``
 
 This command is similar to the **pmlogger** support script, **pmlogger_check**.

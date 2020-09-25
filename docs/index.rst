@@ -15,8 +15,7 @@ makes it especially useful for those seeking centralized monitoring of distribut
 .. toctree::
    :caption: Guides
    :hidden:
-   :maxdepth: -1
-
+   
    UAG/AboutThisGuide
 
 
@@ -24,7 +23,6 @@ makes it especially useful for those seeking centralized monitoring of distribut
    :caption: User's and Administrator's Guide
    :numbered:
    :hidden:
-   :maxdepth: -1
 
    UAG/IntroductionToPcp
    UAG/InstallingAndConfiguringPcp

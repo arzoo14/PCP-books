@@ -430,7 +430,9 @@ The PMNS needs to be updated, the PMDA unconfigured, and PMCD notified. The **Re
 
      ./Remove
 
-The following output illustrates the result::
+The following output illustrates the result:
+
+.. sourcecode:: none
 
      Culling the Performance Metrics Name Space ...
     elasticsearch ... done
