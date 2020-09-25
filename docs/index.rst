@@ -29,6 +29,8 @@ makes it especially useful for those seeking centralized monitoring of distribut
    UAG/CommonConventionsAndArguments
    UAG/MonitoringSystemPerformance
    UAG/PerformanceMetricsInferenceEngine
+   UAG/ArchiveLogging
+   
 
 
 

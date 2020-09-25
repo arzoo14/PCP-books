@@ -28,7 +28,7 @@ Chapter 4, :ref:`MonitoringSystemPerformance`, describes the performance monitor
 
 Chapter 5, :ref:`PerformanceMetricsInferenceEngine`, describes the Performance Metrics Inference Engine (pmie) tool that provides automated monitoring of, and reasoning about, system performance within the PCP framework.
 
-Chapter 6, Archive Logging, covers the PCP services and utilities that support archive logging for capturing accurate historical performance records.
+Chapter 6, :ref:`ArchiveLogging`, covers the PCP services and utilities that support archive logging for capturing accurate historical performance records.
 
 Chapter 7, Performance Co-Pilot Deployment Strategies, presents the various options for deploying PCP functionality across cooperating systems.
 
