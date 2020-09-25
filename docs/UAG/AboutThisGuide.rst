@@ -32,7 +32,7 @@ Chapter 6, :ref:`ArchiveLogging`, covers the PCP services and utilities that sup
 
 Chapter 7, :ref:`Performance Co-Pilot Deployment Strategies`, presents the various options for deploying PCP functionality across cooperating systems.
 
-Chapter 8, Customizing and Extending PCP Services, describes the procedures necessary to ensure that the PCP configuration is customized in ways that maximize the coverage and quality of performance monitoring and management services.
+Chapter 8, :ref:`Customizing and Extending PCP Services`, describes the procedures necessary to ensure that the PCP configuration is customized in ways that maximize the coverage and quality of performance monitoring and management services.
 
 Appendix A, Acronyms, provides a comprehensive list of the acronyms used in this guide and in the man pages for Performance Co-Pilot.
 

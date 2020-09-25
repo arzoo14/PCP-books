@@ -31,13 +31,4 @@ makes it especially useful for those seeking centralized monitoring of distribut
    UAG/PerformanceMetricsInferenceEngine
    UAG/ArchiveLogging
    UAG/PcpDeploymentStrategies
-   
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   UAG/CustomizingAndExtendingPcpServices
