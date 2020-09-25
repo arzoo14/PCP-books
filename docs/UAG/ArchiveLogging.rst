@@ -129,7 +129,7 @@ The configuration files used by these scripts can be edited to suit your particu
 and ``${PCP_PMLOGGERCONTROL_PATH}.d`` files (**pmsnap** has an additional control file, ``${PCP_PMSNAPCONTROL_PATH}``). Complete information on these scripts is 
 available in the **pmlogger_daily(1)** and **pmsnap(1)** man pages.
 
-⁠Archive Log File Management
+Archive Log File Management
 =============================
 
 PCP archive log files can occupy a great deal of disk space, and management of archive logs can be a large task in itself. The following sections provide information 

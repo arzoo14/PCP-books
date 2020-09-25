@@ -334,7 +334,7 @@ underscore (_), as shown in the following example:
 
 As a special case, an arbitrary sequence of letters enclosed by apostrophes (') is also interpreted as an *identifier*; for example:
 
-.. sourcecode:: c
+.. sourcecode:: none
 
  'vms$slow_response'
 
@@ -460,7 +460,7 @@ For **pmie**, a metrics expression is the name of a metric, optionally qualified
 the qualifiers: colon (**:**) for hosts, hash or pound sign (**#**) for instances, and at (**@**) for sample times. The following expression refers to the previous 
 value (**@1**) of the counter for the disk read operations associated with the disk instance **#disk1** on the host **moomba**.
 
-.. sourcecode:: c
+.. sourcecode:: none
 
  disk.dev.read :moomba #disk1 @1
 
@@ -1202,7 +1202,7 @@ This simple step allows **pmie** to be started as part of your machine's boot pr
 
 3. Start the two **pmie** daemons. At the end of this step, you should see two new **pmie** processes monitoring the local and remote hosts:
 
-   .. sourcecode:: c
+   .. sourcecode:: none
 
      ${PCP_RC_DIR}/pmie start
      Performance Co-Pilot starting inference engine(s) ...
@@ -1243,7 +1243,7 @@ To activate the maintenance and housekeeping scripts for a collection of inferen
 2. Edit ``${HOME}/crontab.txt``, adding lines similar to those from the sample ``${PCP_VAR_DIR}/config/pmie/crontab`` file for **pmie_daily** and **pmie_check**; 
    for example:
 
-   .. sourcecode:: c
+   .. sourcecode:: none
 
       # daily processing of pmie logs
       10     0     *     *     *    ${PCP_BINADM_DIR}/pmie_daily
@@ -1252,7 +1252,7 @@ To activate the maintenance and housekeeping scripts for a collection of inferen
 
 3. Make these changes permanent with this command:
 
-   .. sourcecode:: c
+   .. sourcecode:: none
 
       crontab -u pcp < ${HOME}/crontab.txt
 
