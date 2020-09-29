@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Common Conventions and Arguments &mdash; pcp  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Monitoring System Performance" href="MonitoringSystemPerformance.html" />
+    <link rel="prev" title="2. Installing and Configuring Performance Co-Pilot" href="InstallingAndConfiguringPcp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pcp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="AboutThisGuide.html">About User’s and Administrator’s Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User's and Administrator's Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="IntroductionToPcp.html">1. Introduction to PCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InstallingAndConfiguringPcp.html">2. Installing and Configuring Performance Co-Pilot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Common Conventions and Arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#alternate-metrics-source-options">3.1. Alternate Metrics Source Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fetching-metrics-from-another-host">3.1.1. Fetching Metrics from Another Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetching-metrics-from-an-archive-log">3.1.2. ⁠Fetching Metrics from an Archive Log</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#general-pcp-tool-options">3.2. General PCP Tool Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-directories-and-file-locations">3.2.1. ⁠Common Directories and File Locations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alternate-performance-metric-name-spaces">3.2.2. Alternate Performance Metric Name Spaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#time-duration-and-control">3.3. Time Duration and Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance-monitor-reporting-frequency-and-duration">3.3.1. ⁠Performance Monitor Reporting Frequency and Duration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-window-options">3.3.2. ⁠Time Window Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timezone-options">3.3.3. Timezone Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pcp-environment-variables">3.4. PCP Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-pcp-tools-through-a-firewall">3.5. Running PCP Tools through a Firewall</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-pmproxy-service">3.5.1. ⁠The pmproxy service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transient-problems-with-performance-metric-values">3.6. Transient Problems with Performance Metric Values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance-metric-wraparound">3.6.1. Performance Metric Wraparound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-dilation-and-time-skew">3.6.2. Time Dilation and Time Skew</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MonitoringSystemPerformance.html">4. Monitoring System Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PerformanceMetricsInferenceEngine.html">5. Performance Metrics Inference Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArchiveLogging.html">6. Archive Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PcpDeploymentStrategies.html">7. Performance Co-Pilot Deployment Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingAndExtendingPcpServices.html">8. Customizing and Extending PCP Services</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pcp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>3. Common Conventions and Arguments</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/UAG/CommonConventionsAndArguments.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="common-conventions-and-arguments">
+<span id="commonconventionsandarguments"></span><h1><a class="toc-backref" href="#id1">3. Common Conventions and Arguments</a><a class="headerlink" href="#common-conventions-and-arguments" title="Permalink to this headline">¶</a></h1>
+<p>This chapter deals with the user interface components that are common to most text-based utilities that make up the monitor portion of Performance Co-Pilot (PCP).
+These are the major sections in this chapter:</p>
+<p>Section 3.1, “<a class="reference internal" href="#alternate-metrics-source-options">Alternate Metrics Source Options</a>”, details some basic standards used in the development of PCP tools.</p>
+<p>Section 3.2, “<a class="reference internal" href="#general-pcp-tool-options">General PCP Tool Options</a>”, details other options to use with PCP tools.</p>
+<p>Section 3.3, “<a class="reference internal" href="#time-duration-and-control">Time Duration and Control</a>”, describes the time control dialog and time-related command line options available for use with PCP tools.</p>
+<p>Section 3.4, “<a class="reference internal" href="#pcp-environment-variables">PCP Environment Variables</a>”, describes the environment variables supported by PCP tools.</p>
+<p>Section 3.5, “<a class="reference internal" href="#running-pcp-tools-through-a-firewall">Running PCP Tools through a Firewall</a>”, describes how to execute PCP tools that must retrieve performance data from the Performance Metrics Collection Daemon (PMCD)
+on the other side of a TCP/IP security firewall.</p>
+<p>Section 3.6, “<a class="reference internal" href="#transient-problems-with-performance-metric-values">Transient Problems with Performance Metric Values</a>”, covers some uncommon scenarios that may compromise performance metric integrity over the short term.</p>
+<p>Many of the utilities provided with PCP conform to a common set of naming and syntactic conventions for command line arguments and options.
+This section outlines these conventions and their meaning. The options may be generally assumed to be honored for all utilities supporting the
+corresponding functionality.</p>
+<p>In all cases, the man pages for each utility fully describe the supported command arguments and options.</p>
+<p>Command line options are also relevant when starting PCP applications from the desktop using the <strong>Alt</strong> double-click method. This technique
+launches the <strong>pmrun</strong> program to collect additional arguments to pass along when starting a PCP application.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#common-conventions-and-arguments" id="id1">Common Conventions and Arguments</a><ul>
+<li><a class="reference internal" href="#alternate-metrics-source-options" id="id2">Alternate Metrics Source Options</a><ul>
+<li><a class="reference internal" href="#fetching-metrics-from-another-host" id="id3">Fetching Metrics from Another Host</a></li>
+<li><a class="reference internal" href="#fetching-metrics-from-an-archive-log" id="id4">⁠Fetching Metrics from an Archive Log</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#general-pcp-tool-options" id="id5">General PCP Tool Options</a><ul>
+<li><a class="reference internal" href="#common-directories-and-file-locations" id="id6">⁠Common Directories and File Locations</a></li>
+<li><a class="reference internal" href="#alternate-performance-metric-name-spaces" id="id7">Alternate Performance Metric Name Spaces</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#time-duration-and-control" id="id8">Time Duration and Control</a><ul>
+<li><a class="reference internal" href="#performance-monitor-reporting-frequency-and-duration" id="id9">⁠Performance Monitor Reporting Frequency and Duration</a></li>
+<li><a class="reference internal" href="#time-window-options" id="id10">⁠Time Window Options</a></li>
+<li><a class="reference internal" href="#timezone-options" id="id11">Timezone Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pcp-environment-variables" id="id12">PCP Environment Variables</a></li>
+<li><a class="reference internal" href="#running-pcp-tools-through-a-firewall" id="id13">Running PCP Tools through a Firewall</a><ul>
+<li><a class="reference internal" href="#the-pmproxy-service" id="id14">⁠The pmproxy service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transient-problems-with-performance-metric-values" id="id15">Transient Problems with Performance Metric Values</a><ul>
+<li><a class="reference internal" href="#performance-metric-wraparound" id="id16">Performance Metric Wraparound</a></li>
+<li><a class="reference internal" href="#time-dilation-and-time-skew" id="id17">Time Dilation and Time Skew</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="alternate-metrics-source-options">
+<h2><a class="toc-backref" href="#id2">3.1. Alternate Metrics Source Options</a><a class="headerlink" href="#alternate-metrics-source-options" title="Permalink to this headline">¶</a></h2>
+<p>The default source of performance metrics is from PMCD on the local host. This default <strong>pmcd</strong> connection will be made using the Unix domain socket,
+if the platform supports that, else a localhost Inet socket connection is made. This section describes how to obtain metrics from sources other than this default.</p>
+<div class="section" id="fetching-metrics-from-another-host">
+<h3><a class="toc-backref" href="#id3">3.1.1. Fetching Metrics from Another Host</a><a class="headerlink" href="#fetching-metrics-from-another-host" title="Permalink to this headline">¶</a></h3>
+<p>The option <strong>-h</strong> <em>host</em> directs any PCP utility (such as <strong>pmchart</strong> or <strong>pmie</strong>) to make a connection with the PMCD instance running on <em>host</em>.
+Once established, this connection serves as the principal real-time source of performance metrics and metadata. The <em>host</em> specification may be more than
+a simple host name or address - it can also contain decorations specifying protocol type (secure or not), authentication information, and other connection
+attributes. Refer to the <strong>PCPIntro(1)</strong> man page for full details of these, and examples of use of these specifications can also be found in the
+<em>PCP Tutorials and Case Studies</em> companion document.</p>
+</div>
+<div class="section" id="fetching-metrics-from-an-archive-log">
+<h3><a class="toc-backref" href="#id4">3.1.2. ⁠Fetching Metrics from an Archive Log</a><a class="headerlink" href="#fetching-metrics-from-an-archive-log" title="Permalink to this headline">¶</a></h3>
+<p>The option <strong>-a</strong> <em>archive</em> directs the utility to treat the set of PCP archive logs designated by archive as the principal source of performance metrics
+and metadata. archive is a comma-sparated list of names, each of which may be the base name of an archive or the name of a directory containing archives.</p>
+<p>PCP archive logs are created with <strong>pmlogger</strong>. Most PCP utilities operate with equal facility for performance information coming from either a real-time
+feed via PMCD on some host, or for historical data from a set of PCP archive logs. For more information on archive logs and their use, see Chapter 6, Archive Logging.</p>
+<p>The list of names (<strong>archive</strong>) used with the <strong>-a</strong> option implies the existence of the files created automatically by <strong>pmlogger</strong>, as listed in Table 3.1, “Physical Filenames for Components of a PCP Archive Log”.</p>
+<p><strong>Table 3.1. Physical Filenames for Components of a PCP Archive Log</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Filename</th>
+<th class="head">Contents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>archive.</strong> <em>index</em></td>
+<td>Temporal index for rapid access to archive contents</td>
+</tr>
+<tr class="row-odd"><td><strong>archive.</strong> <em>meta</em></td>
+<td>Metadata descriptions for performance metrics and instance domains appearing in the archive</td>
+</tr>
+<tr class="row-even"><td><strong>archive.N</strong></td>
+<td>Volumes of performance metrics values, for <strong>N</strong> = 0,1,2,…</td>
+</tr>
+</tbody>
+</table>
+<p>Most tools are able to concurrently process multiple PCP archive logs (for example, for retrospective analysis of performance across multiple hosts),
+and accept either multiple <strong>-a</strong> options or a comma separated list of archive names following the <strong>-a</strong> option.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <strong>-h</strong> and <strong>-a</strong> options are almost always mutually exclusive. Currently, <strong>pmchart</strong> is the exception to this rule but other tools may continue to blur this line in the future.</p>
+</div>
+</div>
+</div>
+<div class="section" id="general-pcp-tool-options">
+<h2><a class="toc-backref" href="#id5">3.2. General PCP Tool Options</a><a class="headerlink" href="#general-pcp-tool-options" title="Permalink to this headline">¶</a></h2>
+<p>The following sections provide information relevant to most of the PCP tools. It is presented here in a single place for convenience.</p>
+<div class="section" id="common-directories-and-file-locations">
+<h3><a class="toc-backref" href="#id6">3.2.1. ⁠Common Directories and File Locations</a><a class="headerlink" href="#common-directories-and-file-locations" title="Permalink to this headline">¶</a></h3>
+<p>The following files and directories are used by the PCP tools as repositories for option and configuration files and for binaries:</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_DIR}/etc/pcp.env</span></code></p>
+<p>Script to set PCP run-time environment variables.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_DIR}/etc/pcp.conf</span></code></p>
+<p>PCP configuration and environment file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_PMCDCONF_PATH}</span></code></p>
+<p>Configuration file for Performance Metrics Collection Daemon (PMCD). Sets environment variables, including <strong>PATH</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_BINADM_DIR}/pmcd</span></code></p>
+<p>The PMCD binary.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_PMCDOPTIONS_PATH}</span></code></p>
+<p>Command line options for PMCD.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_RC_DIR}/pmcd</span></code></p>
+<p>The PMCD startup script.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_BIN_DIR}/pcptool</span></code></p>
+<p>Directory containing PCP tools such as <strong>pmstat , pminfo, pmlogger, pmlogsummary, pmchart, pmie,</strong> and so on.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_SHARE_DIR}</span></code></p>
+<p>Directory containing shareable PCP-specific files and repository directories such as <strong>bin, demos, examples</strong> and <strong>lib</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}</span></code></p>
+<p>Directory containing non-shareable (that is, per-host) PCP specific files and repository directories.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_BINADM_DIR}/pcptool</span></code></p>
+<p>PCP tools that are typically not executed directly by the end user such as <strong>pmcd_wait</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_SHARE_DIR}/lib/pcplib</span></code></p>
+<p>Miscellaneous PCP libraries and executables.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_PMDAS_DIR}</span></code></p>
+<p>Performance Metric Domain Agents (PMDAs), one directory per PMDA.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/config</span></code></p>
+<p>Configuration files for PCP tools, typically with one directory per tool.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_DEMOS_DIR}</span></code></p>
+<p>Demonstration data files and example programs.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_LOG_DIR}</span></code></p>
+<p>By default, diagnostic and trace log files generated by PMCD and PMDAs. Also, the PCP archive logs are managed in one directory per logged host below here.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/pmns</span></code></p>
+<p>Files and scripts for the Performance Metrics Name Space (PMNS).</p>
+</div>
+<div class="section" id="alternate-performance-metric-name-spaces">
+<h3><a class="toc-backref" href="#id7">3.2.2. Alternate Performance Metric Name Spaces</a><a class="headerlink" href="#alternate-performance-metric-name-spaces" title="Permalink to this headline">¶</a></h3>
+<p>The Performance Metrics Name Space (PMNS) defines a mapping from a collection of human-readable names for performance metrics (convenient to the user) into
+corresponding internal identifiers (convenient for the underlying implementation).</p>
+<p>The distributed PMNS used in PCP avoids most requirements for an alternate PMNS, because clients’ PMNS operations are supported at the Performance Metrics
+Collection Daemon (PMCD) or by means of PMNS data in a PCP archive log. The distributed PMNS is the default, but alternates may be specified using the <strong>-n</strong>
+<em>namespace</em> argument to the PCP tools. When a PMNS is maintained on a host, it is likely to reside in the <code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/pmns</span></code> directory.</p>
+</div>
+</div>
+<div class="section" id="time-duration-and-control">
+<h2><a class="toc-backref" href="#id8">3.3. Time Duration and Control</a><a class="headerlink" href="#time-duration-and-control" title="Permalink to this headline">¶</a></h2>
+<p>The periodic nature of sampling performance metrics and refreshing the displays of the PCP tools makes specification and control of the temporal domain a
+common operation. In the following sections, the services and conventions for specifying time positions and intervals are described.</p>
+<div class="section" id="performance-monitor-reporting-frequency-and-duration">
+<h3><a class="toc-backref" href="#id9">3.3.1. ⁠Performance Monitor Reporting Frequency and Duration</a><a class="headerlink" href="#performance-monitor-reporting-frequency-and-duration" title="Permalink to this headline">¶</a></h3>
+<p>Many of the performance monitoring utilities have periodic reporting patterns. The <strong>-t</strong>  <em>interval</em> and <strong>-s</strong> <em>samples</em> options are used to control
+the sampling (reporting) interval, usually expressed as a real number of seconds (<em>interval</em>), and the number of samples to be reported, respectively.
+In the absence of the <strong>-s</strong> flag, the default behavior is for the performance monitoring utilities to run until they are explicitly stopped.</p>
+<p>The <em>interval</em> argument may also be expressed in terms of minutes, hours, or days, as described in the <strong>PCPIntro(1)</strong> man page.</p>
+</div>
+<div class="section" id="time-window-options">
+<h3><a class="toc-backref" href="#id10">3.3.2. ⁠Time Window Options</a><a class="headerlink" href="#time-window-options" title="Permalink to this headline">¶</a></h3>
+<p>The following options may be used with most PCP tools (typically when the source of the performance metrics is a PCP archive log) to tailor the beginning
+and end points of a display, the sample origin, and the sample time alignment to your convenience.</p>
+<p>The <strong>-S, -T, -O</strong> and <strong>-A</strong> command line options are used by PCP applications to define a time window of interest.</p>
+<p><strong>-S</strong>  <em>duration</em></p>
+<p>The start option may be used to request that the display start at the nominated time. By default, the first sample of performance data is retrieved
+immediately in real-time mode, or coincides with the first sample of data of the first archive in a set of PCP archive logs in archive mode. For archive
+mode, the <strong>-S</strong> option may be used to specify a later time for the start of sampling. By default, if duration is an integer, the units are assumed to be
+seconds.</p>
+<p>To specify an offset from the beginning of a set of PCP archives (in archive mode) simply specify the offset as the <em>duration</em>. For example, the following
+entry retrieves the first sample of data at exactly 30 minutes from the beginning of a set of PCP archives:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-S 30min
+</pre></div>
+</div>
+<p>To specify an offset from the end of a set of PCP archives, prefix the <em>duration</em> with a minus sign. In this case, the first sample time precedes
+the end of archived data by the given <em>duration</em>. For example, the following entry retrieves the first sample exactly one hour preceding the last sample
+in a set of PCP archives:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-S -1hour
+</pre></div>
+</div>
+<p>To specify the calendar date and time (local time in the reporting timezone) for the first sample, use the <strong>ctime(3)</strong> syntax preceded by an “at”
+sign (&#64;). For example, the following entry specifies the date and time to be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-S &#39;@ Mon Mar 4 13:07:47 2017&#39;
+</pre></div>
+</div>
+<p>Note that this format corresponds to the output format of the <strong>date</strong> command for easy “cut and paste.” However, be sure to enclose the string in quotes
+so it is preserved as a single argument for the PCP tool.</p>
+<p>For more complete information on the date and time syntax, see the <strong>PCPIntro(1)</strong> man page.</p>
+<p><strong>-T</strong>  <em>duration</em></p>
+<p>The terminate option may be used to request that the display stop at the time designated by <em>duration</em>. By default, the PCP tools keep sampling performance
+data indefinitely (in real-time mode) or until the end of a set of PCP archives (in archive mode). The <strong>-T</strong> option may be used to specify an earlier time to terminate sampling.</p>
+<p>The interpretation for the <em>duration</em> argument in a <strong>-T</strong> option is the same as for the <strong>-S</strong> option, except for an unsigned time interval that is
+interpreted as being an offset from the start of the time window as defined by the default (now for real time, else start of archive set) or by a <strong>-S</strong>
+option. For example, these options define a time window that spans 45 minutes, after an initial offset (or delay) of 1 hour:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">S</span> <span class="mi">1</span><span class="n">hour</span> <span class="o">-</span><span class="n">T</span> <span class="mi">45</span><span class="n">mins</span>
+</pre></div>
+</div>
+<p><strong>-O</strong>  <em>duration</em></p>
+<p>By default, samples are fetched from the start time (see the description of the <strong>-S</strong> option) to the terminate time (see the description of the <strong>-T</strong>
+option). The offset <strong>-O</strong> option allows the specification of a time between the start time and the terminate time where the tool should position its
+initial sample time. This option is useful when initial attention is focused at some point within a larger time window of interest, or when one PCP tool
+wishes to launch another PCP tool with a common current point of time within a shared time window.</p>
+<p>The <em>duration</em> argument accepted by <strong>-O</strong> conforms to the same syntax and semantics as the <em>duration</em> argument for <strong>-T</strong>. For example, these options
+specify that the initial position should be the end of the time window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">O</span> <span class="o">-</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>This is most useful with the <strong>pmchart</strong> command to display the tail-end of the history up to the end of the time window.</p>
+<p><strong>-A</strong>  <em>alignment</em></p>
+<p>By default, performance data samples do not necessarily happen at any natural unit of measured time. The <strong>-A</strong> switch may be used to force the initial
+sample to be on the specified <em>alignment</em>. For example, these three options specify alignment on seconds, half hours, and whole hours:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-A 1sec
+-A 30min
+-A 1hour
+</pre></div>
+</div>
+<p>The <strong>-A</strong> option advances the time to achieve the desired alignment as soon as possible after the start of the time window, whether this is the default
+window, or one specified with some combination of <strong>-A</strong> and <strong>-O</strong> command line options.</p>
+<p>Obviously the time window may be overspecified by using multiple options from the set <strong>-t, -s, -S, -T, -A,</strong> and <strong>-O</strong>. Similarly, the time window
+may shrink to nothing by injudicious choice of options.</p>
+<p>In all cases, the parsing of these options applies heuristics guided by the principal of “least surprise”; the time window is always well-defined (with the end never earlier than the start), but may shrink to nothing in the extreme.</p>
+</div>
+<div class="section" id="timezone-options">
+<h3><a class="toc-backref" href="#id11">3.3.3. Timezone Options</a><a class="headerlink" href="#timezone-options" title="Permalink to this headline">¶</a></h3>
+<p>All utilities that report time of day use the local timezone by default. The following timezone options are available:</p>
+<p><strong>-z</strong></p>
+<p>Forces times to be reported in the timezone of the host that provided the metric values (the PCP collector host). When used in conjunction with <strong>-a</strong>
+and multiple archives, the convention is to use the timezone from the first named archive.</p>
+<p><strong>-Z</strong>  <em>timezone</em></p>
+<p>Sets the TZ variable to a timezone string, as defined in <strong>environ(7)</strong>, for example, <strong>-Z UTC</strong> for universal time.</p>
+</div>
+</div>
+<div class="section" id="pcp-environment-variables">
+<h2><a class="toc-backref" href="#id12">3.4. PCP Environment Variables</a><a class="headerlink" href="#pcp-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>When you are using PCP tools and utilities and are calling PCP library functions, a standard set of defined environment variables are available in the
+<code class="docutils literal notranslate"><span class="pre">${PCP_DIR}/etc/pcp.conf</span></code> file. These variables are generally used to specify the location of various PCP pieces in the file system and may be loaded
+into shell scripts by sourcing the <code class="docutils literal notranslate"><span class="pre">${PCP_DIR}/etc/pcp.env</span></code> shell script. They may also be queried by C, C++, perl and python programs using the
+<strong>pmGetConfig</strong> library function. If a variable is already defined in the environment, the values in the <strong>pcp.conf</strong> file do not override those values;
+that is, the values in pcp.conf serve only as installation defaults. For additional information, see the <strong>pcp.conf(5)</strong>, <strong>pcp.env(5)</strong>, and <strong>pmGetConfig(3)</strong> man pages.</p>
+<p>The following environment variables are recognized by PCP (these definitions are also available on the <strong>PCPIntro(1)</strong> man page):</p>
+<p><strong>PCP_COUNTER_WRAP</strong></p>
+<p>Many of the performance metrics exported from PCP agents expect that counters increase monotonically. Under some circumstances, one value of a metric may be smaller than the previously fetched value. This can happen when a counter of finite precision overflows, when the PCP agent has been reset or restarted, or when the PCP agent exports values from an underlying instrumentation that is subject to asynchronous discontinuity.</p>
+<p>If set, the <strong>PCP_COUNTER_WRAP</strong> environment variable indicates that all such cases of a decreasing counter should be treated as a counter overflow; and hence the values are assumed to have wrapped once in the interval between consecutive samples. Counter wrapping was the default in versions before the PCP release 1.3.</p>
+<p><strong>PCP_STDERR</strong></p>
+<p>Specifies whether <strong>pmprintf()</strong> error messages are sent to standard error, an <strong>pmconfirm</strong> dialog box, or to a named file; see the <strong>pmprintf(3)</strong>
+man page. Messages go to standard error if <strong>PCP_STDERR</strong> is unset or set without a value. If this variable is set to <strong>DISPLAY</strong>, then messages go to
+an <strong>pmconfirm</strong> dialog box; see the <strong>pmconfirm(1)</strong> man page. Otherwise, the value of <strong>PCP_STDERR</strong> is assumed to be the name of an output file.</p>
+<p><strong>PMCD_CONNECT_TIMEOUT</strong></p>
+<p>When attempting to connect to a remote PMCD on a system that is booting or at the other end of a slow network link, some PMAPI routines could potentially block for a long time until the remote system responds. These routines abort and return an error if the connection has not been established after some specified interval has elapsed. The default interval is 5 seconds. This may be modified by setting this variable in the environment to a larger number of seconds for the desired time out. This is most useful in cases where the remote host is at the end of a slow network, requiring longer latencies to establish the connection correctly.</p>
+<p><strong>PMCD_PORT</strong></p>
+<p>This TCP/IP port is used by PMCD to create the socket for incoming connections and requests. The default is port number 44321, which you may override by setting this variable to a different port number. If a non-default port is in effect when PMCD is started, then every monitoring application connecting to that PMCD must also have this variable set in its environment before attempting a connection.</p>
+<p><strong>PMCD_LOCAL</strong></p>
+<p>This setting indicates that PMCD must only bind to the loopback interface for incoming connections and requests. In this mode, connections from remote hosts are not possible.</p>
+<p><strong>PMCD_RECONNECT_TIMEOUT</strong></p>
+<p>When a monitor or client application loses its connection to a PMCD, the connection may be reestablished by calling the <strong>pmReconnectContext(3)</strong> PMAPI
+function. However, attempts to reconnect are controlled by a back-off strategy to avoid flooding the network with reconnection requests. By default,
+the back-off delays are 5, 10, 20, 40, and 80 seconds for consecutive reconnection requests from a client (the last delay is repeated for any further
+attempts after the last delay in the list). Setting this environment variable to a comma-separated list of positive integers redefines the back-off delays.
+For example, setting the delays to <strong>1,2</strong> will back off for 1 second, then back off every 2 seconds thereafter.</p>
+<p><strong>PMCD_REQUEST_TIMEOUT</strong></p>
+<p>For monitor or client applications connected to PMCD, there is a possibility of the application hanging on a request for performance metrics or metadata or help text. These delays may become severe if the system running PMCD crashes or the network connection is lost or the network link is very slow. By setting this environment variable to a real number of seconds, requests to PMCD timeout after the specified number of seconds. The default behavior is to wait 10 seconds for a response from every PMCD for all applications.</p>
+<p><strong>PMLOGGER_PORT</strong></p>
+<p>This environment variable may be used to change the base TCP/IP port number used by <strong>pmlogger</strong> to create the socket to which <strong>pmlc</strong> instances try
+to connect. The default base port number is 4330. If used, this variable should be set in the environment before <strong>pmlogger</strong> is executed. If <strong>pmlc</strong>
+and <strong>pmlogger</strong> are on different hosts, then obviously <strong>PMLOGGER_PORT</strong> must be set to the same value in both places.</p>
+<p><strong>PMLOGGER_LOCAL</strong></p>
+<p>This environment variable indicates that <strong>pmlogger</strong> must only bind to the loopback interface for <strong>pmlc</strong> connections and requests. In this mode, <strong>pmlc</strong>
+connections from remote hosts are not possible. If used, this variable should be set in the environment before <strong>pmlogger</strong> is executed.</p>
+<p><strong>PMPROXY_PORT</strong>
+This environment variable may be used to change the base TCP/IP port number used by <strong>pmproxy</strong> to create the socket to which proxied clients connect,
+on their way to a distant <strong>pmcd</strong>.</p>
+<p><strong>PMPROXY_LOCAL</strong></p>
+<p>This setting indicates that <strong>pmproxy</strong> must only bind to the loopback interface for incoming connections and requests. In this mode, connections from remote hosts are not possible.</p>
+</div>
+<div class="section" id="running-pcp-tools-through-a-firewall">
+<h2><a class="toc-backref" href="#id13">3.5. Running PCP Tools through a Firewall</a><a class="headerlink" href="#running-pcp-tools-through-a-firewall" title="Permalink to this headline">¶</a></h2>
+<p>In some production environments, the Performance Co-Pilot (PCP) monitoring hosts are on one side of a TCP/IP firewall, and the PCP collector hosts may be on the other side.</p>
+<p>If the firewall service sits between the monitor and collector tools, the <strong>pmproxy</strong> service may be used to perform both packet forwarding and DNS
+proxying through the firewall; see the <strong>pmproxy(1)</strong> man page. Otherwise, it is necessary to arrange for packet forwarding to be enabled for those
+TCP/IP ports used by PCP, namely 44321 (or the value of the <strong>PMCD_PORT</strong> environment variable) for connections to PMCD.</p>
+<div class="section" id="the-pmproxy-service">
+<h3><a class="toc-backref" href="#id14">3.5.1. ⁠The pmproxy service</a><a class="headerlink" href="#the-pmproxy-service" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>pmproxy</strong> service allows PCP clients running on hosts located on one side of a firewall to monitor remote hosts on the other side. The basic
+connection syntax is as follows, where <em>tool</em> is an arbitrary PCP application, typically a monitoring tool:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pmprobe -h remotehost@proxyhost
+</pre></div>
+</div>
+<p>This extended host specification syntax is part of a larger set of available extensions to the basic host naming syntax - refer to the <strong>PCPIntro(1)</strong> man page for further details.</p>
+</div>
+</div>
+<div class="section" id="transient-problems-with-performance-metric-values">
+<h2><a class="toc-backref" href="#id15">3.6. Transient Problems with Performance Metric Values</a><a class="headerlink" href="#transient-problems-with-performance-metric-values" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the values for a performance metric as reported by a PCP tool appear to be incorrect. This is typically caused by transient conditions such as metric wraparound or time skew, described below. These conditions result from design decisions that are biased in favor of lightweight protocols and minimal resource demands for PCP components.</p>
+<p>In all cases, these events are expected to occur infrequently, and should not persist beyond a few samples.</p>
+<div class="section" id="performance-metric-wraparound">
+<h3><a class="toc-backref" href="#id16">3.6.1. Performance Metric Wraparound</a><a class="headerlink" href="#performance-metric-wraparound" title="Permalink to this headline">¶</a></h3>
+<p>Performance metrics are usually expressed as numbers with finite precision. For metrics that are cumulative counters of events or resource consumption, the value of the metric may occasionally overflow the specified range and wraparound to zero.</p>
+<p>Because the value of these counter metrics is computed from the rate of change with respect to the previous sample, this may result in a transient
+condition where the rate of change is an unknown value. If the <strong>PCP_COUNTER_WRAP</strong> environment variable is set, this condition is treated as an overflow, and speculative rate calculations are made. In either case, the correct rate calculation for the metric returns with the next sample.</p>
+</div>
+<div class="section" id="time-dilation-and-time-skew">
+<h3><a class="toc-backref" href="#id17">3.6.2. Time Dilation and Time Skew</a><a class="headerlink" href="#time-dilation-and-time-skew" title="Permalink to this headline">¶</a></h3>
+<p>If a PMDA is tardy in returning results, or the PCP monitoring tool is connected to PMCD via a slow or congested network, an error might be introduced in rate calculations due to a difference between the time the metric was sampled and the time PMCD sends the result to the monitoring tool.</p>
+<p>In practice, these errors are usually so small as to be insignificant, and the errors are self-correcting (not cumulative) over consecutive samples.</p>
+<p>A related problem may occur when the system time is not synchronized between multiple hosts, and the time stamps for the results returned from PMCD
+reflect the skew in the system times. In this case, it is recommended that NTP (network time protocol) be used to keep the system clocks on the collector
+systems synchronized; for information on NTP refer to the <strong>ntpd(1)</strong> man page.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="MonitoringSystemPerformance.html" class="btn btn-neutral float-right" title="4. Monitoring System Performance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="InstallingAndConfiguringPcp.html" class="btn btn-neutral float-left" title="2. Installing and Configuring Performance Co-Pilot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Performance Co-Pilot
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
