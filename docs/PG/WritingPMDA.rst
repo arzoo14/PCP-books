@@ -938,7 +938,7 @@ namespace syntax, for all metrics in the simple PMDA:
 In this example, like the one before, the **SIMPLE** macro is replaced by the domain number, and all (simple.*) metric namespace operations must be handled by 
 the PMDA. This is in contrast to the static metric name model earlier, where the host-wide PMNS file is updated and used by PMCD, acting on behalf of the agent.
 
-⁠PMDA Help Text
+PMDA Help Text
 ===============
 
 For each metric defined within a PMDA, the PMDA developer is strongly encouraged to provide both terse and extended help text to describe the metric, and perhaps 
@@ -1155,8 +1155,8 @@ in **simple_init**, which increments the number of fetches and updates the insta
  }
 
 The callback for **pmdaFetch** is defined as **simple_fetchCallBack**. The PMID is extracted from the **pmdaMetric** structure, and if valid, the appropriate field 
-in the **pmAtomValue** structure is set. The available types and associated fields are described further in Section 3.4, “`Performance Metric Descriptions`_” and 
-:ref:`Example 3.18. pmAtomValue Structure`.
+in the **pmAtomValue** structure is set. The available types and associated fields are described further in Section 3.4, “:ref:`Performance Metric Descriptions`” and 
+:ref:`Example 3.18. pmAtomValue Structure <Example 3.18. pmAtomValue Structure>`.
 
 .. note::
    Note that PMID validity checking need only check the cluster and item numbers, the domain number is guaranteed to be valid and the PMDA should make no 
@@ -1870,7 +1870,7 @@ The variables, shown in `Table 2.1. Variables to Control Behavior of Generic pmd
 **Table 2.1. Variables to Control Behavior of Generic pmdaproc.sh Procedures**
 
 .. list-table::
-   :widths: 20 70 10
+   :widths: 20 60 20
 
    * - **Shell Variable**           
      - **Use**
