@@ -452,7 +452,7 @@ during the most recently completed sample duration than simple periodic sampling
 
 .. figure:: ../../images/trace-sampling.png
 
-⁠   Figure 4.4. Sample Duration Comparison
+   Figure 4.4. Sample Duration Comparison
 
 The trace PMDA allows the length of the sample duration to be configured, as well as the number of historical buffers that are maintained. The rolling-window 
 approach is implemented in the trace PMDA as a ring buffer (see `Figure 4.3. Trace PMDA Overview`_).
