@@ -1,4 +1,4 @@
-.. _AboutThisGuide:
+.. _AboutPGGuide:
 
 About Programmer's Guide
 #########################
