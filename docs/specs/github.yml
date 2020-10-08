@@ -1,32 +1,10 @@
 swagger: '2.0'
-schemes:
-  - https
-host: api.github.com
-basePath: /
-x-hasEquivalentPaths: true
 info:
   description: |
     Powerful collaboration, code review, and code management for open source and private projects.
-  termsOfService: 'https://help.github.com/articles/github-terms-of-service/#b-api-terms'
   title: GitHub
   version: v3
-  x-apisguru-categories:
-    - collaboration
-    - developer_tools
-  x-logo:
-    url: 'http://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png'
-  x-origin:
-    - format: swagger
-      url: 'https://raw.githubusercontent.com/APIs-guru/unofficial_openapi_specs/master/github.com/v3/swagger.yaml'
-      version: '2.0'
-  x-providerName: github.com
-  x-unofficialSpec: true
-externalDocs:
-  url: 'https://developer.github.com/v3/'
-consumes:
-  - application/json
-produces:
-  - application/json
+
 securityDefinitions:
   oauth_2_0:
     authorizationUrl: 'https://github.com/login/oauth/authorize'
@@ -36,120 +14,7 @@ securityDefinitions:
       preferred over Basic Authentication because tokens can be limited to specific
       types of data, and can be revoked by users at any time.
     flow: accessCode
-    scopes:
-      'admin:org': ''
-      'admin:org_hook': ''
-      'admin:public_key': ''
-      'admin:repo_hook': ''
-      delete_repo: ''
-      gist: ''
-      notifications: ''
-      public_repo: ''
-      'read:org': ''
-      'read:public_key': ''
-      'read:repo_hook': ''
-      repo: ''
-      'repo:status': ''
-      repo_deployment: ''
-      user: ''
-      'user:email': ''
-      'user:follow': ''
-      'write:org': ''
-      'write:public_key': ''
-      'write:repo_hook': ''
-    tokenUrl: 'https://github.com/login/oauth/access_token'
-    type: oauth2
-paths:
-  /emojis:
-    get:
-      description: Lists all the emojis available to use on GitHub.
-      parameters:
-        - description: |
-            You can check the current version of media type in responses.
-          in: header
-          name: X-GitHub-Media-Type
-          type: string
-        - description: Is used to set specified media type.
-          in: header
-          name: Accept
-          type: string
-        - in: header
-          name: X-RateLimit-Limit
-          type: integer
-        - in: header
-          name: X-RateLimit-Remaining
-          type: integer
-        - in: header
-          name: X-RateLimit-Reset
-          type: integer
-        - in: header
-          name: X-GitHub-Request-Id
-          type: integer
-      responses:
-        '200':
-          description: OK
-        '403':
-          description: |
-            API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
-            for details.swagger: '2.0'
-schemes:
-  - https
-host: api.github.com
-basePath: /
-x-hasEquivalentPaths: true
-info:
-  description: |
-    Powerful collaboration, code review, and code management for open source and private projects.
-  termsOfService: 'https://help.github.com/articles/github-terms-of-service/#b-api-terms'
-  title: GitHub
-  version: v3
-  x-apisguru-categories:
-    - collaboration
-    - developer_tools
-  x-logo:
-    url: 'http://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png'
-  x-origin:
-    - format: swagger
-      url: 'https://raw.githubusercontent.com/APIs-guru/unofficial_openapi_specs/master/github.com/v3/swagger.yaml'
-      version: '2.0'
-  x-providerName: github.com
-  x-unofficialSpec: true
-externalDocs:
-  url: 'https://developer.github.com/v3/'
-consumes:
-  - application/json
-produces:
-  - application/json
-securityDefinitions:
-  oauth_2_0:
-    authorizationUrl: 'https://github.com/login/oauth/authorize'
-    description: |
-      OAuth2 is a protocol that lets external apps request authorization to private
-      details in a user's GitHub account without getting their password. This is
-      preferred over Basic Authentication because tokens can be limited to specific
-      types of data, and can be revoked by users at any time.
-    flow: accessCode
-    scopes:
-      'admin:org': ''
-      'admin:org_hook': ''
-      'admin:public_key': ''
-      'admin:repo_hook': ''
-      delete_repo: ''
-      gist: ''
-      notifications: ''
-      public_repo: ''
-      'read:org': ''
-      'read:public_key': ''
-      'read:repo_hook': ''
-      repo: ''
-      'repo:status': ''
-      repo_deployment: ''
-      user: ''
-      'user:email': ''
-      'user:follow': ''
-      'write:org': ''
-      'write:public_key': ''
-      'write:repo_hook': ''
+   
     tokenUrl: 'https://github.com/login/oauth/access_token'
     type: oauth2
 paths:
