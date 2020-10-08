@@ -60,8 +60,7 @@ makes it especially useful for those seeking centralized monitoring of distribut
 
 * GitHub API
 
-  * `the page <api/github/>`__
-  * `the spec <_specs/github.yml>`__
+  * `the page <api/>`__
 
 * GitHub API
 
