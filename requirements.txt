@@ -1,1 +1,2 @@
 sphinxcontrib-redoc
+sphinxcontrib-openapi
