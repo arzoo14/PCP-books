@@ -83,8 +83,8 @@ html_theme = 'sphinx_rtd_theme'
 redoc = [
     {
         'name': 'Github API (v3)',
-        'page': 'api',
-        'spec': 'specs/openapi.yml',
+        'page': 'api/github/index',
+        'spec': 'specs/github.yml',
         'opts': {
             'lazy-rendering': True
         },

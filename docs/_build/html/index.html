@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Performance Co-Pilot Books &mdash; pcp  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About User’s and Administrator’s Guide" href="UAG/AboutUAGGuide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> pcp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UAG/AboutUAGGuide.html">About User’s and Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PG/AboutPGGuide.html">About Programmer’s Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User's and Administrator's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UAG/IntroductionToPcp.html">1. Introduction to PCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/InstallingAndConfiguringPcp.html">2. Installing and Configuring Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/CommonConventionsAndArguments.html">3. Common Conventions and Arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/MonitoringSystemPerformance.html">4. Monitoring System Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/PerformanceMetricsInferenceEngine.html">5. Performance Metrics Inference Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/ArchiveLogging.html">6. Archive Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/PcpDeploymentStrategies.html">7. Performance Co-Pilot Deployment Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UAG/CustomizingAndExtendingPcpServices.html">8. Customizing and Extending PCP Services</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmer's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PG/ProgrammingPcp.html">1. Programming Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PG/WritingPMDA.html">2. Writing A PMDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PG/PMAPI.html">3. PMAPI–The Performance Metrics API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PG/InstrumentingApplications.html">4. Instrumenting Applications</a></li>
+</ul>
+<p class="caption"><span class="caption-text">REST API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="REST_API/PMWEBAPI.html">PMWEBAPI</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pcp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Performance Co-Pilot Books</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="performance-co-pilot-books">
+<h1>Performance Co-Pilot Books<a class="headerlink" href="#performance-co-pilot-books" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://pcp.io/">Performance Co-Pilot (PCP)</a> provides a framework and services to support system-level performance monitoring and management. It presents a unifying
+abstraction for all of the performance data in a system, and many tools for interrogating, retrieving and processing that data.</p>
+<p>PCP is a feature-rich, mature, extensible, cross-platform toolkit supporting both live and retrospective analysis. The distributed PCP architecture
+makes it especially useful for those seeking centralized monitoring of distributed processing.</p>
+<p><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="UAG/AboutUAGGuide.html"><span class="doc">About User’s and Administrator’s Guide</span></a></li>
+<li><a class="reference internal" href="PG/AboutPGGuide.html"><span class="doc">About Programmer’s Guide</span></a></li>
+<li><a class="reference internal" href="REST_API/PMWEBAPI.html"><span class="doc">PMWEBAPI</span></a></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<ul>
+<li><p class="first">GitHub API</p>
+<ul class="simple">
+<li><a class="reference external" href="api/github/">the page</a></li>
+</ul>
+</li>
+<li><p class="first">GitHub API</p>
+<ul>
+<li><dl class="get">
+<dt id="get--persons">
+<code class="descname">GET </code><code class="descname">/persons</code><a class="headerlink" href="#get--persons" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>List Persons</strong></p>
+<p>Retrieves a list of all persons on file in the bat computer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – An array of Persons</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Response JSON Object:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>[].id</strong> (<em>integer</em>) – Unique ID for a person</li>
+<li><strong>[].name</strong> (<em>string</em>) – Name of a person</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--evidence">
+<code class="descname">GET </code><code class="descname">/evidence</code><a class="headerlink" href="#get--evidence" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>List Evidence</strong></p>
+<p>Retrieves a list of evidence ever found by world’s greatest
+detective and his family.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>marker</strong> (<em>integer</em>) – The id of the last seen evidence. It’s used for pagination purpose
+by returning ‘limit’ number of evidence after this one.</li>
+<li><strong>limit</strong> (<em>integer</em>) – The maximum number of evidence to be returned by the query.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – An array of evidence.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Response JSON Object:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>[].case</strong> (<em>string</em>) – A case when the evidence is found.</li>
+<li><strong>[].data</strong> (<em>string</em>) – An evidence itself.</li>
+<li><strong>[].id</strong> (<em>integer</em>) – A unique evidence identifier.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--evidence">
+<code class="descname">POST </code><code class="descname">/evidence</code><a class="headerlink" href="#post--evidence" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Create an Evidence</strong></p>
+<p>Creates a new evidence record in database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Request JSON Object:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>case</strong> (<em>string</em>) – A case when the evidence is found.</li>
+<li><strong>data</strong> (<em>string</em>) – An evidence itself.</li>
+<li><strong>id</strong> (<em>integer</em>) – A unique evidence identifier.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> – An evidence.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Response JSON Object:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>case</strong> (<em>string</em>) – A case when the evidence is found.</li>
+<li><strong>data</strong> (<em>string</em>) – An evidence itself.</li>
+<li><strong>id</strong> (<em>integer</em>) – A unique evidence identifier.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--evidence-id">
+<code class="descname">GET </code><code class="descname">/evidence/{id}</code><a class="headerlink" href="#get--evidence-id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Show Requested Evidence</strong></p>
+<p>Queries and returns an evidence with a passed ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>integer</em>) – A unique evidence identifier to query.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – An evidence.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Evidence not found.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Request Headers:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7232#section-3.2">If-None-Match</a> – Executes a request only if passed ETag doesn’t equal to current
+resource one (i.e. resource has been changed).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Response Headers:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7232#section-2.3">ETag</a> – Entity tag is part of HTTP provided for web cache validation
+problem, but also used for optimistic concurrency control.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Response JSON Object:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>case</strong> (<em>string</em>) – A case when the evidence is found.</li>
+<li><strong>data</strong> (<em>string</em>) – An evidence itself.</li>
+<li><strong>id</strong> (<em>integer</em>) – A unique evidence identifier.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="UAG/AboutUAGGuide.html" class="btn btn-neutral float-right" title="About User’s and Administrator’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Performance Co-Pilot
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
