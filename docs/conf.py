@@ -42,7 +42,7 @@ release = ''
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 'sphinx.ext.autosectionlabel','sphinxcontrib.redoc'
+extensions = [ 'sphinx.ext.autosectionlabel','sphinxcontrib.redoc', 'sphinxcontrib.openapi'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -83,8 +83,8 @@ html_theme = 'sphinx_rtd_theme'
 redoc = [
     {
         'name': 'Github API (v3)',
-        'page': 'api/github/index',
-        'spec': '_specs/github.yml',
+        'page': 'api',
+        'spec': 'specs/github.yml',
         'opts': {
             'lazy-rendering': True
         },

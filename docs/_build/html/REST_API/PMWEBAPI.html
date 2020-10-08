@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PMWEBAPI &mdash; pcp  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="4. Instrumenting Applications" href="../PG/InstrumentingApplications.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pcp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/AboutUAGGuide.html">About User’s and Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/AboutPGGuide.html">About Programmer’s Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User's and Administrator's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/IntroductionToPcp.html">1. Introduction to PCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/InstallingAndConfiguringPcp.html">2. Installing and Configuring Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/CommonConventionsAndArguments.html">3. Common Conventions and Arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/MonitoringSystemPerformance.html">4. Monitoring System Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/PerformanceMetricsInferenceEngine.html">5. Performance Metrics Inference Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/ArchiveLogging.html">6. Archive Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/PcpDeploymentStrategies.html">7. Performance Co-Pilot Deployment Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/CustomizingAndExtendingPcpServices.html">8. Customizing and Extending PCP Services</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmer's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../PG/ProgrammingPcp.html">1. Programming Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/WritingPMDA.html">2. Writing A PMDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/PMAPI.html">3. PMAPI–The Performance Metrics API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/InstrumentingApplications.html">4. Instrumenting Applications</a></li>
+</ul>
+<p class="caption"><span class="caption-text">REST API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PMWEBAPI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#open-metrics">OPEN METRICS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-metrics">GET /metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scalable-time-series">SCALABLE TIME SERIES</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-series-query-pmseriesquery-3">GET <em>/series/query</em> - pmSeriesQuery (3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-series-values-pmseriesvalues-3">GET <em>/series/values</em> - pmSeriesValues (3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-series-descs-pmseriesdescs-3">GET <em>/series/descs</em> - pmSeriesDescs (3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-series-labels-pmserieslabels-3-pmserieslabelvalues-3">GET <em>/series/labels</em> - pmSeriesLabels (3), pmSeriesLabelValues (3)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-series-metrics-pmseriesmetrics-3">GET <em>/series/metrics</em> - pmSeriesMetrics (3)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pcp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PMWEBAPI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/REST_API/PMWEBAPI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pmwebapi">
+<span id="id1"></span><h1><a class="toc-backref" href="#id8">PMWEBAPI</a><a class="headerlink" href="#pmwebapi" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pmwebapi" id="id8">PMWEBAPI</a><ul>
+<li><a class="reference internal" href="#open-metrics" id="id9">OPEN METRICS</a><ul>
+<li><a class="reference internal" href="#get-metrics" id="id10">GET /metrics</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scalable-time-series" id="id11">SCALABLE TIME SERIES</a><ul>
+<li><a class="reference internal" href="#get-series-query-pmseriesquery-3" id="id12">GET <em>/series/query</em> - pmSeriesQuery (3)</a></li>
+<li><a class="reference internal" href="#get-series-values-pmseriesvalues-3" id="id13">GET <em>/series/values</em> - pmSeriesValues (3)</a></li>
+<li><a class="reference internal" href="#get-series-descs-pmseriesdescs-3" id="id14">GET <em>/series/descs</em> - pmSeriesDescs (3)</a></li>
+<li><a class="reference internal" href="#get-series-labels-pmserieslabels-3-pmserieslabelvalues-3" id="id15">GET <em>/series/labels</em> - pmSeriesLabels (3), pmSeriesLabelValues (3)</a></li>
+<li><a class="reference internal" href="#get-series-metrics-pmseriesmetrics-3" id="id16">GET <em>/series/metrics</em> - pmSeriesMetrics (3)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>NAME</strong></td>
+<td><strong>PMWEBAPI</strong>- Introduction to the Performance Metrics Web Application Programming Interface</td>
+</tr>
+<tr class="row-even"><td><strong>HTTP SYNOPSIS</strong></td>
+<td><strong>GET /metrics</strong></td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><strong>GET /series/…</strong></td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><strong>GET /search/…</strong></td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><strong>GET /pmapi/…</strong></td>
+</tr>
+<tr class="row-even"><td><strong>C SYNOPSIS</strong></td>
+<td>#include&lt; <a class="reference external" href="https://github.com/performancecopilot/pcp/blob/master/src/include/pcp/pmwebapi.h">pcp/pmwebapi.h</a> &gt;</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>… assorted routines …</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>cc … -lpcp_web -lpcp</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DESCRIPTION</strong></p>
+<p>The PMWEBAPI is a collection of interfaces providing Performance Co-Pilot services for web applications. It consists of APIs for web applications querying and
+analysing both live and historical performance data, as well as APIs used by web servers.</p>
+<p>The usual HTTP URL-encoded optional parameter rules apply and PMWEBAPI REST requests always follow the convention:</p>
+<p><em>/api/endpoint ? parameter1 = value1 &amp; parameter2 = value2</em></p>
+<p>Examples in all following sections use the curl (1) command line utility with a local <a class="reference external" href="https://pcp.io/man/man1/pmproxy.1.html">pmproxy</a> (1) server listening on
+port 44322 (default port). The <a class="reference external" href="https://pcp.io/man/man1/pmjson.1.html">pmjson</a> (1) utility is used to neatly format any JSON output, as opposed to the compact
+(minimal whitespace) form provided by default. The examples in the scalable time series section use historical data recorded by the
+<a class="reference external" href="https://pcp.io/man/man1/pmlogger.1.html">pmlogger</a> (1) service, in conjunction with a local redis-server (1).</p>
+<div class="section" id="open-metrics">
+<h2><a class="toc-backref" href="#id9">OPEN METRICS</a><a class="headerlink" href="#open-metrics" title="Permalink to this headline">¶</a></h2>
+<p>Exporting of live performance metrics in an Open Metrics compatible format (as described at <a class="reference external" href="https://openmetrics.io">https://openmetrics.io</a> and popularized by the
+<a class="reference external" href="https://prometheus.io">https://prometheus.io</a> project) is available.</p>
+<div class="section" id="get-metrics">
+<h3><a class="toc-backref" href="#id10">GET /metrics</a><a class="headerlink" href="#get-metrics" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>names</td>
+<td>string</td>
+<td>Comma-separated list of metric names</td>
+</tr>
+<tr class="row-odd"><td>times</td>
+<td>boolean</td>
+<td>Append sample times (milliseconds since epoch)</td>
+</tr>
+</tbody>
+</table>
+<p>Fetches current values and metadata for all metrics, or only metrics indicated by a comma-separated list of <em>names</em>.</p>
+<p>For all numeric metrics with the given NAME prefixes, create an Open Metrics (Prometheus) text export format giving their current value and related metadata.</p>
+<p>The response has plain text type rather than JSON commonly used elsewhere in the REST API. This format can be injested by many open source monitoring tools,
+including Prometheus and <a href="#id2"><span class="problematic" id="id3">`</span></a>pmdaopenmetrics &lt;<a class="reference external" href="https://pcp.io/man/man1/pmdaopenmetrics.1.html">https://pcp.io/man/man1/pmdaopenmetrics.1.html</a>&gt;`_(1).</p>
+<p>The native PCP metric metadata (metric name, type, indom, semantics and units) is first output for each metric with <strong># PCP</strong> prefix. The metadata reported is of
+the form described on <a class="reference external" href="https://pcp.io/man/man3/pmtypestr.3.html">pmTypeStr</a> (3), <a class="reference external" href="https://pcp.io/man/man3/pmindomstr.3.html">pmInDomStr</a> (3),
+<a class="reference external" href="https://pcp.io/man/man3/pmsemstr.3.html">pmSemStr</a> (3) and <a class="reference external" href="https://pcp.io/man/man3/pmunitsstr.3.html">pmUnitsStr</a> (3) respectively. If the
+<a class="reference external" href="https://pcp.io/man/man3/pmunitsstr.3.html">pmUnitsStr</a> (3) units string is empty, then <strong>none</strong> is output. The units metadata string may contain spaces and
+extends to the end of the line.</p>
+<p>PCP metric names are mapped so that the <strong>.</strong> separators are exchanged with <strong>_</strong> (‘:’ in back-compatibility mode, where “# PCP” is the identifying line suffix).
+Both metric labels and instances are represented as Prometheus labels, with external instance names being quoted and the flattened PCP metric hierarchy being
+presented with each value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/metrics?\
+        names=proc.nprocs,kernel.pernode.cpu.intr,filesys.blocksize
+
+# PCP5 proc.nprocs 3.8.99 u32 PM_INDOM_NULL instant none
+# HELP proc_nprocs instantaneous number of processes
+# TYPE proc_nprocs gauge
+proc_nprocs {hostname=&quot;app1&quot;} 7
+
+# PCP5 kernel.pernode.cpu.intr 60.0.66 u64 60.19 counter millisec
+# HELP kernel_pernode_cpu_intr total interrupt CPU [...]
+# TYPE kernel_pernode_cpu_intr counter
+kernel_pernode_cpu_intr{hostname=&quot;app1&quot;,instname=&quot;node0&quot;} 25603
+
+# PCP5 filesys.blocksize 60.5.9 u32 60.5 instant byte
+# HELP filesys_blocksize Size of each block on mounted file[...]
+# TYPE filesys_blocksize gauge
+filesys_blocksize{hostname=&quot;app1&quot;,instname=&quot;/dev/sda1&quot;} 4096
+filesys_blocksize{hostname=&quot;app1&quot;,instname=&quot;/dev/sda2&quot;} 4096
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="scalable-time-series">
+<h2><a class="toc-backref" href="#id11">SCALABLE TIME SERIES</a><a class="headerlink" href="#scalable-time-series" title="Permalink to this headline">¶</a></h2>
+<p>The fast, scalable time series query capabilities provided by the <a class="reference external" href="https://pcp.io/man/man1/pmseries.1.html">pmseries</a> (1) command are also available through a
+REST API. These queries provide access to performance data (metric metadata and values) from multiple hosts simultaneously, and in a fashion suited to efficient
+retrieval by any number of web applications.</p>
+<p>All requests in this group can be accompanied by an optional <em>client</em> parameter. The value passed in the request will be sent back in the response - all responses
+will be in JSON object form in this case, with top level “client” and “result” fields.</p>
+<div class="section" id="get-series-query-pmseriesquery-3">
+<h3>GET <em>/series/query</em> - <a class="reference external" href="https://pcp.io/man/man3/pmseriesquery.3.html">pmSeriesQuery</a> (3)<a class="headerlink" href="#get-series-query-pmseriesquery-3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>expr</td>
+<td>string</td>
+<td>Query string in <a class="reference external" href="https://pcp.io/man/man1/pmseries.1.html">pmseries</a> (1) format</td>
+</tr>
+<tr class="row-odd"><td>client</td>
+<td>string</td>
+<td>Request identifier sent back with response</td>
+</tr>
+</tbody>
+</table>
+<p>Performs a time series query for either matching identifiers, or matching identifiers with series of time-stamped values.</p>
+<p>The query is in the format described in <a class="reference external" href="https://pcp.io/man/man1/pmseries.1.html">pmseries</a> (1) and is passed to the server via either the <em>expr</em> parameter
+(HTTP GET) or via the message body (HTTP POST).</p>
+<p>When querying for time series matches only, no time window options are specified and matching series identifiers are returned in a JSON array.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/query?\
+        expr=disk.dev.read* | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="s2">&quot;9d8c7fb51ce160eb82e3669aac74ba675dfa8900&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;ddff1bfe286a3b18cebcbadc1678a68a964fbe9d&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>When querying for time series values as well, a time window must be specified as part of the query string. The simplest form is to just request the most recent
+sample.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/query?\
+        expr=disk.dev.read*[samples:1] | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;9d8c7fb51ce160eb82e3669aac74ba675dfa8900&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance&quot;</span><span class="p">:</span> <span class="s2">&quot;c3795d8b757506a2901c6b08b489ba56cae7f0d4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mf">1547483646.2147431</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;12499&quot;</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;ddff1bfe286a3b18cebcbadc1678a68a964fbe9d&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance&quot;</span><span class="p">:</span> <span class="s2">&quot;6b08b489ba56cae7f0d4c3795d8b757506a2901c&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mf">1547485701.7431218</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;1118623&quot;</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance&quot;</span><span class="p">:</span> <span class="s2">&quot;c3795d8b757506a2901c6b08b489ba56cae7f0d4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mf">1547483646.2147431</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;71661&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-series-values-pmseriesvalues-3">
+<h3><a class="toc-backref" href="#id13">GET <em>/series/values</em> - pmSeriesValues (3)</a><a class="headerlink" href="#get-series-values-pmseriesvalues-3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="17%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>series</td>
+<td>string</td>
+<td>Comma-separated list of series identifiers</td>
+</tr>
+<tr class="row-odd"><td>client</td>
+<td>string</td>
+<td>Request identifier sent back with response</td>
+</tr>
+<tr class="row-even"><td>samples</td>
+<td>number</td>
+<td>Count of samples to return</td>
+</tr>
+<tr class="row-odd"><td>interval</td>
+<td>string</td>
+<td>Time between successive samples</td>
+</tr>
+<tr class="row-even"><td>start</td>
+<td>string</td>
+<td>Sample window start time</td>
+</tr>
+<tr class="row-odd"><td>finish</td>
+<td>string</td>
+<td>Sample window end time</td>
+</tr>
+<tr class="row-even"><td>offset</td>
+<td>string</td>
+<td>Sample window offset</td>
+</tr>
+<tr class="row-odd"><td>align</td>
+<td>string</td>
+<td>Sample time alignment</td>
+</tr>
+<tr class="row-even"><td>zone</td>
+<td>string</td>
+<td>Time window timezone</td>
+</tr>
+</tbody>
+</table>
+<p>Performs values retrievals for one or more time series identifiers. The JSON response contains the same information as the <strong>pmseries - q /– query</strong> option
+using any of the time window parameters described on <a class="reference external" href="https://pcp.io/man/man1/pmseries.1.html">pmseries</a> (1). If no time window parameters are specified, the
+single most recent value observed is retrieved.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/values?\
+        series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mf">1317633022959.959241041</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;71660&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-series-descs-pmseriesdescs-3">
+<h3>GET <em>/series/descs</em> - <a class="reference external" href="https://pcp.io/man/man3/pmseriesdescs.3.html">pmSeriesDescs</a> (3)<a class="headerlink" href="#get-series-descs-pmseriesdescs-3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="17%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>series</td>
+<td>string</td>
+<td>Comma-separated list of series identifiers</td>
+</tr>
+<tr class="row-odd"><td>client</td>
+<td>string</td>
+<td>Request identifier sent back with response</td>
+</tr>
+</tbody>
+</table>
+<p>Performs a descriptor lookup for one or more time series identifiers. The JSON response contains the same information as the <strong>pmseries - d /– desc</strong> option.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/descs?\
+        series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;f5ca7481da8c038325d15612bb1c6473ce1ef16f&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pmid&quot;</span><span class="p">:</span> <span class="s2">&quot;60.0.4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;indom&quot;</span><span class="p">:</span> <span class="s2">&quot;60.1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;semantics&quot;</span><span class="p">:</span> <span class="s2">&quot;counter&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;u32&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;count&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-series-labels-pmserieslabels-3-pmserieslabelvalues-3">
+<h3><a class="toc-backref" href="#id15">GET <em>/series/labels</em> - pmSeriesLabels (3), pmSeriesLabelValues (3)</a><a class="headerlink" href="#get-series-labels-pmserieslabels-3-pmserieslabelvalues-3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="17%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>series</td>
+<td>string</td>
+<td>Comma-separated list of series identifiers</td>
+</tr>
+<tr class="row-odd"><td>match</td>
+<td>string</td>
+<td>Glob pattern string to match on all labels</td>
+</tr>
+<tr class="row-even"><td>name</td>
+<td>string</td>
+<td>Find all known label values for given name</td>
+</tr>
+<tr class="row-odd"><td>names</td>
+<td>string</td>
+<td>Comma-separated list of label names</td>
+</tr>
+<tr class="row-even"><td>client</td>
+<td>string</td>
+<td>Request identifier sent back with response</td>
+</tr>
+</tbody>
+</table>
+<p>This command operates in one of three modes. It can perform a label set lookup for one or more time series identifiers, when given the <em>series</em> parameter). It can
+produce a list of all known label names, in the absense of <em>name</em> , <em>names</em> or <em>series</em> parameters. The JSON responses for these modes contains the same information
+as the <strong>pmseries - l /– labels</strong> option.</p>
+<p>Alternatively, it can produce a list of all known label values for a given label <em>name</em> or <em>names</em> . The JSON response for this mode contains the same information
+as the <strong>pmseries - v /– values</strong> option.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/labels?\
+        series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;agent&quot;</span><span class="p">:</span> <span class="s2">&quot;linux&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;domainname&quot;</span><span class="p">:</span> <span class="s2">&quot;acme.com&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;groupid&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+      <span class="nt">&quot;hostname&quot;</span><span class="p">:</span> <span class="s2">&quot;`www.acme.com &lt;http://www.acme.com/&gt;`_&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">-25.28496</span><span class="p">,</span>
+      <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">152.87886</span><span class="p">,</span>
+      <span class="nt">&quot;machineid&quot;</span><span class="p">:</span> <span class="s2">&quot;295b16e3b6074cc8bdbda8bf96f6930a&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;platform&quot;</span><span class="p">:</span> <span class="s2">&quot;dev&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;userid&quot;</span><span class="p">:</span> <span class="mi">1000</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Alternatively, with no <em>name</em> , <em>names</em> or <em>series</em> parameters, return the list of all known label names.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/labels | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s2">&quot;agent&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appversion&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domainname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;groupid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hostname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jobid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;machineid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;platform&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;userid&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Use the <em>name</em> or <em>names</em> parameters to find all possible label values for the given name(s).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/labels?\
+        names=hostname,domainname | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;hostname&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="s2">&quot;nas&quot;</span> <span class="p">],</span>
+    <span class="nt">&quot;domainname&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;acme.com&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-series-metrics-pmseriesmetrics-3">
+<h3><a class="toc-backref" href="#id16">GET <em>/series/metrics</em> - pmSeriesMetrics (3)</a><a class="headerlink" href="#get-series-metrics-pmseriesmetrics-3" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="17%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>series</td>
+<td>string</td>
+<td>Comma-separated list of series identifiers</td>
+</tr>
+<tr class="row-odd"><td>match</td>
+<td>string</td>
+<td>Glob pattern string to match on all names</td>
+</tr>
+<tr class="row-even"><td>client</td>
+<td>string</td>
+<td>Request identifier sent back with response</td>
+</tr>
+</tbody>
+</table>
+<p>Performs a metric name lookup for one or more time series identifiers. The JSON response contains the same information as the <strong>pmseries - m /– metrics</strong> option.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/metrics?\
+        series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;series&quot;</span><span class="p">:</span> <span class="s2">&quot;605fc77742cd0317597291329561ac4e50c0dd12&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;disk.dev.read_bytes&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Alternatively, with no <em>series</em> argument, this request will return the list of all known metric names.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -s http://localhost:44322/series/metrics | pmjson
+</pre></div>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s2">&quot;disk.dev.read&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;disk.dev.read_bytes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;disk.dev.read_merge&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kernel.all.load&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kernel.all.pswitch&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../PG/InstrumentingApplications.html" class="btn btn-neutral float-left" title="4. Instrumenting Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Performance Co-Pilot
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
