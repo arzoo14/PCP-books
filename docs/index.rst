@@ -60,7 +60,7 @@ makes it especially useful for those seeking centralized monitoring of distribut
 
 * GitHub API
 
-  * `the page <api/index>`__
+  * `the page <api/>`__
 
 
 
