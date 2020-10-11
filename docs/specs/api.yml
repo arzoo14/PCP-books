@@ -54,7 +54,7 @@ paths:
         ```
         $ curl -s http://localhost:44322/metrics?\names=proc.nprocs,kernel.pernode.cpu.intr,filesys.blocksize
         ```
-      operationID: "get/metrics"
+        
       consumes:
       - "pmjson"
       produces:
@@ -75,29 +75,29 @@ paths:
               $ curl -s http://localhost:44322/metrics?\names=proc.nprocs,kernel.pernode.cpu.intr,filesys.blocksize
               ```
               ```
-                # PCP5 proc.nprocs 3.8.99 u32 PM_INDOM_NULL instant none 
-                # HELP proc_nprocs instantaneous number of processes
-                # TYPE proc_nprocs gauge
+              \# PCP5 proc.nprocs 3.8.99 u32 PM_INDOM_NULL instant none 
+              \# HELP proc_nprocs instantaneous number of processes
+              \# TYPE proc_nprocs gauge
               ```
               ```
-                proc_nprocs {hostname="app1"} 7
+              proc_nprocs {hostname="app1"} 7
               ```
               ```
-                # PCP5 kernel.pernode.cpu.intr 60.0.66 u64 60.19 counter millisec
-                # HELP kernel_pernode_cpu_intr total interrupt CPU [...]
-                # TYPE kernel_pernode_cpu_intr counter
+              \# PCP5 kernel.pernode.cpu.intr 60.0.66 u64 60.19 counter millisec
+              \# HELP kernel_pernode_cpu_intr total interrupt CPU [...]
+              \# TYPE kernel_pernode_cpu_intr counter
               ```
               ```
-                kernel_pernode_cpu_intr{hostname="app1",instname="node0"} 25603
+              kernel_pernode_cpu_intr{hostname="app1",instname="node0"} 25603
               ```
               ```
-                # PCP5 filesys.blocksize 60.5.9 u32 60.5 instant byte
-                # HELP filesys_blocksize Size of each block on mounted file[...]
-                # TYPE filesys_blocksize gauge
+              \# PCP5 filesys.blocksize 60.5.9 u32 60.5 instant byte
+              \# HELP filesys_blocksize Size of each block on mounted file[...]
+              \# TYPE filesys_blocksize gauge
               ```
               ```
-                filesys_blocksize{hostname="app1",instname="/dev/sda1"} 4096
-                filesys_blocksize{hostname="app1",instname="/dev/sda2"} 4096
+              filesys_blocksize{hostname="app1",instname="/dev/sda1"} 4096
+              filesys_blocksize{hostname="app1",instname="/dev/sda2"} 4096
               ```
           
   /series/query:
@@ -133,10 +133,7 @@ paths:
         type: "string"
       responses:
         "200":
-          description: |
-           ```
-           $ curl -s http://localhost:44322/series/query?\expr=disk.dev.read* | pmjson
-           ```
+          description: "$ curl -s http://localhost:44322/series/query?\expr=disk.dev.read* | pmjson"
           schema:
             type: array
             items:
@@ -146,9 +143,7 @@ paths:
                       "605fc77742cd0317597291329561ac4e50c0dd12"]
         "405":
           description: |
-           ```
            $ curl -s http://localhost:44322/series/query?\expr=disk.dev.read*[samples:1] | pmjson
-           ```
           schema:
             type: array
             items:
@@ -395,4 +390,25 @@ paths:
               domainname: [ "acme.com" ]
           
 
+              
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
