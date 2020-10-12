@@ -19,7 +19,8 @@ paths:
           content:
             application/json:
               schema:
-                anyOf:
+                allOf:
+                  
                   - $ref: '#/components/schemas/Cat'
                   - $ref: '#/components/schemas/Dog'
               examples:
