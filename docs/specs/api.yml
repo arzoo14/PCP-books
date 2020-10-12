@@ -85,6 +85,8 @@ paths:
         in: "query"
         description: "Append sample times (milliseconds since epoch)"
         type: "boolean"
+      
+      
           
   /series/query:
     get:
@@ -336,7 +338,34 @@ paths:
             $ curl -s http://localhost:44322/series/labels?\series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
            ```
           schema:
-                example:
+            type: array
+            items:
+              type: object
+              properties:
+                series:
+                  type: string
+                labels:
+                  type: object
+                  properties:
+                    agent:
+                      type: string
+                    domainname:
+                      type: string
+                    groupid:
+                      type: number
+                    hostname:
+                      type: string
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    machineid:
+                      type: string
+                    platform:
+                      type: string
+                    userid:
+                      type: number
+            example:
                 - series: 605fc77742cd0317597291329561ac4e50c0dd12
                   labels:
                     agent: linux
@@ -354,6 +383,10 @@ paths:
            Alternatively, with no name , names or series parameters, return the list of all known label names.
            ```
           schema:
+            type: array
+            items:
+              type: string
+            
             example: ["agent",
                       "appversion",
                       "domainname",
@@ -371,30 +404,259 @@ paths:
            $ curl -s http://localhost:44322/series/labels?\names=hostname,domainname | pmjson
            ```
           schema:
+            type: object
+            properties:
+              hostname:
+                type: array
+                items:
+                  type: string
+              domainname:
+                type: array
+                items:
+                  type: string
+            
             example:
               hostname: [ "app", "nas" ]
               domainname: [ "acme.com" ]
-          
-
               
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  /series/metrics:
+    get:
+      tags:
+      - "SCALABLE TIME SERIES"
+      summary: "Performs a metric name lookup for one or more time series identifiers."
+      description: |
+        The JSON response contains the same information as the pmseries - m /-- metrics option.
+        ```
+        $ curl -s http://localhost:44322/series/metrics?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+        ```
+        Alternatively, with no series argument, this request will return the list of all known metric names.
+        ```
+        $ curl -s http://localhost:44322/series/metrics | pmjson
+        ```
+      operationId: "get/series/metrics"
+      consumes:
+      - "pmjson"
+      produces:
+      - "pmjson"
+      parameters:
+      - name: "series"
+        in: "query"
+        description: "Comma-separated list of series identifiers"
+        type: "string"
+      - name: "match"
+        in: "query"
+        description: "Glob pattern string to match on all names"
+        type: "string"
+      - name: "client"
+        in: "query"
+        description: "Request identifier sent back with response"
+        type: "string"
+      responses:
+        "200":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/metrics?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+            ```
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                series:
+                  type: string
+                name:
+                  type: string
+            example:
+              - series: 605fc77742cd0317597291329561ac4e50c0dd12
+                name: disk.dev.read_bytes
+        
+        "201":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/metrics | pmjson
+            ```
+          schema:
+            type: array
+            items:
+              type: string
+            example:  [ disk.dev.read,
+                        disk.dev.read_bytes,
+                        disk.dev.read_merge,
+                        kernel.all.load,
+                        kernel.all.pswitch,
+                      ]
+              
+  /series/sources:
+    get:
+      tags:
+      - "SCALABLE TIME SERIES"
+      summary: "Performs a lookup for one or more time series sources, returning an array of all PMAPI context names used to access the time series from that source."
+      description: |
+        The JSON response contains the same information as the pmseries - S /-- source option.
+        ```
+        $ curl -s http://localhost:44322/series/sources?source=2cd6a38f9339f2dd1f0b4775bda89a9e7244def6 | pmjson
+        ```
+      operationId: "get/series/sources"
+      consumes:
+      - "pmjson"
+      produces:
+      - "pmjson"
+      parameters:
+      - name: "series"
+        in: "query"
+        description: "Comma-separated list of series identifiers"
+        type: "string"
+      - name: "match"
+        in: "query"
+        description: "Glob pattern string to match on all names"
+        type: "string"
+      - name: "client"
+        in: "query"
+        description: "Request identifier sent back with response"
+        type: "string"
+      responses:
+        "200":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/sources?source=2cd6a38f9339f2dd1f0b4775bda89a9e7244def6 | pmjson
+            ```
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                source:
+                  type: string
+                context:
+                  type: array
+                  items:
+                    type: string
+            
+            example:
+            - source: 2cd6a38f9339f2dd1f0b4775bda89a9e7244def6
+              context:
+                [ /var/log/pcp/pmlogger/acme,
+                  www.acme.com
+                ]
+                
+  /series/instances:
+    get:
+      tags:
+      - "SCALABLE TIME SERIES"
+      summary: "Provide instance identifiers and names for one or more time series identifiers."
+      description: |
+        The JSON response contains the same information as the pmseries - i /-- instance option.
+        ```
+        $ curl -s http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+        ```
+        Alternatively, with no series argument, this request will return the list of all known instance names.
+        ```
+        $ curl -s http://localhost:44322/series/instances | pmjson
+        ```
+      operationId: "get/series/instances"
+      consumes:
+      - "pmjson"
+      produces:
+      - "pmjson"
+      parameters:
+      - name: "series"
+        in: "query"
+        description: "Comma-separated list of series identifiers"
+        type: "string"
+      - name: "match"
+        in: "query"
+        description: "Glob pattern string to match on all names"
+        type: "string"
+      - name: "client"
+        in: "query"
+        description: "Request identifier sent back with response"
+        type: "string"
+      responses:
+        "200":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+            ```
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                series: 
+                  type: string
+                source:
+                  type: string
+                instance:
+                  type: string
+                id:
+                  type: number
+                name:
+                  type: string
+            example:
+              - series: 605fc77742cd0317597291329561ac4e50c0dd12
+                source: 97261ac7742cd4e50c0d03175913295d12605fc7
+                instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+                id: 1
+                name: sda
+              - series: 605fc77742cd0317597291329561ac4e50c0dd12
+                source: 97261ac7742cd4e50c0d03175913295d12605fc7
+                instance: 57506a2901c6b08b489ba56cae7f0d4c3795d8b7
+                id: 2
+                name: sdb
+        "201":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/instances | pmjson
+            ```
+          schema:
+            type: array
+            items:
+              type: string
+            example: [  1 minute,
+                        5 minute,
+                        15 minute,
+                        cpu0,
+                        cpu1,
+                        cpu2,
+                        cpu3,
+                        node0,
+                        node1,
+                        sda,
+                        sdb
+                      ]
+  /series/load:
+    get:
+      tags:
+      - "SCALABLE TIME SERIES"
+      summary: "Load time series performance data from the specified source into the redis-server cache."
+      description: |
+        This request is equivalent to the pmseries - l /-- load option.
+        ```
+        $ curl -s http://localhost:44322/series/load&expr={source.name:"/var/log/pcp/pmlogger/acme"}
+        ```
+      operationId: "get/series/load"
+      consumes:
+      - "pmjson"
+      produces:
+      - "pmjson"
+      parameters:
+      - name: "expr"
+        in: "query"
+        description: "Source load string in pmseries (1) format"
+        type: "string"
+      - name: "client"
+        in: "query"
+        description: "Request identifier sent back with response"
+        type: "string"
+      responses:
+        "200":
+          description: |
+            ```
+            $ curl -s http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+            ```
+          schema:
+            properties:
+              success:
+                type: boolean
+            example:
+              success: true
