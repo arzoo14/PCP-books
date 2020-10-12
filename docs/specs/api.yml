@@ -137,13 +137,35 @@ paths:
       
       responses:
         "200":
-          description: OK
+          description: OKay
           content:
             application/json:
               schema:
                 anyOf:
                   - $ref: '#/components/schemas/Response1'
                   - $ref: '#/components/schemas/Response2'
+              
+              examples:
+                objectexample:
+                  value:
+                    [ "9d8c7fb51ce160eb82e3669aac74ba675dfa8900",
+                      "ddff1bfe286a3b18cebcbadc1678a68a964fbe9d",
+                      "605fc77742cd0317597291329561ac4e50c0dd12"]
+                
+                subject:
+                  value:
+                    - series: 9d8c7fb51ce160eb82e3669aac74ba675dfa8900
+                      instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+                      timestamp: 1547483646.2147431
+                      value: 12499
+                    - series: ddff1bfe286a3b18cebcbadc1678a68a964fbe9d
+                      instance: 6b08b489ba56cae7f0d4c3795d8b757506a2901c
+                      timestamp: 1547485701.7431218
+                      value: 1118623
+                    - series: 605fc77742cd0317597291329561ac4e50c0dd12
+                      instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+                      timestamp: 1547483646.2147431
+                      value: 71661  
           
 
   /series/values:
