@@ -1,4 +1,4 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
   description: |
     ## NAME
@@ -89,19 +89,18 @@ paths:
 
         ```
         
-      consumes:
-      - "pmjson"
-      produces:
-      - "pmjson"
+      
       parameters:
       - name: "names"
         in: "query"
         description: "Comma-separated list of metric names"
-        type: "string"
+        schema:
+          type: "string"
       - name: "times"
         in: "query"
         description: "Append sample times (milliseconds since epoch)"
-        type: "boolean"
+        schema:
+          type: "boolean"
       
       
           
@@ -122,59 +121,31 @@ paths:
         $ curl -s http://localhost:44322/series/query?expr=disk.dev.read*[samples:1] | pmjson
         ```
       operationId: "get/series/query"
-      consumes:
-      - "pmjson"
-      produces:
-      - "pmjson"
       parameters:
       - name: "expr"
         in: "query"
         description: "Query string in pmseries (1) format"
         required: false
-        type: "string"
+        schema:
+          type: "string"
       - name: "client"
         in: "query"
         description: "Request identifier sent back with response"
         required: false
-        type: "string"
+        schema:
+          type: "string"
+      
       responses:
         "200":
-          description: 
-          schema:
-            type: array
-            items:
-              type: string
-            example: ["9d8c7fb51ce160eb82e3669aac74ba675dfa8900",
-                      "ddff1bfe286a3b18cebcbadc1678a68a964fbe9d",
-                      "605fc77742cd0317597291329561ac4e50c0dd12"]
-        "":
-          description:
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                series:
-                  type: string
-                instance:
-                  type: string
-                timestamp:
-                  type: integer
-                value:
-                  type: string
-            example:
-              - series: 9d8c7fb51ce160eb82e3669aac74ba675dfa8900
-                instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
-                timestamp: 1547483646.2147431
-                value: 12499
-              - series: ddff1bfe286a3b18cebcbadc1678a68a964fbe9d
-                instance: 6b08b489ba56cae7f0d4c3795d8b757506a2901c
-                timestamp: 1547485701.7431218
-                value: 1118623
-              - series: 605fc77742cd0317597291329561ac4e50c0dd12
-                instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
-                timestamp: 1547483646.2147431
-                value: 71661
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Response1'
+                  - $ref: '#/components/schemas/Response2'
+          
+
   /series/values:
     get:
       tags:
@@ -646,7 +617,42 @@ paths:
             example:
               success: true
 
-      
+components:
+  schemas:
+    Response1:
+      type: array
+      items:
+        type: string
+      example: ["9d8c7fb51ce160eb82e3669aac74ba675dfa8900",
+                "ddff1bfe286a3b18cebcbadc1678a68a964fbe9d",
+                "605fc77742cd0317597291329561ac4e50c0dd12"]
+    
+    Response2:
+      type: array
+      items:
+        type: object
+        properties:
+          series:
+           type: string
+          instance:
+            type: string
+          timestamp:
+            type: integer
+          value:
+            type: string
+      example:
+        - series: 9d8c7fb51ce160eb82e3669aac74ba675dfa8900
+          instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+          timestamp: 1547483646.2147431
+          value: 12499
+        - series: ddff1bfe286a3b18cebcbadc1678a68a964fbe9d
+          instance: 6b08b489ba56cae7f0d4c3795d8b757506a2901c
+          timestamp: 1547485701.7431218
+          value: 1118623
+        - series: 605fc77742cd0317597291329561ac4e50c0dd12
+          instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+          timestamp: 1547483646.2147431
+          value: 71661     
     
     
     
