@@ -12,7 +12,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: string
+            type: object
       responses:
         '200':
           content:
@@ -28,7 +28,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: string
+            type: object
       requestBody:
         content:
           application/json:
