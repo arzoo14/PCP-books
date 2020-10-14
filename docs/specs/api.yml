@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dependant'
-          description: ''
+          description: 'OK'
     put:
       operationId: updateDependant
       parameters:
@@ -40,7 +40,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dependant'
-          description: ''
+          description: 'OK'
 components:
   schemas:
     Dependant:
@@ -53,10 +53,11 @@ components:
           type: string
           title: Dependant name
         property:
-          allOf:
-            - title: Dependence property title
-              description: Dependence property description
-            - $ref: '#/components/schemas/Dependence'
+          anyOf: [
+             {'title': 'Dependence property title',
+              'description': 'Dependence property description'},
+            { '$ref': '#/components/schemas/Dependence' }
+            ]
       required:
         - name
       title: Dependant title
