@@ -1,77 +1,66 @@
-openapi: 3.0.2
+openapi: 3.0.0
 info:
-  title: ''
-  version: ''
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+servers:
+  - url: http://api.example.com/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing
 paths:
-  '/api/v1/dependant/{_uid}/':
-    get:
-      operationId: retrieveDependant
-      parameters:
-        - name: _uid
-          in: path
-          required: true
-          description: ''
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Dependant'
-          description: ''
-    put:
-      operationId: updateDependant
-      parameters:
-        - name: _uid
-          in: path
-          required: true
-          description: ''
-          schema:
-            type: string
+  /pets:
+    patch:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Dependant'
+              allOf: [
+                      {$ref: '#/components/schemas/PetByAge'},
+                      {$ref: '#/components/schemas/PetByType'}
+                    ]
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Dependant'
-          description: ''
+          description: OK
+          content: 
+              application/json:
+                schema:
+                  allOf:
+                        [ 
+                          {'$ref' : '#/components/schemas/PetByAge'},
+                          {'$ref' : '#/components/schemas/PetByType'}
+                        ]
+                
 components:
   schemas:
-    Dependant:
-      properties:
-        _uid:
+    PetByAge:
+      type: object
+      properties: 
+        age: 
+          type: integer
+        nickname: 
           type: string
-          title: ' uid'
-          readOnly: true
-        name:
-          type: string
-          title: Dependant name
-        property:
-          allOf:
-            - title: Dependence property title
-              description: Dependence property description
-            - $ref: '#/components/schemas/Dependence'
       required:
-        - name
-      title: Dependant title
-      description: Dependant description
-    Dependence:
+        - age
+      example: 
+        age: 12
+        nickname: ram
+          
+    PetByType:
+      type: object
       properties:
-        _uid:
+        pet_type:
           type: string
-          title: ' uid'
-          readOnly: true
-        name:
-          type: string
-          title: Dependence name
-      required:
-        - name
-      title: Dependence title
-      description: Dependence description
-
+          enum: [Cat, Dog]
+        hunts:
+          type: boolean
+      required: 
+        - pet_type
+      example: 
+        pet_type: Cat
+        hunts: true
+        
+        
+        
+        
+        
