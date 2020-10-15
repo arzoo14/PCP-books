@@ -1,4 +1,4 @@
-# PMWEBAPI OpenAPI Definition
+# pmwebapi OpenAPI Definition
 
 ## Working on your OpenAPI Definition
 
