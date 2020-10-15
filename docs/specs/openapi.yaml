@@ -318,93 +318,15 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/labels?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
-                type: array
-                example:
-                - series: 605fc77742cd0317597291329561ac4e50c0dd12
-                  labels:
-                    agent: linux
-                    domainname: acme.com
-                    groupid: 1000
-                    hostname: www.acme.com
-                    latitude: -25.28496
-                    longitude: 152.87886
-                    machineid: 295b16e3b6074cc8bdbda8bf96f6930a
-                    platform: dev
-                    userid: 1000
-                items:
-                  type: object
-                  properties:
-                    series:
-                      type: string
-                    labels:
-                      type: object
-                      properties:
-                        agent:
-                          type: string
-                        domainname:
-                          type: string
-                        groupid:
-                          type: number
-                        hostname:
-                          type: string
-                        latitude:
-                          type: number
-                        longitude:
-                          type: number
-                        machineid:
-                          type: string
-                        platform:
-                          type: string
-                        userid:
-                          type: number
-        201:
-          description: |
-            $ curl -s http://localhost:44322/series/labels | pmjson
-          content:
-            pmjson:
-              schema:
-                type: array
-                example:
-                - agent
-                - appversion
-                - domainname
-                - groupid
-                - hostname
-                - jobid
-                - latitude
-                - longitude
-                - machineid
-                - platform
-                - userid
-                items:
-                  type: string
-        202:
-          description: |
-            $ curl -s http://localhost:44322/series/labels?names=hostname,domainname | pmjson
-          content:
-            pmjson:
-              schema:
-                type: object
-                properties:
-                  hostname:
-                    type: array
-                    items:
-                      type: string
-                  domainname:
-                    type: array
-                    items:
-                      type: string
-                example:
-                  hostname:
-                  - app
-                  - nas
-                  domainname:
-                  - acme.com
+                anyOf:
+                - $ref: '#/components/schemas/response3'
+                - $ref: '#/components/schemas/response4'
+                - $ref: '#/components/schemas/response5'
+                
   /series/metrics:
     get:
       tags:
@@ -438,37 +360,14 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/metrics?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
-                type: array
-                example:
-                - series: 605fc77742cd0317597291329561ac4e50c0dd12
-                  name: disk.dev.read_bytes
-                items:
-                  type: object
-                  properties:
-                    series:
-                      type: string
-                    name:
-                      type: string
-        201:
-          description: |
-            $ curl -s http://localhost:44322/series/metrics | pmjson
-          content:
-            pmjson:
-              schema:
-                type: array
-                example:
-                - disk.dev.read
-                - disk.dev.read_bytes
-                - disk.dev.read_merge
-                - kernel.all.load
-                - kernel.all.pswitch
-                items:
-                  type: string
+                anyOf:
+                - $ref: '#/components/schemas/response6'
+                - $ref: '#/components/schemas/response7'
+                
   /series/sources:
     get:
       tags:
@@ -554,57 +453,14 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
-                type: array
-                example:
-                - series: 605fc77742cd0317597291329561ac4e50c0dd12
-                  source: 97261ac7742cd4e50c0d03175913295d12605fc7
-                  instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
-                  id: 1
-                  name: sda
-                - series: 605fc77742cd0317597291329561ac4e50c0dd12
-                  source: 97261ac7742cd4e50c0d03175913295d12605fc7
-                  instance: 57506a2901c6b08b489ba56cae7f0d4c3795d8b7
-                  id: 2
-                  name: sdb
-                items:
-                  type: object
-                  properties:
-                    series:
-                      type: string
-                    source:
-                      type: string
-                    instance:
-                      type: string
-                    id:
-                      type: number
-                    name:
-                      type: string
-        201:
-          description: |
-            $ curl -s http://localhost:44322/series/instances | pmjson
-          content:
-            pmjson:
-              schema:
-                type: array
-                example:
-                - 1 minute
-                - 5 minute
-                - 15 minute
-                - cpu0
-                - cpu1
-                - cpu2
-                - cpu3
-                - node0
-                - node1
-                - sda
-                - sdb
-                items:
-                  type: string
+                anyOf:
+                - $ref: '#/components/schemas/response8'
+                - $ref: '#/components/schemas/response9'
+                
   /series/load:
     get:
       tags:
@@ -630,17 +486,17 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
-                type: object
+                type: boolean
                 example:
                   success: true
 components:
   schemas:
     response1:
+      title: Without Time Window
       type: array
       items:
         type: string
@@ -650,6 +506,7 @@ components:
         - 605fc77742cd0317597291329561ac4e50c0dd12
 
     response2:
+      title: With Time Window
       type: array
       items:
         type: object
@@ -675,6 +532,153 @@ components:
           instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
           timestamp: 1.5474836462147431E9
           value: 71661
-                 
 
+    response3:
+      title: With series parameter
+      type: object
+      properties:
+        series:
+          type: string
+        labels:
+          type: object
+          properties:
+            agent:
+              type: string
+            domainname:
+              type: string
+            groupid:
+              type: number
+            hostname:
+              type: string
+            latitude:
+              type: number
+            longitude:
+              type: number
+            machineid:
+              type: string
+            platform:
+              type: string
+            userid:
+              type: number
+      example:
+        - series: 605fc77742cd0317597291329561ac4e50c0dd12
+          labels:
+            agent: linux
+            domainname: acme.com
+            groupid: 1000
+            hostname: www.acme.com
+            latitude: -25.28496
+            longitude: 152.87886
+            machineid: 295b16e3b6074cc8bdbda8bf96f6930a
+            platform: dev
+            userid: 1000
+                
+    response4:
+      title: Without any parameter
+      type: array
+      items:
+        type: string
+      example:
+        - agent
+        - appversion
+        - domainname
+        - groupid
+        - hostname
+        - jobid
+        - latitude
+        - longitude
+        - machineid
+        - platform
+        - userid
+                
+    response5:
+      title: With name/names parameter
+      type: object
+      properties:
+        hostname:
+          type: array
+          items:
+            type: string
+        domainname:
+          type: array
+          items:
+            type: string
+      example:
+        hostname:
+          - app
+          - nas
+        domainname:
+          - acme.com
+        
+    response6:
+      title: With series parameter
+      type: array
+      items:
+        type: object
+        properties:
+          series:
+            type: string
+          name:
+            type: string
+      example:
+        - series: 605fc77742cd0317597291329561ac4e50c0dd12
+          name: disk.dev.read_bytes
+                
+    response7:
+      title: Without series parameter
+      type: array
+      items:
+        type: string
+      example:
+        - disk.dev.read
+        - disk.dev.read_bytes
+        - disk.dev.read_merge
+        - kernel.all.load
+        - kernel.all.pswitch
+
+    response8:
+      title: With series parameter
+      type: array
+      items:
+        type: object
+        properties:
+          series:
+            type: string
+          source:
+            type: string
+          instance:
+            type: string
+          id:
+            type: number
+          name:
+            type: string
+      example:
+        - series: 605fc77742cd0317597291329561ac4e50c0dd12
+          source: 97261ac7742cd4e50c0d03175913295d12605fc7
+          instance: c3795d8b757506a2901c6b08b489ba56cae7f0d4
+          id: 1
+          name: sda
+        - series: 605fc77742cd0317597291329561ac4e50c0dd12
+          source: 97261ac7742cd4e50c0d03175913295d12605fc7
+          instance: 57506a2901c6b08b489ba56cae7f0d4c3795d8b7
+          id: 2
+          name: sdb
+
+    response9:
+      title: Without series parameter
+      type: array
+      items:
+        type: string
+      example:
+        - 1 minute
+        - 5 minute
+        - 15 minute
+        - cpu0
+        - cpu1
+        - cpu2
+        - cpu3
+        - node0
+        - node1
+        - sda
+        - sdb
 
