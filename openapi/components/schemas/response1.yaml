@@ -1,7 +1,0 @@
-type: array
-items:
-  type: string
-example:
-  - 9d8c7fb51ce160eb82e3669aac74ba675dfa8900
-  - ddff1bfe286a3b18cebcbadc1678a68a964fbe9d
-  - 605fc77742cd0317597291329561ac4e50c0dd12
