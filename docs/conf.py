@@ -84,7 +84,7 @@ redoc = [
     {
         'name': 'PMWEBAPI',
         'page': 'api/index',
-        'spec': 'specs/api.yml',
+        'spec': 'specs/api.yaml',
         'opts': {
             'lazy-rendering': True
         },
