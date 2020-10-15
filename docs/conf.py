@@ -82,16 +82,18 @@ html_theme = 'sphinx_rtd_theme'
 
 redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
 
-#redoc = [
- #   {
-  #      'name': 'PMWEBAPI',
-   #     'page': 'api/index',
-    #    'spec': 'specs/openapi.yaml',
-     #   'opts': {
-      #      'lazy-rendering': True
-       # },#
-   # },
-#]
+redoc = [
+    {
+        'name': 'PMWEBAPI',
+        'page': 'api/index',
+        'spec': 'specs/openapi.yaml',
+        'opts': {
+            'lazy-rendering': True,
+	    'expand-responses': [200, 201],
+
+        },
+    },
+]
 
 if not os.environ.get('READTHEDOCS') == 'True':
     import sphinx_rtd_theme
