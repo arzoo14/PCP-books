@@ -1,0 +1,10 @@
+{
+  "generator-openapi-repo": {
+    "importExistingSpec": false,
+    "name": "arzoo14",
+    "repo": "arzoo14/PCP-books",
+    "splitSpec": false,
+    "samples": true,
+    "installSwaggerUI": true
+  }
+}
