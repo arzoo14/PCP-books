@@ -1,84 +1,135 @@
-openapi: 3.0.2
+openapi: 3.0.1
 info:
-  version: 1.0.0
-  title: Example.com
-  termsOfService: 'https://example.com/terms/'
-  contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  x-logo:
-    url: 'https://redocly.github.io/openapi-template/logo.png'
+  title: PMWEBAPI
   description: >
-    This is an **example** API to demonstrate features of OpenAPI specification
+    ## NAME
 
-    # Introduction
-
-    This API definition is intended to to be a good starting point for
-    describing your API in 
-
-    [OpenAPI/Swagger
-    format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
-
-    It also demonstrates features of
-    [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool
-    and 
-
-    [Redoc](https://github.com/Redocly/Redoc) documentation engine. So beyond
-    the standard OpenAPI syntax we use a few 
-
-    [vendor
-    extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
+    **PMWEBAPI** - Introduction to the Performance Metrics Web Application
+    Programming Interface
 
 
-    # OpenAPI Specification
+    ## HTTP SYNOPSIS
+      * **GET /metrics**
+      * **GET /series/...**
+      * **GET /search/...**
+      * **GET /pmapi/...**
 
-    The goal of The OpenAPI Specification is to define a standard,
-    language-agnostic interface to REST APIs which
+    ## C SYNOPSIS
 
-    allows both humans and computers to discover and understand the capabilities
-    of the service without access to source
+    &nbsp;&nbsp;&nbsp;&nbsp;**\#include
+    <[pcp/pmwebapi.h](https://github.com/performancecopilot/pcp/blob/master/src/include/pcp/pmwebapi.h)>**
 
-    code, documentation, or through network traffic inspection. When properly
-    defined via OpenAPI, a consumer can 
+    &nbsp;&nbsp;&nbsp;&nbsp;... assorted routines ...
 
-    understand and interact with the remote service with a minimal amount of
-    implementation logic. Similar to what
+    &nbsp;&nbsp;&nbsp;&nbsp;cc ... -lpcp_web -lpcp
 
-    interfaces have done for lower-level programming, OpenAPI removes the
-    guesswork in calling the service.
-externalDocs:
-  description: Find out how to create a GitHub repo for your OpenAPI definition.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
-tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
+
+    ## DESCRIPTION
+
+    The PMWEBAPI is a collection of interfaces providing Performance Co-Pilot
+    services for web applications. It consists of APIs for web applications
+    querying and analysing both live and historical performance data, as well as
+    APIs used by web servers.
+
+
+    The usual HTTP URL-encoded optional parameter rules apply and PMWEBAPI REST
+    requests always follow the convention:
+
+    ```
+
+    /api/endpoint ? parameter1 = value1 & parameter2 = value2
+
+    ```
+
+
+    Examples in all following sections use the
+    [curl](https://pcp.io/man/man1/curl.1.html)(1) command line utility with a
+    local [pmproxy](https://pcp.io/man/man1/pmproxy.1.html)(1) server listening
+    on port 44322 (default port). The
+    [pmjson](https://pcp.io/man/man1/pmjson.1.html)(1) utility is used to neatly
+    format any JSON output, as opposed to the compact (minimal whitespace) form
+    provided by default. The examples in the scalable time series section use
+    historical data recorded by the
+    [pmlogger](https://pcp.io/man/man1/pmlogger.1.html)(1) service, in
+    conjunction with a local
+    [redis-server](https://man7.org/linux/man-pages/man1/redis-server.1.html)(1).
+  version: ''
 servers:
-  - url: 'http://example.com/api/v1'
-  - url: 'https://example.com/api/v1'
+  - url: 'http://localhost:44322/'
+tags:
+  - name: OPEN METRICS
+    description: >
+      Exporting of live performance metrics in an Open Metrics compatible format
+      (as described at https://openmetrics.io and popularized by the
+      https://prometheus.io project) is available.
+  - name: SCALABLE TIME SERIES
+    description: >
+      The fast, scalable time series query capabilities provided by the
+      [pmseries](https://pcp.io/man/man1/pmseries.1.html)(1) command are also
+      available through a REST API. These queries provide access to performance
+      data (metric metadata and values) from multiple hosts simultaneously, and
+      in a fashion suited to efficient retrieval by any number of web
+      applications.
+
+
+      All requests in this group can be accompanied by an optional *client*
+      parameter. The value passed in the request will be sent back in the
+      response - all responses will be in JSON object form in this case, with
+      top level "client" and "result" fields.
+  - name: FULL TEXT SEARCH
+    description: >
+      The full text search capabilities provided by the pmsearch (1) command are
+      also available through a REST API. These queries provide access to an
+      index over performance metric names, instances, instance domains and help
+      text, suitable for a metric search engine, and in a fashion suited to
+      efficient querying by any number of web applications.
+
+      In order to use this functionality, the optional RediSearch module must be
+      loaded in the redis-server at the time pmproxy is started, such that
+      metrics, instances and help text it discovers can be automatically
+      indexed.
+  - name: PMAPI HOST SERVICES
+    description: >
+      The live performance collection facilities available from pmcd (1) can
+      also be accessed through a REST API.
+
+      All requests are performed on the web server host by default, unless
+      either a hostspec or context parameter is provided. hostname can be used
+      in place of hostspec .
+
+
+      Context identifiers are used as a persistent way to refer to PMAPI
+      contexts across related web requests. These contexts expire after a
+      configurable period of disuse, and are either explicitly allocated using
+      the /pmapi/context interface, or implicitly allocated using other
+      interfaces.
+
+
+      The timeout interval is configurable at context creation time, and as such
+      the polltime parameter can be used anywhere the hostspec is specified. It
+      sets the context timeout in terms of length of inactive time. The unit for
+      the timeout value is seconds and the default is 5.
+
+
+      To specify a specific existing context in any PMAPI web request, the
+      endpoints can be accessed with either the context parameter or enbedded in
+      the endpoint URL itself, such as /pmapi/[number]/fetch .
 paths:
-  '/users/{username}':
-    $ref: 'paths/users@{username}.yaml'
-  /echo:
-    $ref: paths/echo.yaml
-components:
-  securitySchemes:
-    main_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://example.com/api/oauth/dialog'
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key:
-      type: apiKey
-      in: header
-      name: api_key
-    basic_auth:
-      type: http
-      scheme: basic
+  /metrics:
+    $ref: paths/metrics.yaml
+  /series/query:
+    $ref: paths/series@query.yaml
+  /series/values:
+    $ref: paths/series@values.yaml
+  /series/descs:
+    $ref: paths/series@descs.yaml
+  /series/labels:
+    $ref: paths/series@labels.yaml
+  /series/metrics:
+    $ref: paths/series@metrics.yaml
+  /series/sources:
+    $ref: paths/series@sources.yaml
+  /series/instances:
+    $ref: paths/series@instances.yaml
+  /series/load:
+    $ref: paths/series@load.yaml

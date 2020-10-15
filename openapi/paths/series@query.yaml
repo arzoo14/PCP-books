@@ -1,0 +1,53 @@
+get:
+  tags:
+    - SCALABLE TIME SERIES
+  summary: >-
+    Performs a time series query for either matching identifiers, or matching
+    identifiers with series of time-stamped values.
+  description: >
+    The query is in the format described in
+    [pmseries](https://pcp.io/man/man1/pmseries.1.html)(1) and is passed to the
+    server via either the *expr* parameter (HTTP GET) or via the message body
+    (HTTP POST).
+
+
+    When querying for time series matches only, no time window options are
+    specified and matching series identifiers are returned in a JSON array.
+
+    ```
+
+    $ curl -s http://localhost:44322/series/query?expr=disk.dev.read* | pmjson
+
+    ```
+
+    When querying for time series values as well, a time window must be
+    specified as part of the query string. The simplest form is to just request
+    the most recent sample.
+
+    ```
+
+    $ curl -s http://localhost:44322/series/query?expr=disk.dev.read*[samples:1]
+    | pmjson
+
+    ```
+  operationId: get/series/query
+  parameters:
+    - name: expr
+      in: query
+      description: Query string in pmseries (1) format
+      schema:
+        type: string
+    - name: client
+      in: query
+      description: Request identifier sent back with response
+      schema:
+        type: string
+  responses:
+    '200':
+      description: successful operation
+      content:
+        pmjson:
+          schema:
+            anyOf:
+              - $ref: ../components/schemas/response1.yaml
+              - $ref: ../components/schemas/response2.yaml

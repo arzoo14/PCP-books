@@ -1,0 +1,60 @@
+get:
+  tags:
+    - SCALABLE TIME SERIES
+  summary: Performs a descriptor lookup for one or more time series identifiers.
+  description: >
+    The JSON response contains the same information as the pmseries - d /-- desc
+    option.
+
+    ```
+
+    $ curl -s
+    http://localhost:44322/series/descs?series=605fc77742cd0317597291329561ac4e50c0dd12
+    | pmjson
+
+    ```
+  operationId: get/series/descs
+  parameters:
+    - name: series
+      in: query
+      description: Comma-separated list of series identifiers
+      schema:
+        type: string
+    - name: client
+      in: query
+      description: Request identifier sent back with response
+      schema:
+        type: string
+  responses:
+    '200':
+      description: >
+        $ curl -s
+        http://localhost:44322/series/descs?series=605fc77742cd0317597291329561ac4e50c0dd12
+        | pmjson
+      content:
+        pmjson:
+          schema:
+            type: object
+            properties:
+              series:
+                type: string
+              source:
+                type: integer
+              pmid:
+                type: string
+              indom:
+                type: string
+              semantics:
+                type: integer
+              type:
+                type: string
+              units:
+                type: string
+            example:
+              - series: 605fc77742cd0317597291329561ac4e50c0dd12
+                source: f5ca7481da8c038325d15612bb1c6473ce1ef16f
+                pmid: 60.0.4
+                indom: 60.1
+                semantics: counter
+                type: u32
+                units: count

@@ -1,0 +1,39 @@
+get:
+  tags:
+    - SCALABLE TIME SERIES
+  summary: >-
+    Load time series performance data from the specified source into the
+    redis-server cache.
+  description: >
+    This request is equivalent to the pmseries - l /-- load option.
+
+    ```
+
+    $ curl -s
+    http://localhost:44322/series/load&expr={source.name:"/var/log/pcp/pmlogger/acme"}
+
+    ```
+  operationId: get/series/load
+  parameters:
+    - name: expr
+      in: query
+      description: Source load string in pmseries (1) format
+      schema:
+        type: string
+    - name: client
+      in: query
+      description: Request identifier sent back with response
+      schema:
+        type: string
+  responses:
+    '200':
+      description: >
+        $ curl -s
+        http://localhost:44322/series/instances?series=605fc77742cd0317597291329561ac4e50c0dd12
+        | pmjson
+      content:
+        pmjson:
+          schema:
+            type: object
+            example:
+              success: true
