@@ -1,8 +1,6 @@
 openapi: 3.0.1
 info:
   title: PMWEBAPI
-  x-logo:
-    url: '../../api/images/pcp.png'
   description: |
     ## NAME
     **PMWEBAPI** - Introduction to the Performance Metrics Web Application Programming Interface
