@@ -195,8 +195,7 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/values?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
@@ -238,8 +237,7 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/descs?series=605fc77742cd0317597291329561ac4e50c0dd12 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
@@ -399,8 +397,7 @@ paths:
           type: string
       responses:
         200:
-          description: |
-            $ curl -s http://localhost:44322/series/sources?source=2cd6a38f9339f2dd1f0b4775bda89a9e7244def6 | pmjson
+          description: successful operation
           content:
             pmjson:
               schema:
