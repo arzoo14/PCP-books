@@ -1,2 +1,5 @@
 sphinxcontrib-redoc
 sphinxcontrib-openapi
+
+redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
+

@@ -80,7 +80,7 @@ pygments_style = None
 #
 html_theme = 'sphinx_rtd_theme'
 
-redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
+
 
 redoc = [
     {
@@ -89,11 +89,13 @@ redoc = [
         'spec': 'specs/openapi.yaml',
         'opts': {
             'lazy-rendering': True,
-	    'expand-responses': [200, 201],
 
         },
     },
 ]
+
+redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
+
 
 if not os.environ.get('READTHEDOCS') == 'True':
     import sphinx_rtd_theme
