@@ -501,7 +501,10 @@ paths:
           content:
             pmjson:
               schema:
-                type: boolean
+                type: object
+                properties:
+                  success:
+                    type: boolean
                 example:
                   success: true
 
