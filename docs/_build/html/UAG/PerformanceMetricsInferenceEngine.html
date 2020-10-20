@@ -1,0 +1,1492 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Performance Metrics Inference Engine &mdash; pcp  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Archive Logging" href="ArchiveLogging.html" />
+    <link rel="prev" title="4. Monitoring System Performance" href="MonitoringSystemPerformance.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pcp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="AboutUAGGuide.html">About User’s and Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/AboutPGGuide.html">About Programmer’s Guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User's and Administrator's Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="IntroductionToPcp.html">1. Introduction to PCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InstallingAndConfiguringPcp.html">2. Installing and Configuring Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CommonConventionsAndArguments.html">3. Common Conventions and Arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MonitoringSystemPerformance.html">4. Monitoring System Performance</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Performance Metrics Inference Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction-to-pmie">5.1. Introduction to pmie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-pmie-usage">5.2. Basic pmie Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-use-of-pcp-services">5.2.1. pmie use of PCP services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simple-pmie-usage">5.2.2. ⁠Simple pmie Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complex-pmie-examples">5.2.3. ⁠Complex pmie Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#specification-language-for-pmie">5.3. Specification Language for pmie</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-pmie-syntax">5.3.1. Basic pmie Syntax</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lexical-elements">5.3.1.1. ⁠Lexical Elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comments">5.3.1.2. Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macros">5.3.1.3. ⁠Macros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#units">5.3.1.4. Units</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-evaluation-frequency">5.3.2. Setting Evaluation Frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-metric-expressions">5.3.3. pmie Metric Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-rate-conversion">5.3.4. pmie Rate Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-arithmetic-expressions">5.3.5. pmie Arithmetic Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-logical-expressions">5.3.6. ⁠pmie Logical Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logical-constants">5.3.6.1. Logical Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#relational-expressions">5.3.6.2. ⁠Relational Expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boolean-expressions">5.3.6.3. ⁠Boolean Expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quantification-operators">5.3.6.4. Quantification Operators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-rule-expressions">5.3.7. pmie Rule Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-intrinsic-operators">5.3.8. pmie Intrinsic Operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arithmetic-aggregation">5.3.8.1. ⁠Arithmetic Aggregation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-rate-operator">5.3.8.2. ⁠The rate Operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transitional-operators">5.3.8.3. Transitional Operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pmie-examples">5.4. pmie Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#developing-and-debugging-pmie-rules">5.5. Developing and Debugging pmie Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#caveats-and-notes-on-pmie">5.6. Caveats and Notes on pmie</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance-metrics-wraparound">5.6.1. ⁠Performance Metrics Wraparound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-sample-intervals">5.6.2. ⁠pmie Sample Intervals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-instance-names">5.6.3. ⁠pmie Instance Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-error-detection">5.6.4. ⁠pmie Error Detection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-pmie-rules-with-pmieconf">5.7. Creating pmie Rules with pmieconf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#management-of-pmie-processes">5.8. Management of pmie Processes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-a-pmie-crontab-entry">5.8.1. Add a pmie crontab Entry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-files-and-directories">5.8.2. ⁠Global Files and Directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pmie-instances-and-their-progress">5.8.3. pmie Instances and Their Progress</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ArchiveLogging.html">6. Archive Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PcpDeploymentStrategies.html">7. Performance Co-Pilot Deployment Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingAndExtendingPcpServices.html">8. Customizing and Extending PCP Services</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmer's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../PG/ProgrammingPcp.html">1. Programming Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/WritingPMDA.html">2. Writing A PMDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/PMAPI.html">3. PMAPI–The Performance Metrics API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PG/InstrumentingApplications.html">4. Instrumenting Applications</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pcp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>5. Performance Metrics Inference Engine</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/UAG/PerformanceMetricsInferenceEngine.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="performance-metrics-inference-engine">
+<span id="performancemetricsinferenceengine"></span><h1><a class="toc-backref" href="#id3">5. Performance Metrics Inference Engine</a><a class="headerlink" href="#performance-metrics-inference-engine" title="Permalink to this headline">¶</a></h1>
+<p>The Performance Metrics Inference Engine (<strong>pmie</strong>) is a tool that provides automated monitoring of, and reasoning about, system performance within the
+Performance Co-Pilot (PCP) framework.</p>
+<p>The major sections in this chapter are as follows:</p>
+<p>Section 5.1, “<a class="reference internal" href="#introduction-to-pmie">Introduction to pmie</a>”, provides an introduction to the concepts and design of <strong>pmie</strong>.</p>
+<p>Section 5.2, “<a class="reference internal" href="#basic-pmie-usage">Basic pmie Usage</a>”, describes the basic syntax and usage of <strong>pmie</strong>.</p>
+<p>Section 5.3, “<a class="reference internal" href="#specification-language-for-pmie">Specification Language for pmie</a>”, discusses the complete <strong>pmie</strong> rule specification language.</p>
+<p>Section 5.4, “<a class="reference internal" href="#pmie-examples">pmie Examples</a>”, provides an example, covering several common performance scenarios.</p>
+<p>Section 5.5, “<a class="reference internal" href="#developing-and-debugging-pmie-rules">Developing and Debugging pmie Rules</a>”, presents some tips and techniques for <strong>pmie</strong> rule development.</p>
+<p>Section 5.6, “<a class="reference internal" href="#caveats-and-notes-on-pmie">Caveats and Notes on pmie</a>”, presents some important information on using <strong>pmie</strong>.</p>
+<p>Section 5.7, “<a class="reference internal" href="#creating-pmie-rules-with-pmieconf">Creating pmie Rules with pmieconf</a>”, describes how to use the <strong>pmieconf</strong> command to generate <strong>pmie</strong> rules.</p>
+<p>Section 5.8, “<a class="reference internal" href="#management-of-pmie-processes">Management of pmie Processes</a>”, provides support for running <strong>pmie</strong> as a daemon.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#performance-metrics-inference-engine" id="id3">Performance Metrics Inference Engine</a><ul>
+<li><a class="reference internal" href="#introduction-to-pmie" id="id4">Introduction to pmie</a></li>
+<li><a class="reference internal" href="#basic-pmie-usage" id="id5">Basic pmie Usage</a><ul>
+<li><a class="reference internal" href="#pmie-use-of-pcp-services" id="id6">pmie use of PCP services</a></li>
+<li><a class="reference internal" href="#simple-pmie-usage" id="id7">⁠Simple pmie Usage</a></li>
+<li><a class="reference internal" href="#complex-pmie-examples" id="id8">⁠Complex pmie Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#specification-language-for-pmie" id="id9">Specification Language for pmie</a><ul>
+<li><a class="reference internal" href="#basic-pmie-syntax" id="id10">Basic pmie Syntax</a><ul>
+<li><a class="reference internal" href="#lexical-elements" id="id11">⁠Lexical Elements</a></li>
+<li><a class="reference internal" href="#comments" id="id12">Comments</a></li>
+<li><a class="reference internal" href="#macros" id="id13">⁠Macros</a></li>
+<li><a class="reference internal" href="#units" id="id14">Units</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setting-evaluation-frequency" id="id15">Setting Evaluation Frequency</a></li>
+<li><a class="reference internal" href="#pmie-metric-expressions" id="id16">pmie Metric Expressions</a></li>
+<li><a class="reference internal" href="#pmie-rate-conversion" id="id17">pmie Rate Conversion</a></li>
+<li><a class="reference internal" href="#pmie-arithmetic-expressions" id="id18">pmie Arithmetic Expressions</a></li>
+<li><a class="reference internal" href="#pmie-logical-expressions" id="id19">⁠pmie Logical Expressions</a><ul>
+<li><a class="reference internal" href="#logical-constants" id="id20">Logical Constants</a></li>
+<li><a class="reference internal" href="#relational-expressions" id="id21">⁠Relational Expressions</a></li>
+<li><a class="reference internal" href="#boolean-expressions" id="id22">⁠Boolean Expressions</a></li>
+<li><a class="reference internal" href="#quantification-operators" id="id23">Quantification Operators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pmie-rule-expressions" id="id24">pmie Rule Expressions</a></li>
+<li><a class="reference internal" href="#pmie-intrinsic-operators" id="id25">pmie Intrinsic Operators</a><ul>
+<li><a class="reference internal" href="#arithmetic-aggregation" id="id26">⁠Arithmetic Aggregation</a></li>
+<li><a class="reference internal" href="#the-rate-operator" id="id27">⁠The rate Operator</a></li>
+<li><a class="reference internal" href="#transitional-operators" id="id28">Transitional Operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pmie-examples" id="id29">pmie Examples</a></li>
+<li><a class="reference internal" href="#developing-and-debugging-pmie-rules" id="id30">Developing and Debugging pmie Rules</a></li>
+<li><a class="reference internal" href="#caveats-and-notes-on-pmie" id="id31">Caveats and Notes on pmie</a><ul>
+<li><a class="reference internal" href="#performance-metrics-wraparound" id="id32">⁠Performance Metrics Wraparound</a></li>
+<li><a class="reference internal" href="#pmie-sample-intervals" id="id33">⁠pmie Sample Intervals</a></li>
+<li><a class="reference internal" href="#pmie-instance-names" id="id34">⁠pmie Instance Names</a></li>
+<li><a class="reference internal" href="#pmie-error-detection" id="id35">⁠pmie Error Detection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-pmie-rules-with-pmieconf" id="id36">Creating pmie Rules with pmieconf</a></li>
+<li><a class="reference internal" href="#management-of-pmie-processes" id="id37">Management of pmie Processes</a><ul>
+<li><a class="reference internal" href="#add-a-pmie-crontab-entry" id="id38">Add a pmie crontab Entry</a></li>
+<li><a class="reference internal" href="#global-files-and-directories" id="id39">⁠Global Files and Directories</a></li>
+<li><a class="reference internal" href="#pmie-instances-and-their-progress" id="id40">pmie Instances and Their Progress</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction-to-pmie">
+<h2><a class="toc-backref" href="#id4">5.1. Introduction to pmie</a><a class="headerlink" href="#introduction-to-pmie" title="Permalink to this headline">¶</a></h2>
+<p>Automated reasoning within Performance Co-Pilot (PCP) is provided by the Performance Metrics Inference Engine, (<strong>pmie</strong>), which is an applied artificial
+intelligence application.</p>
+<p>The <strong>pmie</strong> tool accepts expressions describing adverse performance scenarios, and periodically evaluates these against streams of performance metric
+values from one or more sources. When an expression is found to be true, <strong>pmie</strong> is able to execute arbitrary actions to alert or notify the system
+administrator of the occurrence of an adverse performance scenario. These facilities are very general, and are designed to accommodate the automated
+execution of a mixture of generic and site-specific performance monitoring and control functions.</p>
+<p>The stream of performance metrics to be evaluated may be from one or more hosts, or from one or more PCP archive logs. In the latter case, <strong>pmie</strong> may be
+used to retrospectively identify adverse performance conditions.</p>
+<p>Using <strong>pmie</strong>, you can filter, interpret, and reason about the large volume of performance data made available from PCP collector systems or PCP archives.</p>
+<p>Typical <strong>pmie</strong> uses include the following:</p>
+<ul class="simple">
+<li>Automated real-time monitoring of a host, a set of hosts, or client-server pairs of hosts to raise operational alarms when poor performance is detected in a production environment</li>
+<li>Nightly processing of archive logs to detect and report performance regressions, or quantify quality of service for service level agreements or management reports, or produce advance warning of pending performance problems</li>
+<li>Strategic performance management, for example, detection of slightly abnormal to chronic system behavior, trend analysis, and capacity planning</li>
+</ul>
+<p>The <strong>pmie</strong> expressions are described in a language with expressive power and operational flexibility. It includes the following operators and functions:</p>
+<ul class="simple">
+<li>Generalized predicate-action pairs, where a predicate is a logical expression over the available performance metrics, and the action is arbitrary. Predefined actions include the following:<ul>
+<li>Launch a visible alarm with <strong>pmconfirm</strong>; see the <strong>pmconfirm(1)</strong> man page.</li>
+<li>Post an entry to the system log file; see the <strong>syslog(3)</strong> man page.</li>
+<li>Post an entry to the PCP noticeboard file <code class="docutils literal notranslate"><span class="pre">${PCP_LOG_DIR}/NOTICES</span></code>; see the <strong>pmpost(1)</strong> man page.</li>
+<li>Execute a shell command or script, for example, to send e-mail, initiate a pager call, warn the help desk, and so on.</li>
+<li>Echo a message on standard output; useful for scripts that generate reports from retrospective processing of PCP archive logs.</li>
+</ul>
+</li>
+<li>Arithmetic and logical expressions in a C-like syntax.</li>
+<li>Expression groups may have an independent evaluation frequency, to support both short-term and long-term monitoring.</li>
+<li>Canonical scale and rate conversion of performance metric values to provide sensible expression evaluation.</li>
+<li>Aggregation functions of <strong>sum, avg, min</strong>, and <strong>max</strong>, that may be applied to collections of performance metrics values clustered over multiple hosts, or multiple instances, or multiple consecutive samples in time.</li>
+<li>Universal and existential quantification, to handle expressions of the form “for every….” and “at least one…”.</li>
+<li>Percentile aggregation to handle statistical outliers, such as “for at least 80% of the last 20 samples, …”.</li>
+<li>Macro processing to expedite repeated use of common subexpressions or specification components.</li>
+<li>Transparent operation against either live-feeds of performance metric values from PMCD on one or more hosts, or against PCP archive logs of previously accumulated performance metric values.</li>
+</ul>
+<p>The power of <strong>pmie</strong> may be harnessed to automate the most common of the deterministic system management functions that are responses to changes in system performance. For example, disable a batch stream if
+the DBMS transaction commit response time at the ninetieth percentile goes over two seconds, or stop accepting uploads and send e-mail to the <em>sysadmin</em> alias if free space in a storage system falls below five
+percent.</p>
+<p>Moreover, the power of <strong>pmie</strong> can be directed towards the exceptional and sporadic performance problems. For example, if a network packet storm is expected, enable IP header tracing for ten seconds, and send
+e-mail to advise that data has been collected and is awaiting analysis. Or, if production batch throughput falls below 50 jobs per minute, activate a pager to the systems administrator on duty.</p>
+<p>Obviously, <strong>pmie</strong> customization is required to produce meaningful filtering and actions in each production environment. The <strong>pmieconf</strong> tool provides a convenient customization method, allowing the user to
+generate parameterized <strong>pmie</strong> rules for some of the more common performance scenarios.</p>
+</div>
+<div class="section" id="basic-pmie-usage">
+<h2><a class="toc-backref" href="#id5">5.2. Basic pmie Usage</a><a class="headerlink" href="#basic-pmie-usage" title="Permalink to this headline">¶</a></h2>
+<p>This section presents and explains some basic examples of <strong>pmie</strong> usage. The <strong>pmie</strong> tool accepts the common PCP command line arguments, as described in Chapter 3, <a class="reference internal" href="CommonConventionsAndArguments.html#commonconventionsandarguments"><span class="std std-ref">Common Conventions and Arguments</span></a>. In addition, <strong>pmie</strong> accepts the following command line arguments:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>-d</strong></td>
+<td>Enables interactive debug mode.</td>
+</tr>
+<tr class="row-even"><td><strong>-v</strong></td>
+<td>Verbose mode: expression values are displayed.</td>
+</tr>
+<tr class="row-odd"><td><strong>-V</strong></td>
+<td>Verbose mode: annotated expression values are displayed.</td>
+</tr>
+<tr class="row-even"><td><strong>-W</strong></td>
+<td>When-verbose mode: when a condition is true, the satisfying expression bindings are displayed.</td>
+</tr>
+</tbody>
+</table>
+<p>One of the most basic invocations of this tool is this form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<p>In this form, the expressions to be evaluated are read from <em>filename</em>. In the absence of a given <em>filename</em>,
+expressions are read from standard input, which may be your system keyboard.</p>
+<div class="section" id="pmie-use-of-pcp-services">
+<h3><a class="toc-backref" href="#id6">5.2.1. pmie use of PCP services</a><a class="headerlink" href="#pmie-use-of-pcp-services" title="Permalink to this headline">¶</a></h3>
+<p>Before you use <strong>pmie</strong>, it is strongly recommended that you familiarize yourself with the concepts from the Section 1.2, “<a class="reference internal" href="IntroductionToPcp.html#conceptual-foundations"><span class="std std-ref">Conceptual Foundations</span></a>”. The discussion in this section serves as a very brief review of these concepts.</p>
+<p>PCP makes available thousands of performance metrics that you can use when formulating expressions for <strong>pmie</strong> to evaluate. If you want to find out which metrics are currently available on your system, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pminfo</span>
+</pre></div>
+</div>
+<p>Use the <strong>pmie</strong> command line arguments to find out more about a particular metric. In <a class="reference internal" href="#example-5-1-pmie-with-the-f-option">Example 5.1. pmie with the -f Option</a>, to fetch new metric values from host <strong>dove</strong>, you use the <strong>-f</strong> flag:</p>
+<p id="example-5-1-pmie-with-the-f-option"><strong>Example 5.1. pmie with the -f Option</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pminfo -f -h dove disk.dev.total
+</pre></div>
+</div>
+<p>This produces the following response:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>disk.dev.total
+    inst [0 or &quot;xscsi/pci00.01.0/target81/lun0/disc&quot;] value 131233
+    inst [4 or &quot;xscsi/pci00.01.0/target82/lun0/disc&quot;] value 4
+    inst [8 or &quot;xscsi/pci00.01.0/target83/lun0/disc&quot;] value 4
+    inst [12 or &quot;xscsi/pci00.01.0/target84/lun0/disc&quot;] value 4
+    inst [16 or &quot;xscsi/pci00.01.0/target85/lun0/disc&quot;] value 4
+    inst [18 or &quot;xscsi/pci00.01.0/target86/lun0/disc&quot;] value 4
+</pre></div>
+</div>
+<p>This reveals that on the host <strong>dove</strong>, the metric <strong>disk.dev.total</strong> has six instances, one for each disk on the system.</p>
+<p>Use the following command to request help text (specified with the <strong>-T</strong> flag) to provide more information about performance metrics:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pminfo -T network.interface.in.packets
+</pre></div>
+</div>
+<p>The metadata associated with a performance metric is used by <strong>pmie</strong> to determine how the value should be interpreted. You can examine the descriptor that encodes
+the metadata by using the <strong>-d</strong> flag for <strong>pminfo</strong>, as shown in <a class="reference internal" href="#example-5-2-pmie-with-the-d-and-h-options">Example 5.2. pmie with the -d and -h Options</a> :</p>
+<p id="example-5-2-pmie-with-the-d-and-h-options"><strong>Example 5.2. pmie with the -d and -h Options</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pminfo -d -h somehost mem.util.cached kernel.percpu.cpu.user
+</pre></div>
+</div>
+<p>In response, you see output similar to this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mem.util.cached
+    Data Type: 64-bit unsigned int  InDom: PM_INDOM_NULL 0xffffffff
+    Semantics: instant  Units: Kbyte
+
+kernel.percpu.cpu.user
+    Data Type: 64-bit unsigned int  InDom: 60.0 0xf000000
+    Semantics: counter  Units: millisec
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A cumulative counter such as <strong>kernel.percpu.cpu.user</strong> is automatically converted by <strong>pmie</strong> into a rate (measured in events per second, or count/second), while
+instantaneous values such as <strong>mem.util.cached</strong> are not subjected to rate conversion. Metrics with an instance domain (<strong>InDom</strong> in the <strong>pminfo</strong> output) of <strong>PM_INDOM_NULL</strong>
+are singular and always produce one value per source. However, a metric like <strong>kernel.percpu.cpu.user</strong> has an instance domain, and may produce multiple values per
+source (in this case, it is one value for each configured CPU).</p>
+</div>
+</div>
+<div class="section" id="simple-pmie-usage">
+<h3><a class="toc-backref" href="#id7">5.2.2. ⁠Simple pmie Usage</a><a class="headerlink" href="#simple-pmie-usage" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#example-5-3-pmie-with-the-v-option">Example 5.3. pmie with the -v Option</a> directs the inference engine to evaluate and print values (specified with the <strong>-v</strong> flag) for a single performance metric (the
+simplest possible expression), in this case <strong>disk.dev.total</strong>, collected from the local PMCD:</p>
+<p id="example-5-3-pmie-with-the-v-option"><strong>Example 5.3. pmie with the -v Option</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmie -v
+iops = disk.dev.total;
+Ctrl+D
+iops:      ?      ?
+iops:   14.4      0
+iops:   25.9  0.112
+iops:   12.2      0
+iops:   12.3   64.1
+iops:  8.594  52.17
+iops:  2.001  71.64
+</pre></div>
+</div>
+<p>On this system, there are two disk spindles, hence two values of the expression <strong>iops</strong> per sample. Notice that the values for the first sample are unknown
+(represented by the question marks [?] in the first line of output), because rates can be computed only when at least two samples are available. The subsequent
+samples are produced every ten seconds by default. The second sample reports that during the preceding ten seconds there was an average of 14.4 transfers per second
+on one disk and no transfers on the other disk.</p>
+<p>Rates are computed using time stamps delivered by PMCD. Due to unavoidable inaccuracy in the actual sampling time (the sample interval is not exactly 10 seconds),
+you may see more decimal places in values than you expect. Notice, however, that these errors do not accumulate but cancel each other out over subsequent samples.</p>
+<p>In <a class="reference internal" href="#example-5-3-pmie-with-the-v-option">Example 5.3. pmie with the -v Option</a>, the expression to be evaluated was entered using the keyboard, followed by the end-of-file character [<strong>Ctrl+D</strong>].
+Usually, it is more convenient to enter expressions into a file (for example, <strong>myrules</strong>) and ask <strong>pmie</strong> to read the file. Use this command syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span> <span class="o">-</span><span class="n">v</span> <span class="n">myrules</span>
+</pre></div>
+</div>
+<p>Please refer to the <strong>pmie(1)</strong> man page for a complete description of <strong>pmie</strong> command line options.</p>
+</div>
+<div class="section" id="complex-pmie-examples">
+<h3><a class="toc-backref" href="#id8">5.2.3. ⁠Complex pmie Examples</a><a class="headerlink" href="#complex-pmie-examples" title="Permalink to this headline">¶</a></h3>
+<p>This section illustrates more complex <strong>pmie</strong> expressions of the specification language. Section 5.3, “<a class="reference internal" href="#specification-language-for-pmie">Specification Language for pmie</a>”, provides a complete
+description of the <strong>pmie</strong> specification language.</p>
+<p>The following arithmetic expression computes the percentage of write operations over the total number of disk transfers.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">write</span> <span class="o">/</span> <span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <strong>disk.all</strong> metrics are singular, so this expression produces exactly one value per sample, independent of the number of disk devices.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If there is no disk activity, <strong>disk.all.total</strong> will be zero and <strong>pmie</strong> evaluates this expression to be not a number. When <strong>-v</strong> is used, any such values are displayed as question marks.</p>
+</div>
+<p>The following logical expression has the value <strong>true</strong> or <strong>false</strong> for each disk:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span>
+<span class="n">disk</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">write</span> <span class="o">&gt;</span> <span class="n">disk</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">read</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The value is true if the number of writes exceeds the number of reads, and if there is significant disk activity (more than 10 transfers per second).
+<a class="reference internal" href="#example-5-4-printed-pmie-output">Example 5.4. Printed pmie Output</a> demonstrates a simple action:</p>
+<p id="example-5-4-printed-pmie-output"><strong>Example 5.4. Printed pmie Output</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>some_inst disk.dev.total &gt; 60
+          -&gt; print &quot;[%i] high disk i/o&quot;;
+</pre></div>
+</div>
+<p>This prints a message to the standard output whenever the total number of transfers for some disk (<strong>some_inst</strong>) exceeds 60 transfers per second. The <strong>%i</strong> (instance)
+in the message is replaced with the name(s) of the disk(s) that caused the logical expression to be <strong>true</strong>.</p>
+<p>Using <strong>pmie</strong> to evaluate the above expressions every 3 seconds, you see output similar to <a class="reference internal" href="#example-5-5-labelled-pmie-output">Example 5.5. Labelled pmie Output</a>. Notice the introduction of labels for each <strong>pmie</strong> expression.</p>
+<p id="example-5-5-labelled-pmie-output"><strong>Example 5.5. Labelled pmie Output</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pmie -v -t 3sec
+pct_wrt = (disk.all.write / disk.all.total) * 100;
+busy_wrt = disk.dev.total &gt; 10 &amp;&amp;
+           disk.dev.write &gt; disk.dev.read;
+busy = some_inst disk.dev.total &gt; 60
+           -&gt; print &quot;[%i] high disk i/o &quot;;
+Ctrl+D
+pct_wrt:       ?
+busy_wrt:      ?      ?
+busy:          ?
+
+pct_wrt:   18.43
+busy_wrt:  false  false
+busy:      false
+
+Mon Aug  5 14:56:08 2012: [disk2] high disk i/o
+pct_wrt:   10.83
+busy_wrt:  false  false
+busy:      true
+
+pct_wrt:   19.85
+busy_wrt:   true  false
+busy:      false
+
+pct_wrt:       ?
+busy_wrt:  false  false
+busy:      false
+
+Mon Aug  5 14:56:17 2012: [disk1] high disk i/o [disk2] high disk i/o
+pct_wrt:   14.8
+busy_wrt:  false  false
+busy:   true
+</pre></div>
+</div>
+<p>The first sample contains unknowns, since all expressions depend on computing rates. Also notice that the expression <strong>pct_wrt</strong> may have an undefined value whenever
+all disks are idle, as the denominator of the expression is zero. If one or more disks is busy, the expression <strong>busy</strong> is true, and the message from the <strong>print</strong>
+in the action part of the rule appears (before the <strong>-v</strong> values).</p>
+</div>
+</div>
+<div class="section" id="specification-language-for-pmie">
+<h2><a class="toc-backref" href="#id9">5.3. Specification Language for pmie</a><a class="headerlink" href="#specification-language-for-pmie" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the complete syntax of the <strong>pmie</strong> specification language, as well as macro facilities and the issue of sampling and evaluation frequency.
+The reader with a preference for learning by example may choose to skip this section and go straight to the examples in Section 5.4, “<a class="reference internal" href="#pmie-examples">pmie Examples</a>”.</p>
+<p>Complex expressions are built up recursively from simple elements:</p>
+<ol class="arabic simple">
+<li>Performance metric values are obtained from PMCD for real-time sources, otherwise from PCP archive logs.</li>
+<li>Metrics values may be combined using arithmetic operators to produce arithmetic expressions.</li>
+<li>Arithmetic expressions may be compared using relational operators to produce logical expressions.</li>
+<li>Logical expressions may be combined using Boolean operators, including powerful quantifiers.</li>
+<li>Aggregation operators may be used to compute summary expressions, for either arithmetic or logical operands.</li>
+<li>The final logical expression may be used to initiate a sequence of actions.</li>
+</ol>
+<div class="section" id="basic-pmie-syntax">
+<h3><a class="toc-backref" href="#id10">5.3.1. Basic pmie Syntax</a><a class="headerlink" href="#basic-pmie-syntax" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>pmie</strong> rule specification language supports a number of basic syntactic elements.</p>
+<div class="section" id="lexical-elements">
+<h4><a class="toc-backref" href="#id11">5.3.1.1. ⁠Lexical Elements</a><a class="headerlink" href="#lexical-elements" title="Permalink to this headline">¶</a></h4>
+<p>All <strong>pmie</strong> expressions are composed of the following lexical elements:</p>
+<p><strong>Identifier</strong></p>
+<p>Begins with an alphabetic character (either upper or lowercase), followed by zero or more letters, the numeric digits, and the special characters period (.) and
+underscore (_), as shown in the following example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x, disk.dev.total and my_stuff
+</pre></div>
+</div>
+<p>As a special case, an arbitrary sequence of letters enclosed by apostrophes (‘) is also interpreted as an <em>identifier</em>; for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;vms$slow_response&#39;
+</pre></div>
+</div>
+<p><strong>Keyword</strong></p>
+<p>The aggregate operators, units, and predefined actions are represented by keywords; for example, <strong>some_inst</strong>, <strong>print</strong>, and <strong>hour</strong>.</p>
+<p><strong>Numeric constant</strong></p>
+<p>Any likely representation of a decimal integer or floating point number; for example, 124, 0.05, and -45.67</p>
+<p><strong>String constant</strong></p>
+<p>An arbitrary sequence of characters, enclosed by double quotation marks (<strong>“x”</strong>).</p>
+<p>Within quotes of any sort, the backslash () may be used as an escape character as shown in the following example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;A \&quot;gentle\&quot; reminder&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="comments">
+<h4><a class="toc-backref" href="#id12">5.3.1.2. Comments</a><a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h4>
+<p>Comments may be embedded anywhere in the source, in either of these forms:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>/* text */</td>
+<td>Comment, optionally spanning multiple lines, with no nesting of comments.</td>
+</tr>
+<tr class="row-even"><td>// text</td>
+<td>Comment from here to the end of the line.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="macros">
+<h4><a class="toc-backref" href="#id13">5.3.1.3. ⁠Macros</a><a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h4>
+<p>When they are fully specified, expressions in <strong>pmie</strong> tend to be verbose and repetitive. The use of macros can reduce repetition and improve readability and
+modularity. Any statement of the following form associates the macro name <strong>identifier</strong> with the given string constant.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>identifier = &quot;string&quot;;
+</pre></div>
+</div>
+<p>Any subsequent occurrence of the macro name <strong>identifier</strong> is replaced by the string most recently associated with a macro definition for <strong>identifier</strong>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$identifier
+</pre></div>
+</div>
+<p>For example, start with the following macro definition:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>disk = &quot;disk.all&quot;;
+</pre></div>
+</div>
+<p>You can then use the following syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pct_wrt = ($disk.write / $disk.total) * 100;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Macro expansion is performed before syntactic parsing; so macros may only be assigned constant string values.</p>
+</div>
+</div>
+<div class="section" id="units">
+<h4><a class="toc-backref" href="#id14">5.3.1.4. Units</a><a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h4>
+<p>The inference engine converts all numeric values to canonical units (seconds for time, bytes for space, and events for count). To avoid surprises, you are encouraged to specify the units for numeric constants. If units are specified, they are checked for dimension compatibility against the metadata for the associated performance metrics.</p>
+<p>The syntax for a <strong>units</strong> specification is a sequence of one or more of the following keywords separated by either a space or a slash (/), to denote per: <strong>byte, KByte, MByte, GByte, TByte, nsec, nanosecond, usec, microsecond, msec, millisecond, sec, second, min, minute, hour, count, Kcount, Mcount, Gcount,</strong> or <strong>Tcount</strong>. Plural forms are also accepted.</p>
+<p>The following are examples of units usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">blktotal</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="n">Mbyte</span> <span class="o">/</span> <span class="n">second</span><span class="p">;</span>
+<span class="n">mem</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">cached</span> <span class="o">&lt;</span> <span class="mi">500</span> <span class="n">Kbyte</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you do not specify the units for numeric constants, it is assumed that the constant is in the canonical units of seconds for time, bytes for space, and events for count, and the dimensionality of the constant is assumed to be correct. Thus, in the following expression, the <strong>500</strong> is interpreted as 500 bytes.</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mem</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">cached</span> <span class="o">&lt;</span> <span class="mi">500</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="setting-evaluation-frequency">
+<h3><a class="toc-backref" href="#id15">5.3.2. Setting Evaluation Frequency</a><a class="headerlink" href="#setting-evaluation-frequency" title="Permalink to this headline">¶</a></h3>
+<p>The identifier name <strong>delta</strong> is reserved to denote the interval of time between consecutive evaluations of one or more expressions. Set <strong>delta</strong> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delta</span> <span class="o">=</span> <span class="n">number</span> <span class="p">[</span><span class="n">units</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>If present, <strong>units</strong> must be one of the time units described in the preceding section. If absent, <strong>units</strong> are assumed to be <strong>seconds</strong>. For example, the following
+expression has the effect that any subsequent expressions (up to the next expression that assigns a value to <strong>delta</strong>) are scheduled for evaluation at a fixed frequency, once every five minutes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>delta = 5 min;
+</pre></div>
+</div>
+<p>The default value for <strong>delta</strong> may be specified using the <strong>-t</strong> command line option; otherwise <strong>delta</strong> is initially set to be 10 seconds.</p>
+</div>
+<div class="section" id="pmie-metric-expressions">
+<h3><a class="toc-backref" href="#id16">5.3.3. pmie Metric Expressions</a><a class="headerlink" href="#pmie-metric-expressions" title="Permalink to this headline">¶</a></h3>
+<p>The performance metrics namespace (PMNS) provides a means of naming performance metrics, for example, <strong>disk.dev.read</strong>. PCP allows an application to retrieve one or more values for a performance metric from a designated source (a collector host running PMCD, or a set of PCP archive logs). To specify a single value for some performance metric requires the metric name to be associated with all three of the following:</p>
+<ol class="arabic simple">
+<li>A particular host (or source of metrics values)</li>
+<li>A particular instance (for metrics with multiple values)</li>
+<li>A sample time</li>
+</ol>
+<p>The permissible values for hosts are the range of valid hostnames as provided by Internet naming conventions.</p>
+<p>The names for instances are provided by the Performance Metrics Domain Agents (PMDA) for the instance domain associated with the chosen performance metric.</p>
+<p>The sample time specification is defined as the set of natural numbers 0, 1, 2, and so on. A number refers to one of a sequence of sampling events, from the current sample 0 to its predecessor 1, whose predecessor was 2, and so on.
+This scheme is illustrated by the time line shown in <a class="reference internal" href="#figure-5-1-sampling-time-line">Figure 5.1. Sampling Time Line</a>.</p>
+<div class="figure" id="id1">
+<span id="figure-5-1-sampling-time-line"></span><img alt="../_images/sampling-timeline.png" src="../_images/sampling-timeline.png" />
+<p class="caption"><span class="caption-text">Figure 5.1. Sampling Time Line</span></p>
+</div>
+<p>Each sample point is assumed to be separated from its predecessor by a constant amount of real time, the <strong>delta</strong>. The most recent sample point is always zero.
+The value of <strong>delta</strong> may vary from one expression to the next, but is fixed for each expression; for more information on the sampling interval, see
+Section 5.3.2, “<a class="reference internal" href="#setting-evaluation-frequency">Setting Evaluation Frequency</a>”.</p>
+<p>For <strong>pmie</strong>, a metrics expression is the name of a metric, optionally qualified by a host, instance and sample time specification. Special characters introduce
+the qualifiers: colon (<strong>:</strong>) for hosts, hash or pound sign (<strong>#</strong>) for instances, and at (<strong>&#64;</strong>) for sample times. The following expression refers to the previous
+value (<strong>&#64;1</strong>) of the counter for the disk read operations associated with the disk instance <strong>#disk1</strong> on the host <strong>moomba</strong>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>disk.dev.read :moomba #disk1 @1
+</pre></div>
+</div>
+<p>In fact, this expression defines a point in the three-dimensional (3D) parameter space of {<strong>host</strong>} x {<strong>instance</strong>} x {<strong>sample time</strong>} as shown in <a class="reference internal" href="#figure-5-2-three-dimensional-parameter-space">Figure 5.2. Three-Dimensional Parameter Space</a>.</p>
+<div class="figure" id="id2">
+<span id="figure-5-2-three-dimensional-parameter-space"></span><img alt="../_images/parameter-space.png" src="../_images/parameter-space.png" />
+<p class="caption"><span class="caption-text">Figure 5.2. Three-Dimensional Parameter Space</span></p>
+</div>
+<p>A metric expression may also identify sets of values corresponding to one-, two-, or three-dimensional slices of this space, according to the following rules:</p>
+<ol class="arabic">
+<li><p class="first">A metric expression consists of a PCP metric name, followed by optional host specifications, followed by optional instance specifications, and finally, optional sample time specifications.</p>
+</li>
+<li><p class="first">A host specification consists of one or more host names, each prefixed by a colon (<strong>:</strong>). For example: <strong>:indy :far.away.domain.com :localhost</strong></p>
+</li>
+<li><p class="first">A missing host specification implies the default <strong>pmie</strong> source of metrics, as defined by a <strong>-h</strong> option on the command line, or the first named archive in an
+<strong>-a</strong> option on the command line, or PMCD on the local host.</p>
+</li>
+<li><p class="first">An instance specification consists of one or more instance names, each prefixed by a hash or pound (<strong>#</strong>) sign. For example: <strong>#eth0 #eth2</strong></p>
+<p>Recall that you can discover the instance names for a particular metric, using the pminfo command. See Section 5.2.1, “<a class="reference internal" href="#pmie-use-of-pcp-services">pmie use of PCP services</a>”.</p>
+</li>
+</ol>
+<blockquote>
+<div>Within the <strong>pmie</strong> grammar, an instance name is an identifier. If the instance name contains characters other than alphanumeric characters, enclose the instance name in single quotes; for example, <strong>#'/boot'  #'/usr'</strong></div></blockquote>
+<ol class="arabic simple" start="5">
+<li>A missing instance specification implies all instances for the associated performance metric from each associated <strong>pmie</strong> source of metrics.</li>
+<li>A sample time specification consists of either a single time or a range of times. A single time is represented as an at (<strong>&#64;</strong>) followed by a natural number.
+A range of times is an at (<strong>&#64;</strong>), followed by a natural number, followed by two periods (<strong>..</strong>) followed by a second natural number. The ordering of the end
+points in a range is immaterial. For example, <strong>&#64;0..9</strong> specifies the last 10 sample times.</li>
+<li>A missing sample time specification implies the most recent sample time.</li>
+</ol>
+<p>The following metric expression refers to a three-dimensional set of values, with two hosts in one dimension, five sample times in another, and the number of instances
+in the third dimension being determined by the number of configured disk spindles on the two hosts.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">read</span> <span class="p">:</span><span class="n">foo</span> <span class="p">:</span><span class="n">bar</span> <span class="o">@</span><span class="mf">0.</span><span class="o">.</span><span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pmie-rate-conversion">
+<h3><a class="toc-backref" href="#id17">5.3.4. pmie Rate Conversion</a><a class="headerlink" href="#pmie-rate-conversion" title="Permalink to this headline">¶</a></h3>
+<p>Many of the metrics delivered by PCP are cumulative counters. Consider the following metric:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">total</span>
+</pre></div>
+</div>
+<p>A single value for this metric tells you only that a certain number of disk I/O operations have occurred since boot time, and that information may be invalid if the
+counter has exceeded its 32-bit range and wrapped. You need at least two values, sampled at known times, to compute the recent rate at which the I/O operations are
+being executed. The required syntax would be this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">total</span> <span class="o">@</span><span class="mi">0</span> <span class="o">-</span> <span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">total</span> <span class="o">@</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta</span>
+</pre></div>
+</div>
+<p>The accuracy of <strong>delta</strong> as a measure of actual inter-sample delay is an issue. <strong>pmie</strong> requests samples, at intervals of approximately <strong>delta</strong>, while the results
+exported from PMCD are time stamped with the high-resolution system clock time when the samples were extracted. For these reasons, a built-in and implicit rate
+conversion using accurate time stamps is provided by <strong>pmie</strong> for performance metrics that have counter semantics. For example, the following expression is
+unconditionally converted to a rate by pmie.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">total</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pmie-arithmetic-expressions">
+<h3><a class="toc-backref" href="#id18">5.3.5. pmie Arithmetic Expressions</a><a class="headerlink" href="#pmie-arithmetic-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Within <strong>pmie</strong>, simple arithmetic expressions are constructed from metrics expressions (see Section 5.3.3, “<a class="reference internal" href="#pmie-metric-expressions">pmie Metric Expressions</a>”) and numeric constants,
+using all of the arithmetic operators and precedence rules of the C programming language.</p>
+<p>All <strong>pmie</strong> arithmetic is performed in double precision.</p>
+<p>Section 5.3.8, “<a class="reference internal" href="#pmie-intrinsic-operators">pmie Intrinsic Operators</a>”, describes additional operators that may be used for aggregate operations to reduce the dimensionality of an arithmetic expression.</p>
+</div>
+<div class="section" id="pmie-logical-expressions">
+<h3><a class="toc-backref" href="#id19">5.3.6. ⁠pmie Logical Expressions</a><a class="headerlink" href="#pmie-logical-expressions" title="Permalink to this headline">¶</a></h3>
+<p>A number of logical expression types are supported:</p>
+<ul class="simple">
+<li>Logical constants</li>
+<li>Relational expressions</li>
+<li>Boolean expressions</li>
+<li>Quantification operators</li>
+</ul>
+<div class="section" id="logical-constants">
+<h4><a class="toc-backref" href="#id20">5.3.6.1. Logical Constants</a><a class="headerlink" href="#logical-constants" title="Permalink to this headline">¶</a></h4>
+<p>Like in the C programming language, <strong>pmie</strong> interprets an arithmetic value of zero to be false, and all other arithmetic values are considered true.</p>
+</div>
+<div class="section" id="relational-expressions">
+<h4><a class="toc-backref" href="#id21">5.3.6.2. ⁠Relational Expressions</a><a class="headerlink" href="#relational-expressions" title="Permalink to this headline">¶</a></h4>
+<p>Relational expressions are the simplest form of logical expression, in which values may be derived from arithmetic expressions using <strong>pmie</strong> relational operators.
+For example, the following is a relational expression that is true or false, depending on the aggregate total of disk read operations per second being greater than 50.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disk</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">read</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="n">count</span><span class="o">/</span><span class="n">sec</span>
+</pre></div>
+</div>
+<p>All of the relational logical operators and precedence rules of the C programming language are supported in <strong>pmie</strong>.</p>
+<p>As described in Section 5.3.3, “<a class="reference internal" href="#pmie-metric-expressions">pmie Metric Expressions</a>”, arithmetic expressions in <strong>pmie</strong> may assume set values. The relational operators are also required to
+take constant, singleton, and set-valued expressions as arguments. The result has the same dimensionality as the operands. Suppose the rule in <a class="reference internal" href="#example-5-6-relational-expressions">Example 5.6. Relational Expressions</a> is given:</p>
+<p id="example-5-6-relational-expressions"><strong>Example 5.6. Relational Expressions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hosts = &quot;:gonzo&quot;;
+intfs = &quot;#eth0 #eth2&quot;;
+all_intf = network.interface.in.packets
+               $hosts $intfs @0..2 &gt; 300 count/sec;
+</pre></div>
+</div>
+<p>Then the execution of <strong>pmie</strong> may proceed as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmie -V uag.11
+all_intf:
+       gonzo: [eth0]      ?      ?      ?
+       gonzo: [eth2]      ?      ?      ?
+all_intf:
+       gonzo: [eth0]  false      ?      ?
+       gonzo: [eth2]  false      ?      ?
+all_intf:
+       gonzo: [eth0]   true  false      ?
+       gonzo: [eth2]  false  false      ?
+all_intf:
+       gonzo: [eth0]   true   true  false
+       gonzo: [eth2]  false  false  false
+</pre></div>
+</div>
+<p>At each sample, the relational operator greater than (&gt;) produces six truth values for the cross-product of the <strong>instance</strong> and <strong>sample time</strong> dimensions.</p>
+<p>Section 5.3.6.4, “<a class="reference internal" href="#quantification-operators">Quantification Operators</a>”, describes additional logical operators that may be used to reduce the dimensionality of a relational expression.</p>
+</div>
+<div class="section" id="boolean-expressions">
+<h4><a class="toc-backref" href="#id22">5.3.6.3. ⁠Boolean Expressions</a><a class="headerlink" href="#boolean-expressions" title="Permalink to this headline">¶</a></h4>
+<p>The regular Boolean operators from the C programming language are supported: conjunction (<strong>&amp;&amp;</strong>), disjunction (<strong>||</strong>) and negation (<strong>!</strong>).</p>
+<p>As with the relational operators, the Boolean operators accommodate set-valued operands, and set-valued results.</p>
+</div>
+<div class="section" id="quantification-operators">
+<h4><a class="toc-backref" href="#id23">5.3.6.4. Quantification Operators</a><a class="headerlink" href="#quantification-operators" title="Permalink to this headline">¶</a></h4>
+<p>Boolean and relational operators may accept set-valued operands and produce set-valued results. In many cases, rules that are appropriate for performance management
+require a set of truth values to be reduced along one or more of the dimensions of hosts, instances, and sample times described in Section 5.3.3, “<a class="reference internal" href="#pmie-metric-expressions">pmie Metric Expressions</a>”.
+The <strong>pmie</strong> quantification operators perform this function.</p>
+<p>Each quantification operator takes a one-, two-, or three-dimension set of truth values as an operand, and reduces it to a set of smaller dimension, by quantification
+along a single dimension. For example, suppose the expression in the previous example is simplified and prefixed by <strong>some_sample</strong>, to produce the following expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>intfs = &quot;#eth0 #eth2&quot;;
+all_intf = some_sample network.interface.in.packets
+                     $intfs @0..2 &gt; 300 count/sec;
+</pre></div>
+</div>
+<p>Then the expression result is reduced from six values to two (one per interface instance), such that the result for a particular instance will be false unless the
+relational expression for the same interface instance is true for at least one of the preceding three sample times.</p>
+<p>There are existential, universal, and percentile quantification operators in each of the <em>host, instance</em>, and <em>sample time</em> dimensions to produce the nine operators as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>some_host</td>
+<td>True if the expression is true for at least one host for the same instance and sample time.</td>
+</tr>
+<tr class="row-even"><td>all_host</td>
+<td>True if the expression is true for every host for the same instance and sample time.</td>
+</tr>
+<tr class="row-odd"><td>N%_host</td>
+<td>True if the expression is true for at least N% of the hosts for the same instance and sample time.</td>
+</tr>
+<tr class="row-even"><td>some_inst</td>
+<td>True if the expression is true for at least one instance for the same host and sample time.</td>
+</tr>
+<tr class="row-odd"><td>all_instance</td>
+<td>True if the expression is true for every instance for the same host and sample time.</td>
+</tr>
+<tr class="row-even"><td>N%_instance</td>
+<td>True if the expression is true for at least N% of the instances for the same host and sample time.</td>
+</tr>
+<tr class="row-odd"><td>some_sample time</td>
+<td>True if the expression is true for at least one sample time for the same host and instance.</td>
+</tr>
+<tr class="row-even"><td>all_sample time</td>
+<td>True if the expression is true for every sample time for the same host and instance.</td>
+</tr>
+<tr class="row-odd"><td>N%_sample time</td>
+<td>True if the expression is true for at least N% of the sample times for the same host and instance.</td>
+</tr>
+</tbody>
+</table>
+<p>These operators may be nested. For example, the following expression answers the question: “Are all hosts experiencing at least 20% of their disks busy either reading or writing?”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Servers = &quot;:moomba :babylon&quot;;
+all_host (
+    20%_inst disk.dev.read $Servers &gt; 40 ||
+    20%_inst disk.dev.write $Servers &gt; 40
+);
+</pre></div>
+</div>
+<p>The following expression uses different syntax to encode the same semantics:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>all_host (
+    20%_inst (
+        disk.dev.read $Servers &gt; 40 ||
+        disk.dev.write $Servers &gt; 40
+    )
+);
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To avoid confusion over precedence and scope for the quantification operators, use explicit parentheses.</p>
+</div>
+<p>Two additional quantification operators are available for the instance dimension only, namely <strong>match_inst</strong> and <strong>nomatch_inst</strong>, that take a regular expression and a
+boolean expression. The result is the boolean AND of the expression and the result of matching (or not matching) the associated instance name against the regular expression.</p>
+<p>For example, this rule evaluates error rates on various 10BaseT Ethernet network interfaces (such as ecN, ethN, or efN):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>some_inst
+        match_inst &quot;^(ec|eth|ef)&quot;
+                network.interface.total.errors &gt; 10 count/sec
+-&gt; syslog &quot;Ethernet errors:&quot; &quot; %i&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="pmie-rule-expressions">
+<h3><a class="toc-backref" href="#id24">5.3.7. pmie Rule Expressions</a><a class="headerlink" href="#pmie-rule-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Rule expressions for <strong>pmie</strong> have the following syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lexpr</span> <span class="o">-&gt;</span> <span class="n">actions</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>The semantics are as follows:</p>
+<ul>
+<li><p class="first">If the logical expression <strong>lexpr</strong> evaluates <strong>true</strong>, then perform the <em>actions</em> that follow. Otherwise, do not perform the <em>actions</em>.</p>
+</li>
+<li><p class="first">It is required that <strong>lexpr</strong> has a singular truth value. Aggregation and quantification operators must have been applied to reduce multiple truth values to a single value.</p>
+</li>
+<li><p class="first">When executed, an <em>action</em> completes with a success/failure status.</p>
+</li>
+<li><p class="first">One or more <em>actions</em> may appear; consecutive <em>actions</em> are separated by operators that control the execution of subsequent <em>actions</em>, as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>action-1</em> <strong>&amp;</strong> : Always execute subsequent actions (serial execution).</li>
+<li><em>action-1</em> <strong>|</strong> : If <em>action-1</em> fails, execute subsequent actions, otherwise skip the subsequent actions (alternation).</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>An <em>action</em> is composed of a keyword to identify the action method, an optional <em>time</em> specification, and one or more arguments.</p>
+<p>A <em>time</em> specification uses the same syntax as a valid time interval that may be assigned to <strong>delta</strong>, as described in Section 5.3.2, “<a class="reference internal" href="#setting-evaluation-frequency">Setting Evaluation Frequency</a> ”.
+If the <em>action</em> is executed and the <em>time</em> specification is present, <strong>pmie</strong> will suppress any subsequent execution of this <em>action</em> until the wall clock time has advanced by <em>time</em>.</p>
+<p>The arguments are passed directly to the action method.</p>
+<p>The following action methods are provided:</p>
+<p><strong>shell</strong></p>
+<p>The single argument is passed to the shell for execution. This <em>action</em> is implemented using <strong>system</strong> in the background. The <em>action</em> does not wait for the system call to return, and succeeds unless the fork fails.</p>
+<p><strong>alarm</strong></p>
+<p>A notifier containing a time stamp, a single <em>argument</em> as a message, and a <strong>Cancel</strong> button is posted on the current display screen (as identified by the <strong>DISPLAY</strong>
+environment variable). Each alarm <em>action</em> first checks if its notifier is already active. If there is an identical active notifier, a duplicate notifier is not posted.
+The action succeeds unless the fork fails.</p>
+<p><strong>syslog</strong></p>
+<p>A message is written into the system log. If the first word of the first argument is <strong>-p</strong>, the second word is interpreted as the priority (see the <strong>syslog(3)</strong> man page); the message tag is <strong>pcp-pmie</strong>.
+The remaining argument is the message to be written to the system log. This action always succeeds.</p>
+<p><strong>print</strong></p>
+<p>A message containing a time stamp in <strong>ctime(3)</strong> format and the argument is displayed out to standard output (<strong>stdout</strong>). This action always succeeds.</p>
+<p>Within the argument passed to an action method, the following expansions are supported to allow some of the context from the logical expression on the left to appear to be embedded in the argument:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>%h</strong></td>
+<td>The value of a <em>host</em> that makes the expression true.</td>
+</tr>
+<tr class="row-even"><td><strong>%i</strong></td>
+<td>The value of an <em>instance</em> that makes the expression true.</td>
+</tr>
+<tr class="row-odd"><td><strong>%v</strong></td>
+<td>The value of a performance metric from the logical expression.</td>
+</tr>
+</tbody>
+</table>
+<p>Some ambiguity may occur in respect to which host, instance, or performance metric is bound to a %-token. In most cases, the leftmost binding in the top-level
+subexpression is used. You may need to use <strong>pmie</strong> in the interactive debugging mode (specify the <strong>-d</strong> command line option) in conjunction with the <strong>-W</strong>
+command line option to discover which subexpressions contributes to the %-token bindings.</p>
+<p><a class="reference internal" href="#example-5-7-rule-expression-options">Example 5.7. Rule Expression Options</a> illustrates some of the options when constructing rule expressions:</p>
+<p id="example-5-7-rule-expression-options"><strong>Example 5.7. Rule Expression Options</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>some_inst ( disk.dev.total &gt; 60 )
+       -&gt; syslog 10 mins &quot;[%i] busy, %v IOPS &quot; &amp;
+          shell 1 hour &quot;echo \
+               &#39;Disk %i is REALLY busy. Running at %v I/Os per second&#39; \
+               | Mail -s &#39;pmie alarm&#39; sysadm&quot;;
+</pre></div>
+</div>
+<p>In this case, <strong>%v</strong> and <strong>%i</strong> are both associated with the instances for the metric <strong>disk.dev.total</strong> that make the expression true. If more than one instance
+makes the expression true (more than one disk is busy), then the argument is formed by concatenating the result from each %-token binding. The text added to the
+system log file might be as shown in <a class="reference internal" href="#example-5-8-system-log-text">Example 5.8. System Log Text</a> :</p>
+<p id="example-5-8-system-log-text"><strong>Example 5.8. System Log Text</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aug</span> <span class="mi">6</span> <span class="mi">08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">44</span> <span class="mi">5</span><span class="n">B</span><span class="p">:</span><span class="n">gonzo</span> <span class="n">pcp</span><span class="o">-</span><span class="n">pmie</span><span class="p">[</span><span class="mi">3371</span><span class="p">]:</span>
+                         <span class="p">[</span><span class="n">disk1</span><span class="p">]</span> <span class="n">busy</span><span class="p">,</span> <span class="mf">3.7</span> <span class="n">IOPS</span> <span class="p">[</span><span class="n">disk2</span><span class="p">]</span> <span class="n">busy</span><span class="p">,</span> <span class="mf">0.3</span> <span class="n">IOPS</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When <strong>pmie</strong> is processing performance metrics from a set of PCP archive logs, the <em>actions</em> will be processed in the expected manner; however, the action
+methods are modified to report a textual facsimile of the <em>action</em> on the standard output.</p>
+</div>
+<p>Consider the rule in <a class="reference internal" href="#example-5-9-standard-output">Example 5.9. Standard Output</a> :</p>
+<p id="example-5-9-standard-output"><strong>Example 5.9. Standard Output</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>delta = 2 sec;  // more often for demonstration purposes
+percpu  = &quot;kernel.percpu&quot;;
+// Unusual usr-sys split when some CPU is more than 20% in usr mode
+// and sys mode is at least 1.5 times usr mode
+//
+cpu_usr_sys = some_inst (
+        $percpu.cpu.sys &gt; $percpu.cpu.user * 1.5 &amp;&amp;
+        $percpu.cpu.user &gt; 0.2
+   ) -&gt;  alarm &quot;Unusual sys time: &quot; &quot;%i &quot;;
+</pre></div>
+</div>
+<p>When evaluated against an archive, the following output is generated (the alarm action produces a message on standard output):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmafm ${HOME}/f4 pmie cpu.head cpu.00
+alarm Wed Aug  7 14:54:48 2012: Unusual sys time: cpu0
+alarm Wed Aug  7 14:54:50 2012: Unusual sys time: cpu0
+alarm Wed Aug  7 14:54:52 2012: Unusual sys time: cpu0
+alarm Wed Aug  7 14:55:02 2012: Unusual sys time: cpu0
+alarm Wed Aug  7 14:55:06 2012: Unusual sys time: cpu0
+</pre></div>
+</div>
+</div>
+<div class="section" id="pmie-intrinsic-operators">
+<h3><a class="toc-backref" href="#id25">5.3.8. pmie Intrinsic Operators</a><a class="headerlink" href="#pmie-intrinsic-operators" title="Permalink to this headline">¶</a></h3>
+<p>The following sections describe some other useful intrinsic operators for <strong>pmie</strong>. These operators are divided into three groups:</p>
+<ol class="arabic simple">
+<li>Arithmetic aggregation</li>
+<li>The rate operator</li>
+<li>Transitional operators</li>
+</ol>
+<div class="section" id="arithmetic-aggregation">
+<h4><a class="toc-backref" href="#id26">5.3.8.1. ⁠Arithmetic Aggregation</a><a class="headerlink" href="#arithmetic-aggregation" title="Permalink to this headline">¶</a></h4>
+<p>For set-valued arithmetic expressions, the following operators reduce the dimensionality of the result by arithmetic aggregation along one of the <em>host</em>, <em>instance</em>,
+or <em>sample time</em> dimensions. For example, to aggregate in the <em>host</em> dimension, the following operators are provided:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>avg_host</strong></td>
+<td>Computes the average value across all <em>instances</em> for the same <em>host</em> and <em>sample time</em></td>
+</tr>
+<tr class="row-even"><td><strong>sum_host</strong></td>
+<td>Computes the total value across all <em>instances</em> for the same <em>host</em> and <em>sample time</em></td>
+</tr>
+<tr class="row-odd"><td><strong>count_host</strong></td>
+<td>Computes the number of values across all <em>instances</em> for the same <em>host</em> and <em>sample time</em></td>
+</tr>
+<tr class="row-even"><td><strong>min_host</strong></td>
+<td>Computes the minimum value across all <em>instances</em> for the same <em>host</em> and <em>sample time</em></td>
+</tr>
+<tr class="row-odd"><td><strong>max_host</strong></td>
+<td>Computes the maximum value across all <em>instances</em> for the same <em>host</em> and <em>sample time</em></td>
+</tr>
+</tbody>
+</table>
+<p>Ten additional operators correspond to the forms *_inst and *_sample.</p>
+<p>The following example illustrates the use of an aggregate operator in combination with an existential operator to answer the question “Does some host currently have
+two or more busy processors?”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// note &#39;&#39; to escape - in host name
+poke = &quot;:moomba :&#39;mac-larry&#39; :bitbucket&quot;;
+some_host (
+    count_inst ( kernel.percpu.cpu.user $poke +
+                 kernel.percpu.cpu.sys $poke &gt; 0.7 ) &gt;= 2
+    )
+       -&gt; alarm &quot;2 or more busy CPUs&quot;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-rate-operator">
+<h4><a class="toc-backref" href="#id27">5.3.8.2. ⁠The rate Operator</a><a class="headerlink" href="#the-rate-operator" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>rate</strong> operator computes the rate of change of an arithmetic expression as shown in the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rate</span> <span class="n">mem</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">cached</span>
+</pre></div>
+</div>
+<p>It returns the rate of change for the <strong>mem.util.cached</strong> performance metric; that is, the rate at which page cache memory is being allocated and released.</p>
+<p>The <strong>rate</strong> intrinsic operator is most useful for metrics with instantaneous value semantics. For metrics with counter semantics,  <strong>pmie</strong> already performs an
+implicit rate calculation (see the Section 5.3.4, “<a class="reference internal" href="#pmie-rate-conversion">pmie Rate Conversion</a>”) and the <strong>rate</strong> operator would produce the second derivative with respect to time,
+which is less likely to be useful.</p>
+</div>
+<div class="section" id="transitional-operators">
+<h4><a class="toc-backref" href="#id28">5.3.8.3. Transitional Operators</a><a class="headerlink" href="#transitional-operators" title="Permalink to this headline">¶</a></h4>
+<p>In some cases, an action needs to be triggered when an expression changes from true to false or vice versa. The following operators take a logical expression as an operand, and return a logical expression:</p>
+<ul class="simple">
+<li><strong>rising</strong>: Has the value <strong>true</strong> when the operand transitions from <strong>false</strong> to <strong>true</strong> in consecutive samples.</li>
+<li><strong>falling</strong>: Has the value <strong>false</strong> when the operand transitions from <strong>true</strong> to <strong>false</strong> in consecutive samples.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="pmie-examples">
+<h2><a class="toc-backref" href="#id29">5.4. pmie Examples</a><a class="headerlink" href="#pmie-examples" title="Permalink to this headline">¶</a></h2>
+<p>The examples presented in this section are task-oriented and use the full power of the pmie specification language as described in Section 5.3, “<a class="reference internal" href="#specification-language-for-pmie">Specification Language for pmie</a>”.</p>
+<p>Source code for the <strong>pmie</strong> examples in this chapter, and many more examples, is provided within the <em>PCP Tutorials and Case Studies</em>.
+<a class="reference internal" href="#example-5-10-monitoring-cpu-utilization">Example 5.10. Monitoring CPU Utilization</a> and <a class="reference internal" href="#example-5-11-monitoring-disk-activity">Example 5.11. Monitoring Disk Activity</a> illustrate monitoring CPU utilization and disk activity.</p>
+<p id="example-5-10-monitoring-cpu-utilization"><strong>Example 5.10. Monitoring CPU Utilization</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Some Common Performance Monitoring Scenarios
+//
+// The CPU Group
+//
+delta = 2 sec;  // more often for demonstration purposes
+// common prefixes
+//
+percpu  = &quot;kernel.percpu&quot;;
+all     = &quot;kernel.all&quot;;
+// Unusual usr-sys split when some CPU is more than 20% in usr mode
+// and sys mode is at least 1.5 times usr mode
+//
+cpu_usr_sys =
+       some_inst (
+           $percpu.cpu.sys &gt; $percpu.cpu.user * 1.5 &amp;&amp;
+           $percpu.cpu.user &gt; 0.2
+       )
+           -&gt;  alarm &quot;Unusual sys time: &quot; &quot;%i &quot;;
+// Over all CPUs, syscall_rate &gt; 1000 * no_of_cpus
+//
+cpu_syscall =
+       $all.syscall &gt; 1000 count/sec * hinv.ncpu
+       -&gt;  print &quot;high aggregate syscalls: %v&quot;;
+// Sustained high syscall rate on a single CPU
+//
+delta = 30 sec;
+percpu_syscall =
+       some_inst (
+           $percpu.syscall &gt; 2000 count/sec
+       )
+           -&gt; syslog &quot;Sustained syscalls per second? &quot; &quot;[%i] %v &quot;;
+// the 1 minute load average exceeds 5 * number of CPUs on any host
+hosts = &quot;:gonzo :moomba&quot;;   // change as required
+delta = 1 minute;           // no need to evaluate more often than this
+high_load =
+     some_host (
+           $all.load $hosts #&#39;1 minute&#39; &gt; 5 * hinv.ncpu
+       )
+           -&gt; alarm &quot;High Load Average? &quot; &quot;%h: %v &quot;;
+</pre></div>
+</div>
+<p id="example-5-11-monitoring-disk-activity"><strong>Example 5.11. Monitoring Disk Activity</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Some Common Performance Monitoring Scenarios
+//
+// The Disk Group
+//
+delta = 15 sec;         // often enough for disks?
+// common prefixes
+//
+disk    = &quot;disk&quot;;
+// Any disk performing more than 40 I/Os per second, sustained over
+// at least 30 seconds is probably busy
+//
+delta = 30 seconds;
+disk_busy =
+       some_inst (
+           $disk.dev.total &gt; 40 count/sec
+       )
+]      -&gt; shell &quot;Mail -s &#39;Heavy systained disk traffic&#39; sysadm&quot;;
+// Try and catch bursts of activity ... more than 60 I/Os per second
+// for at least 25% of 8 consecutive 3 second samples
+//
+delta = 3 sec;
+disk_burst =
+       some_inst (
+           25%_sample (
+               $disk.dev.total @0..7 &gt; 60 count/sec
+           )
+       )
+       -&gt; alarm &quot;Disk Burst? &quot; &quot;%i &quot;;
+// any SCSI disk controller performing more than 3 Mbytes per
+// second is busy
+// Note: the obscure 512 is to convert blocks/sec to byte/sec,
+//       and pmie handles the rest of the scale conversion
+//
+some_inst $disk.ctl.blktotal * 512 &gt; 3 Mbyte/sec
+           -&gt; alarm &quot;Busy Disk Controller: &quot; &quot;%i &quot;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="developing-and-debugging-pmie-rules">
+<h2><a class="toc-backref" href="#id30">5.5. Developing and Debugging pmie Rules</a><a class="headerlink" href="#developing-and-debugging-pmie-rules" title="Permalink to this headline">¶</a></h2>
+<p>Given the <strong>-d</strong> command line option, <strong>pmie</strong> executes in interactive mode, and the user is presented with a menu of options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmie debugger commands
+     f [file-name]      - load expressions from given file or stdin
+     l [expr-name]      - list named expression or all expressions
+     r [interval]       - run for given or default interval
+     S time-spec        - set start time for run
+     T time-spec        - set default interval for run command
+     v [expr-name]      - print subexpression for %h, %i and %v bindings
+     h or ?             - print this menu of commands
+     q                  - quit
+pmie&gt;
+</pre></div>
+</div>
+<p>If both the <strong>-d</strong> option and a filename are present, the expressions in the given file are loaded before entering interactive mode. Interactive mode is useful for debugging new rules.</p>
+</div>
+<div class="section" id="caveats-and-notes-on-pmie">
+<h2><a class="toc-backref" href="#id31">5.6. Caveats and Notes on pmie</a><a class="headerlink" href="#caveats-and-notes-on-pmie" title="Permalink to this headline">¶</a></h2>
+<p>The following sections provide important information for users of <strong>pmie</strong>.</p>
+<div class="section" id="performance-metrics-wraparound">
+<h3><a class="toc-backref" href="#id32">5.6.1. ⁠Performance Metrics Wraparound</a><a class="headerlink" href="#performance-metrics-wraparound" title="Permalink to this headline">¶</a></h3>
+<p>Performance metrics that are cumulative counters may occasionally overflow their range and wraparound to 0. When this happens, an unknown value (printed as <strong>?</strong>) is
+returned as the value of the metric for one sample (recall that the value returned is normally a rate). You can have PCP interpolate a value based on expected rate
+of change by setting the <strong>PCP_COUNTER_WRAP</strong> environment variable.</p>
+</div>
+<div class="section" id="pmie-sample-intervals">
+<h3><a class="toc-backref" href="#id33">5.6.2. ⁠pmie Sample Intervals</a><a class="headerlink" href="#pmie-sample-intervals" title="Permalink to this headline">¶</a></h3>
+<p>The sample interval (<strong>delta</strong>) should always be long enough, particularly in the case of rates, to ensure that a meaningful value is computed. Interval may vary
+according to the metric and your needs. A reasonable minimum is in the range of ten seconds or several minutes. Although PCP supports sampling rates up to hundreds
+of times per second, using small sample intervals creates unnecessary load on the monitored system.</p>
+</div>
+<div class="section" id="pmie-instance-names">
+<h3><a class="toc-backref" href="#id34">5.6.3. ⁠pmie Instance Names</a><a class="headerlink" href="#pmie-instance-names" title="Permalink to this headline">¶</a></h3>
+<p>When you specify a metric instance name (<em>#identifier</em>) in a <strong>pmie</strong> expression, it is compared against the instance name looked up from either a live collector system or an archive as follows:</p>
+<ul class="simple">
+<li>If the given instance name and the looked up name are the same, they are considered to match.</li>
+<li>Otherwise, the first two space separated tokens are extracted from the looked up name. If the given instance name is the same as either of these tokens, they are considered a match.</li>
+</ul>
+<p>For some metrics, notably the per process (<strong>proc.xxx.xxx</strong>) metrics, the first token in the looked up instance name is impossible to determine at the time you are
+writing <strong>pmie</strong> expressions. The above policy circumvents this problem.</p>
+</div>
+<div class="section" id="pmie-error-detection">
+<h3><a class="toc-backref" href="#id35">5.6.4. ⁠pmie Error Detection</a><a class="headerlink" href="#pmie-error-detection" title="Permalink to this headline">¶</a></h3>
+<p>The parser used in <strong>pmie</strong> is not particularly robust in handling syntax errors. It is suggested that you check any problematic expressions individually in interactive mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">d</span>
+<span class="n">pmie</span><span class="o">&gt;</span> <span class="n">f</span>
+<span class="n">expression</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">D</span>
+</pre></div>
+</div>
+<p>If the expression was parsed, its internal representation is shown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span><span class="o">&gt;</span> <span class="n">l</span>
+</pre></div>
+</div>
+<p>The expression is evaluated twice and its value printed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span><span class="o">&gt;</span> <span class="n">r</span> <span class="mi">10</span><span class="n">sec</span>
+</pre></div>
+</div>
+<p>Then quit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pmie</span><span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+<p>It is not always possible to detect semantic errors at parse time. This happens when a performance metric descriptor is not available from the named host at this time.
+A warning is issued, and the expression is put on a wait list. The wait list is checked periodically (about every five minutes) to see if the metric descriptor has
+become available. If an error is detected at this time, a message is printed to the standard error stream (<strong>stderr</strong>) and the offending expression is set aside.</p>
+</div>
+</div>
+<div class="section" id="creating-pmie-rules-with-pmieconf">
+<h2><a class="toc-backref" href="#id36">5.7. Creating pmie Rules with pmieconf</a><a class="headerlink" href="#creating-pmie-rules-with-pmieconf" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>pmieconf</strong> tool is a command line utility that is designed to aid the specification of <strong>pmie</strong> rules from parameterized versions of the rules. <strong>pmieconf</strong> is
+used to display and modify variables or parameters controlling the details of the generated <strong>pmie</strong> rules.</p>
+<p><strong>pmieconf</strong> reads two different forms of supplied input files and produces a localized <strong>pmie</strong> configuration file as its output.</p>
+<p>The first input form is a generalized <strong>pmie</strong> rule file such as those found below <code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/config/pmieconf</span></code>. These files contain the generalized rules
+which <strong>pmieconf</strong> is able to manipulate. Each of the rules can be enabled or disabled, or the individual variables associated with each rule can be edited.</p>
+<p>The second form is an actual <strong>pmie</strong> configuration file (that is, a file which can be interpreted by <strong>pmie</strong>, conforming to the <strong>pmie</strong> syntax described in
+Section 5.3, “<a class="reference internal" href="#specification-language-for-pmie">Specification Language for pmie</a>”). This file is both input to and output from <strong>pmieconf</strong>.</p>
+<p>The input version of the file contains any changed variables or rule states from previous invocations of <strong>pmieconf</strong>, and the output version contains both the changes
+in state (for any subsequent <strong>pmieconf</strong> sessions) and the generated <strong>pmie</strong> syntax. The <strong>pmieconf</strong> state is embedded within a <strong>pmie</strong> comment block at the head
+of the output file and is not interpreted by <strong>pmie</strong> itself.</p>
+<p><strong>pmieconf</strong> is an integral part of the <strong>pmie</strong> daemon management process described in Section 5.8, “<a class="reference internal" href="#management-of-pmie-processes">Management of pmie Processes</a>”. <a class="reference internal" href="#procedure-5-1-display-pmieconf-rules">Procedure 5.1. Display pmieconf Rules</a> and
+<a class="reference internal" href="#procedure-5-2-modify-pmieconf-rules-and-generate-a-pmie-file">Procedure 5.2. Modify pmieconf Rules and Generate a pmie File</a> introduce the <strong>pmieconf</strong> tool through a series of typical operations.</p>
+<p id="procedure-5-1-display-pmieconf-rules"><strong>Procedure 5.1. Display pmieconf Rules</strong></p>
+<ol class="arabic simple">
+<li>Start <strong>pmieconf</strong> interactively (as the superuser).</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmieconf -f ${PCP_SYSCONF_DIR}/pmie/config.demo
+Updates will be made to ${PCP_SYSCONF_DIR}/pmie/config.demo
+
+pmieconf&gt;
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p class="first">List the set of available <strong>pmieconf</strong> rules by using the <strong>rules</strong> command.</p>
+</li>
+<li><p class="first">List the set of rule groups using the <strong>groups</strong> command.</p>
+</li>
+<li><p class="first">List only the enabled rules, using the <strong>rules enabled</strong> command.</p>
+</li>
+<li><p class="first">List a single rule:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pmieconf&gt; list memory.swap_low
+   rule: memory.swap_low  [Low free swap space]
+   help: There is only threshold percent swap space remaining - the system
+         may soon run out of virtual memory.  Reduce the number and size of
+         the running programs or add more swap(1) space before it
+completely
+         runs out.
+         predicate =
+           some_host (
+               ( 100 * ( swap.free $hosts$ / swap.length $hosts$ ) )
+                 &lt; $threshold$
+               &amp;&amp; swap.length $hosts$ &gt; 0        // ensure swap in use
+            )
+   vars: enabled = no
+         threshold = 10%
+
+pmieconf&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">List one rule variable:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pmieconf&gt; list memory.swap_low threshold
+   rule: memory.swap_low  [Low free swap space]
+         threshold = 10%
+
+pmieconf&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p id="procedure-5-2-modify-pmieconf-rules-and-generate-a-pmie-file"><strong>Procedure 5.2. Modify pmieconf Rules and Generate a pmie File</strong></p>
+<ol class="arabic">
+<li><p class="first">Lower the threshold for the <strong>memory.swap_low</strong> rule, and also change the <strong>pmie</strong> sample interval affecting just this rule. The <strong>delta</strong> variable is special in
+that it is not associated with any particular rule; it has been defined as a global <strong>pmieconf</strong> variable. Global variables can be displayed using the <strong>list global</strong>
+command to <strong>pmieconf</strong>, and can be modified either globally or local to a specific rule.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pmieconf&gt; modify memory.swap_low threshold 5
+
+pmieconf&gt; modify memory.swap_low delta &quot;1 sec&quot;
+
+pmieconf&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Disable all of the rules except for the <strong>memory.swap_low</strong> rule so that you can see the effects of your change in isolation.</p>
+<p>This produces a relatively simple <strong>pmie</strong> configuration file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmieconf&gt; disable all
+
+pmieconf&gt; enable memory.swap_low
+
+pmieconf&gt; status
+  verbose:  off
+  enabled rules:  1 of 35
+  pmie configuration file:  ${PCP_SYSCONF_DIR}/pmie/config.demo
+  pmie processes (PIDs) using this file:  (none found)
+
+pmieconf&gt; quit
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div>You can also use the <strong>status</strong> command to verify that only one rule is enabled at the end of this step.</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">Run <strong>pmie</strong> with the new configuration file. Use a text editor to view the newly generated <strong>pmie</strong> configuration file (<code class="docutils literal notranslate"><span class="pre">${PCP_SYSCONF_DIR}/pmie/config.demo</span></code>),
+and then run the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pmie -T &quot;1.5 sec&quot; -v -l ${HOME}/demo.log ${PCP_SYSCONF_DIR}/pmie/config.demo
+memory.swap_low: false
+
+memory.swap_low: false
+
+cat ${HOME}/demo.log
+Log for pmie on venus started Mon Jun 21 16:26:06 2012
+
+pmie: PID = 21847, default host = venus
+
+[Mon Jun 21 16:26:07] pmie(21847) Info: evaluator exiting
+
+Log finished Mon Jun 21 16:26:07 2012
+</pre></div>
+</div>
+</li>
+<li><p class="first">Notice that both of the <strong>pmieconf</strong> files used in the previous step are simple text files, as described in the <strong>pmieconf(5)</strong> man page:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>file ${PCP_SYSCONF_DIR}/pmie/config.demo
+${PCP_SYSCONF_DIR}/pmie/config.demo:  PCP pmie config (V.1)
+file ${PCP_VAR_DIR}/config/pmieconf/memory/swap_low
+${PCP_VAR_DIR}/config/pmieconf/memory/swap_low:       PCP pmieconf rules (V.1)
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="management-of-pmie-processes">
+<h2><a class="toc-backref" href="#id37">5.8. Management of pmie Processes</a><a class="headerlink" href="#management-of-pmie-processes" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>pmie</strong> process can be run as a daemon as part of the system startup sequence, and can thus be used to perform automated, live performance monitoring of a
+running system. To do this, run these commands (as superuser):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>chkconfig pmie on
+${PCP_RC_DIR}/pmie start
+</pre></div>
+</div>
+<p>By default, these enable a single <strong>pmie</strong> process monitoring the local host, with the default set of <strong>pmieconf</strong> rules enabled (for more information about <strong>pmieconf</strong>,
+see Section 5.7, “<a class="reference internal" href="#creating-pmie-rules-with-pmieconf">Creating pmie Rules with pmieconf</a>”). <a class="reference internal" href="#procedure-5-3-add-a-new-pmie-instance-to-the-pmie-daemon-management-framework">Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework</a> illustrates how you can
+use these commands to start any number of <strong>pmie</strong> processes to monitor local or remote machines.</p>
+<p id="procedure-5-3-add-a-new-pmie-instance-to-the-pmie-daemon-management-framework"><strong>Procedure 5.3. Add a New pmie Instance to the pmie Daemon Management Framework</strong></p>
+<ol class="arabic">
+<li><p class="first">Use a text editor (as superuser) to edit the <code class="docutils literal notranslate"><span class="pre">pmie${PCP_PMIECONTROL_PATH}</span></code> and <code class="docutils literal notranslate"><span class="pre">${PCP_PMIECONTROL_PATH}.d</span></code> control files. Notice the default entry, which looks like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#Host           P?  S?  Log File                                  Arguments
+LOCALHOSTNAME   y   n   PCP_LOG_DIR/pmie/LOCALHOSTNAME/pmie.log   -c config.default
+</pre></div>
+</div>
+<p>This entry is used to enable a local <strong>pmie</strong> process. Add a new entry for a remote host on your local network (for example, <strong>venus</strong>), by using your pmie
+configuration file (see Section 5.7, “<a class="reference internal" href="#creating-pmie-rules-with-pmieconf">Creating pmie Rules with pmieconf</a>”):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#Host           P?  S?  Log File                                  Arguments
+venus           n   n   PCP_LOG_DIR/pmie/venus/pmie.log           -c config.demo
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Without an absolute path, the configuration file (<strong>-c</strong> above) will be resolved using <code class="docutils literal notranslate"><span class="pre">${PCP_SYSCONF_DIR}/pmie</span></code> - if <strong>config.demo</strong> was created in
+<a class="reference internal" href="#procedure-5-2-modify-pmieconf-rules-and-generate-a-pmie-file">Procedure 5.2. Modify pmieconf Rules and Generate a pmie File</a> it would be used here for host <strong>venus</strong>, otherwise a new configuration file will be generated
+using the default rules (at <code class="docutils literal notranslate"><span class="pre">${PCP_SYSCONF_DIR}/pmie/config.demo</span></code>).</p>
+</div>
+</li>
+<li><p class="first">Enable <strong>pmie</strong> daemon management:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chkconfig</span> <span class="n">pmie</span> <span class="n">on</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This simple step allows <strong>pmie</strong> to be started as part of your machine’s boot process.</p>
+<ol class="arabic" start="3">
+<li><p class="first">Start the two <strong>pmie</strong> daemons. At the end of this step, you should see two new <strong>pmie</strong> processes monitoring the local and remote hosts:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>${PCP_RC_DIR}/pmie start
+Performance Co-Pilot starting inference engine(s) ...
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Wait a few moments while the startup scripts run. The <strong>pmie</strong> start script uses the <strong>pmie_check</strong> script to do most of its work.</p>
+<p>Verify that the <strong>pmie</strong> processes have started:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pcp
+Performance Co-Pilot configuration on pluto:
+
+ platform: Linux pluto 3.10.0-0.rc7.64.el7.x86_64 #1 SMP
+ hardware: 8 cpus, 2 disks, 23960MB RAM
+ timezone: EST-10
+     pmcd: Version 3.11.3-1, 8 agents
+     pmda: pmcd proc xfs linux mmv infiniband gluster elasticsearch
+     pmie: pluto: ${PCP_LOG_DIR}/pmie/pluto/pmie.log
+           venus: ${PCP_LOG_DIR}/pmie/venus/pmie.log
+</pre></div>
+</div>
+<p>If a remote host is not up at the time when <strong>pmie</strong> is started, the <strong>pmie</strong> process may exit. <strong>pmie</strong> processes may also exit if the local machine is starved of
+memory resources. To counter these adverse cases, it can be useful to have a <strong>crontab</strong> entry running. Adding an entry as shown in Section 5.8.1, “<a class="reference internal" href="#add-a-pmie-crontab-entry">Add a pmie crontab Entry</a>”
+ensures that if one of the configured <strong>pmie</strong> processes exits, it is automatically restarted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on your platform, the <strong>crontab</strong> entry discussed here may already have been installed for you, as part of the package installation process. In this case, the file <strong>/etc/cron.d/pcp-pmie</strong> will exist, and the rest of this section can be skipped.</p>
+</div>
+<div class="section" id="add-a-pmie-crontab-entry">
+<h3><a class="toc-backref" href="#id38">5.8.1. Add a pmie crontab Entry</a><a class="headerlink" href="#add-a-pmie-crontab-entry" title="Permalink to this headline">¶</a></h3>
+<p>To activate the maintenance and housekeeping scripts for a collection of inference engines, execute the following tasks while logged into the local host as the superuser (<strong>root</strong>):</p>
+<ol class="arabic simple">
+<li>Augment the <strong>crontab</strong> file for the <strong>pcp</strong> user. For example:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>crontab -l -u pcp &gt; ${HOME}/crontab.txt
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">Edit <code class="docutils literal notranslate"><span class="pre">${HOME}/crontab.txt</span></code>, adding lines similar to those from the sample <code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/config/pmie/crontab</span></code> file for <strong>pmie_daily</strong> and <strong>pmie_check</strong>;
+for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># daily processing of pmie logs
+10     0     *     *     *    ${PCP_BINADM_DIR}/pmie_daily
+# every 30 minutes, check pmie instances are running
+25,55  *     *     *     *    ${PCP_BINADM_DIR}/pmie_check
+</pre></div>
+</div>
+</li>
+<li><p class="first">Make these changes permanent with this command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>crontab -u pcp &lt; ${HOME}/crontab.txt
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="global-files-and-directories">
+<h3><a class="toc-backref" href="#id39">5.8.2. ⁠Global Files and Directories</a><a class="headerlink" href="#global-files-and-directories" title="Permalink to this headline">¶</a></h3>
+<p>The following global files and directories influence the behavior of <strong>pmie</strong> and the <strong>pmie</strong> management scripts:</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_DEMOS_DIR}/pmie/*</span></code></p>
+<p>Contains sample <strong>pmie</strong> rules that may be used as a basis for developing local rules.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_SYSCONF_DIR}/pmie/config.default</span></code></p>
+<p>Is the default <strong>pmie</strong> configuration file that is used when the <strong>pmie</strong> daemon facility is enabled. Generated by <strong>pmieconf</strong> if not manually setup beforehand.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/config/pmieconf/*/*</span></code></p>
+<p>Contains the <strong>pmieconf</strong> rule definitions (templates) in its subdirectories.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_PMIECONTROL_PATH}</span> <span class="pre">and</span> <span class="pre">${PCP_PMIECONTROL_PATH}.d</span></code> files</p>
+<p>Defines which PCP collector hosts require a daemon <strong>pmie</strong> to be launched on the local host, where the configuration file comes from, where the <strong>pmie</strong> log file
+should be created, and <strong>pmie</strong> startup options.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_VAR_DIR}/config/pmlogger/crontab</span></code></p>
+<p>Contains default <strong>crontab</strong> entries that may be merged with the <strong>crontab</strong> entries for root to schedule the periodic execution of the <strong>pmie_check</strong> script,
+for verifying that <strong>pmie</strong> instances are running. Only for platforms where a default <strong>crontab</strong> is not automatically installed during the initial PCP package installation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_LOG_DIR}/pmie/*</span></code></p>
+<p>Contains the <strong>pmie</strong> log files for the host. These files are created by the default behavior of the <code class="docutils literal notranslate"><span class="pre">${PCP_RC_DIR}/pmie</span></code> startup scripts.</p>
+</div>
+<div class="section" id="pmie-instances-and-their-progress">
+<h3><a class="toc-backref" href="#id40">5.8.3. pmie Instances and Their Progress</a><a class="headerlink" href="#pmie-instances-and-their-progress" title="Permalink to this headline">¶</a></h3>
+<p>The PMCD PMDA exports information about executing <strong>pmie</strong> instances and their progress in terms of rule evaluations and action execution rates.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pmie_check</span></code></p>
+<p>This command is similar to the <strong>pmlogger</strong> support script, <strong>pmlogger_check</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_RC_DIR}/pmie</span></code></p>
+<p>This start script supports the starting and stopping of multiple <strong>pmie</strong> instances that are monitoring one or more hosts.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${PCP_TMP_DIR}/pmie</span></code></p>
+<p>The statistics that <strong>pmie</strong> gathers are maintained in binary data structure files. These files are located in this directory.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pmcd.pmie</span> <span class="pre">metrics</span></code></p>
+<p>If <strong>pmie</strong> is running on a system with a PCP collector deployment, the PMCD PMDA exports these metrics via the <strong>pmcd.pmie</strong> group of metrics.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ArchiveLogging.html" class="btn btn-neutral float-right" title="6. Archive Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="MonitoringSystemPerformance.html" class="btn btn-neutral float-left" title="4. Monitoring System Performance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Performance Co-Pilot
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

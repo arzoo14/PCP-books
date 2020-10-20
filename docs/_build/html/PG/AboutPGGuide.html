@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About Programmer’s Guide &mdash; pcp  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Introduction to PCP" href="../UAG/IntroductionToPcp.html" />
+    <link rel="prev" title="About User’s and Administrator’s Guide" href="../UAG/AboutUAGGuide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pcp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../UAG/AboutUAGGuide.html">About User’s and Administrator’s Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About Programmer’s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-this-guide-contains">⁠What This Guide Contains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#audience-for-this-guide">Audience for This Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-resources">Related Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#man-pages">Man Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#web-site">Web Site</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conventions">⁠Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reader-comments">Reader Comments</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">User's and Administrator's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/IntroductionToPcp.html">1. Introduction to PCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/InstallingAndConfiguringPcp.html">2. Installing and Configuring Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/CommonConventionsAndArguments.html">3. Common Conventions and Arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/MonitoringSystemPerformance.html">4. Monitoring System Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/PerformanceMetricsInferenceEngine.html">5. Performance Metrics Inference Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/ArchiveLogging.html">6. Archive Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/PcpDeploymentStrategies.html">7. Performance Co-Pilot Deployment Strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UAG/CustomizingAndExtendingPcpServices.html">8. Customizing and Extending PCP Services</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmer's Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammingPcp.html">1. Programming Performance Co-Pilot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WritingPMDA.html">2. Writing A PMDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PMAPI.html">3. PMAPI–The Performance Metrics API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InstrumentingApplications.html">4. Instrumenting Applications</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pcp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>About Programmer’s Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/PG/AboutPGGuide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-programmer-s-guide">
+<span id="aboutpgguide"></span><h1><a class="toc-backref" href="#id1">About Programmer’s Guide</a><a class="headerlink" href="#about-programmer-s-guide" title="Permalink to this headline">¶</a></h1>
+<p>This guide describes how to program the Performance Co-Pilot (PCP) performance analysis toolkit. PCP provides a systems-level suite of tools that cooperate to
+deliver distributed performance monitoring and performance management services spanning hardware platforms, operating systems, service layers, database internals,
+user applications and distributed architectures.</p>
+<p>PCP is an open source, cross-platform software package - customizations, extensions, source code inspection, and tinkering in general is actively encouraged.</p>
+<p>“About Programmer’s Guide” includes short descriptions of the chapters in this book, directs you to additional sources of information, and explains typographical conventions.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#about-programmer-s-guide" id="id1">About Programmer’s Guide</a><ul>
+<li><a class="reference internal" href="#what-this-guide-contains" id="id2">⁠What This Guide Contains</a></li>
+<li><a class="reference internal" href="#audience-for-this-guide" id="id3">Audience for This Guide</a></li>
+<li><a class="reference internal" href="#related-resources" id="id4">Related Resources</a></li>
+<li><a class="reference internal" href="#man-pages" id="id5">Man Pages</a></li>
+<li><a class="reference internal" href="#web-site" id="id6">Web Site</a></li>
+<li><a class="reference internal" href="#conventions" id="id7">⁠Conventions</a></li>
+<li><a class="reference internal" href="#reader-comments" id="id8">Reader Comments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="what-this-guide-contains">
+<h2><a class="toc-backref" href="#id2">⁠What This Guide Contains</a><a class="headerlink" href="#what-this-guide-contains" title="Permalink to this headline">¶</a></h2>
+<p>This guide contains the following chapters:</p>
+<p>Chapter 1, <a class="reference internal" href="ProgrammingPcp.html#programming-performance-co-pilot"><span class="std std-ref">Programming Performance Co-Pilot</span></a>, contains a thumbnail sketch of how to program the various PCP components.</p>
+<p>Chapter 2, <a class="reference internal" href="WritingPMDA.html#writing-a-pmda"><span class="std std-ref">Writing A PMDA</span></a>, describes how to write Performance Metrics Domain Agents (PMDAs) for PCP.</p>
+<p>Chapter 3, <a class="reference internal" href="PMAPI.html#pmapi-the-performance-metrics-api"><span class="std std-ref">PMAPI–The Performance Metrics API</span></a>, describes the interface that allows you to design custom performance monitoring tools.</p>
+<p>Chapter 4, <a class="reference internal" href="InstrumentingApplications.html#instrumenting-applications"><span class="std std-ref">Instrumenting Applications</span></a>, introduces techniques, tools and interfaces to assist with exporting performance data from within applications.</p>
+</div>
+<div class="section" id="audience-for-this-guide">
+<h2><a class="toc-backref" href="#id3">Audience for This Guide</a><a class="headerlink" href="#audience-for-this-guide" title="Permalink to this headline">¶</a></h2>
+<p>The guide describes the programming interfaces to Performance Co-Pilot (PCP) for the following intended audience:</p>
+<ul class="simple">
+<li>Performance analysts or system administrators who want to extend or customize performance monitoring tools available with PCP</li>
+<li>Developers who wish to integrate performance data from within their applications into the PCP framework</li>
+</ul>
+<p>This book is written for those who are competent with the C programming language, the UNIX or the Linux operating systems, and the target domain from which the
+desired performance metrics are to be extracted. Familiarity with the PCP tool suite is assumed.</p>
+</div>
+<div class="section" id="related-resources">
+<h2><a class="toc-backref" href="#id4">Related Resources</a><a class="headerlink" href="#related-resources" title="Permalink to this headline">¶</a></h2>
+<p>The <em>Performance Co-Pilot User’s and Administrator’s Guide</em> is a companion document to the <em>Performance Co-Pilot Programmer’s Guide</em>, and is intended for system
+administrators and performance analysts who are directly using and administering PCP installations.</p>
+<p>The <em>Performance Co-Pilot Tutorials and Case Studies</em> provides a series of real-world examples of using various PCP tools, and lessons learned from deploying the
+toolkit in production environments. It serves to provide reinforcement of the general concepts discussed in the other two books with additional case studies, and
+in some cases very detailed discussion of specifics of individual tools.</p>
+<p>Additional resources include man pages and the project web site.</p>
+</div>
+<div class="section" id="man-pages">
+<h2><a class="toc-backref" href="#id5">Man Pages</a><a class="headerlink" href="#man-pages" title="Permalink to this headline">¶</a></h2>
+<p>The operating system man pages provide concise reference information on the use of commands, subroutines, and system resources. There is usually a man page for
+each PCP command or subroutine. To see a list of all the PCP man pages, start from the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">PCPIntro</span>
+</pre></div>
+</div>
+<p>Each man page usually has a “SEE ALSO” section, linking to other, related entries.</p>
+<p>To see a particular man page, supply its name to the <strong>man</strong> command, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">pcp</span>
+</pre></div>
+</div>
+<p>The man pages are arranged in different sections separating commands, programming interfaces, and so on. For a complete list of manual sections on a platform enter
+the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">man</span>
+</pre></div>
+</div>
+<p>When referring to man pages, this guide follows a standard convention: the section number in parentheses follows the item. For example, <strong>pminfo(1)</strong> refers to the
+man page in section 1 for the <strong>pminfo</strong> command.</p>
+</div>
+<div class="section" id="web-site">
+<h2><a class="toc-backref" href="#id6">Web Site</a><a class="headerlink" href="#web-site" title="Permalink to this headline">¶</a></h2>
+<p>The following web site is accessible to everyone:</p>
+<p>URL : <a class="reference external" href="https://pcp.io">https://pcp.io</a></p>
+<p>PCP is open source software released under the GNU General Public License (GPL) and GNU Lesser General Public License (LGPL)</p>
+</div>
+<div class="section" id="conventions">
+<h2><a class="toc-backref" href="#id7">⁠Conventions</a><a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h2>
+<p>The following conventions are used throughout this document:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Convention</strong></td>
+<td><strong>Meaning</strong></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">${PCP_VARIABLE}</span></code></td>
+<td>A brace-enclosed all-capital-letters syntax indicates a variable that has been sourced from the global <code class="docutils literal notranslate"><span class="pre">${PCP_DIR}/etc/pcp.conf</span></code> file. These special variables indicate parameters that affect all PCP commands, and are likely to be different between platforms.</td>
+</tr>
+<tr class="row-odd"><td><strong>command</strong></td>
+<td>This fixed-space font denotes literal items such as commands, files, routines, path names, signals, messages, and programming language structures.</td>
+</tr>
+<tr class="row-even"><td><em>variable</em></td>
+<td>Italic typeface denotes variable entries and words or concepts being defined.</td>
+</tr>
+<tr class="row-odd"><td><strong>user input</strong></td>
+<td>This bold, fixed-space font denotes literal items that the user enters in interactive sessions. (Output is shown in nonbold, fixed-space font.)</td>
+</tr>
+<tr class="row-even"><td>[ ]</td>
+<td>Brackets enclose optional portions of a command or directive line.</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>Ellipses indicate that a preceding element can be repeated.</td>
+</tr>
+<tr class="row-even"><td>ALL CAPS</td>
+<td>All capital letters denote environment variables, operator names, directives, defined constants, and macros in C programs.</td>
+</tr>
+<tr class="row-odd"><td>()</td>
+<td>Parentheses that follow function names surround function arguments or are empty if the function has no arguments; parentheses that follow commands surround man page section numbers.                                                                                                                 |</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="reader-comments">
+<h2><a class="toc-backref" href="#id8">Reader Comments</a><a class="headerlink" href="#reader-comments" title="Permalink to this headline">¶</a></h2>
+<p>If you have comments about the technical accuracy, content, or organization of this document, contact the PCP maintainers using either the email address or the web site listed earlier.</p>
+<p>We value your comments and will respond to them promptly.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../UAG/IntroductionToPcp.html" class="btn btn-neutral float-right" title="1. Introduction to PCP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../UAG/AboutUAGGuide.html" class="btn btn-neutral float-left" title="About User’s and Administrator’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Performance Co-Pilot
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
