@@ -1,21 +1,28 @@
 .. _TimeSeriesQuerying:
 
-Fast & Scalable Time Series Querying - PMSERIES
-#############################################################
+Fast, Scalable Time Series Querying - pmseries
+################################################
 
-PMSERIES is a fast and scalable time series querying which displays information about performance metrics.
+**pmseries** is a fast and scalable time series querying which displays information about performance metrics.
 
 The major sections in this chapter are as follows:
 
-Section 9.1, “`Introduction to pmseries`_”, 
+Section 9.1, “`Introduction to pmseries`_”, provides an introduction to the concepts and working of **pmseries**.
 
-Section 9.2, 
+Section 9.2, “`Timeseries Queries`_”, explains how query expressions are formed using the **pmseries** query language.
 
-Section 9.3, 
+Section 9.3, “`Metadata Qualifiers and Metatdata Operators`_”, explains various metadata properties.
 
-Section 9.4, 
+Section 9.4, “`Time Specification`_”, specifies a specific time window of interest.
 
-Section 9.5, 
+Section 9.5, “`Expressions`_”, explains the various arithmetic operators, functions, function references as well as their compatibility supported by **pmseries**.
+
+Section 9.6, “`Timeseries Options`_”, explains the various timeseries options requested to **pmseries** using command line.
+
+Section 9.7, “`PCP Environment`_”, describes environment variables used to parameterize the file and directory names used by PCP.
+
+Section 9.8, “`PCP Redis`_”, explains the PCP Redis data source and laids off a path for PCP Grafana Plugin.
+
 
 .. contents::
 
@@ -37,22 +44,24 @@ identified using a unique SHA-1 hash which is always displayed in a 40-hexdigit 
 with every metric.
 
 Importantly, this includes all metric metadata (labels, names, descriptors). Metric labels in particular are (as far as possible) unique for every 
-machine - on Linux for example the labels associated with every metric include the unique */etc/machine-id* , the hostname, domainname, and other automatically 
-generated machine labels, as well as any administrator-defined labels from */etc/pcp/labels* . These labels can be reported with pminfo(1) and the 
-*pmcd.labels* metric.
+machine - on Linux for example the labels associated with every metric include the unique ``/etc/machine-id`` , the hostname, domainname, and other automatically 
+generated machine labels, as well as any administrator-defined labels from ``/etc/pcp/labels`` . These labels can be reported with `pminfo(1) <https://man7.org/linux/man-pages/man1/pminfo.1.html>`_ 
+and the *pmcd.labels* metric.
 
-See pmLookupLabels(3), pmLookupInDom(3), pmLookupName(3) and pmLookupDesc(3) for detailed information about metric labels and other metric metadata used 
-in each timeseries identifier hash calculation.
+See `pmLookupLabels(3) <https://man7.org/linux/man-pages/man3/pmLookupLabels.3.html>`_, `pmLookupInDom(3) <https://man7.org/linux/man-pages/man3/pmLookupInDom.3.html>`_, 
+`pmLookupName(3) <https://man7.org/linux/man-pages/man3/pmLookupName.3.html>`_ and `pmLookupDesc(3) <https://man7.org/linux/man-pages/man3/pmLookupDesc.3.html>`_ for 
+detailed information about metric labels and other metric metadata used in each timeseries identifier hash calculation.
 
 The timeseries identifiers provide a higher level (and machine independent) identifier than the traditional PCP performance metric identifiers (pmID), 
-instance domain identifiers (pmInDom) and metric names. See PCPIntro(1) for more details about these traditional identifiers. However, **pmseries** uses 
-timeseries identifiers in much the same way that pminfo(1) uses the lower level indom, metric identifiers and metric names.
+instance domain identifiers (pmInDom) and metric names. See `PCPIntro(1) <https://pcp.io/man/man1/pcpintro.1.html>`_ for more details about these 
+traditional identifiers. However, **pmseries** uses timeseries identifiers in much the same way that `pminfo(1) <https://man7.org/linux/man-pages/man1/pminfo.1.html>`_ 
+uses the lower level indom, metric identifiers and metric names.
 
 The default mode of **pmseries** operation (i.e. with no command line options) depends on the arguments it is presented. If all non-option arguments 
 appear to be timeseries identifiers (in 40 hex digit form) **pmseries** will report metadata for these timeseries - refer to the **-a** option for details. 
 Otherwise, the parameters will be treated as a timeseries query.
 
-TIMESERIES QUERIES
+Timeseries Queries
 ********************
 
 Query expressions are formed using the **pmseries** query language described below, but can be as simple as a metric name.
@@ -76,11 +85,12 @@ To identify timeseries expression operands, the query language uses the general 
  [metric.name] '{metadata qualifiers}' '[time specification]'
 
 The *metric.name* component restricts the timeseries query to any matching PCP metric name (the list of metric names for a PCP archive or live host is 
-reported by pminfo(1) with no arguments beyond -- **host** or -- **archive**). The **pmseries** syntax extends on that of **pminfo** and allows for 
-glob(7) based pattern matching within the metric name. The above describes operands available as the leaves of **pmseries** expressions, which may include 
-functions, arithmetic operators and other features. See the `EXPRESSIONS`_ section below for further details.
+reported by `pminfo(1) <https://man7.org/linux/man-pages/man1/pminfo.1.html>`_ with no arguments beyond -- **host** or -- **archive**). The **pmseries** 
+syntax extends on that of **pminfo** and allows for `glob(7) <https://man7.org/linux/man-pages/man7/glob.7.html>`_ based pattern matching within the 
+metric name. The above describes operands available as the leaves of **pmseries** expressions, which may include functions, arithmetic operators and other 
+features. See the `EXPRESSIONS`_ section below for further details.
 
-METADATA QUALIFIERS AND METADATA OPERATORS
+Metadata Qualifiers and Metadata Operators
 ********************************************
 
 Metadata qualifiers are enclosed by "curly" braces ( **{}** ), and further restrict the query results to timeseries operands with various metadata 
@@ -123,7 +133,7 @@ Logical operators
 Multiple metadata qualifiers can be combined with the logical operators for AND ("&&") and OR ("||") as in many programming languages. The comma 
 (",") character is equivalent to logical AND ("&&").
 
-TIME SPECIFICATION
+Time Specification
 ********************
 
 The final (optional) component of a query allows the user to specify a specific time window of interest. Any time specification will result in values 
@@ -146,22 +156,22 @@ Sample interval
 =================
 
 An interval between successive samples can be requested using the **interval** or (equivalent) **delta** keyword. The *value* provided should be either a 
-numeric or string value that will be parsed by pmParseInterval(3), such as **5** (seconds) or **2min** (minutes).
+numeric or string value that will be parsed by `pmParseInterval(3) <https://man7.org/linux/man-pages/man3/pmParseInterval.3.html>`_, such as **5** (seconds) or **2min** (minutes).
 
 Time window
 ============
 
-Start and end times, and alignments, affecting the returned values. The keywords match the parameters to the pmParseTimeWindow(3) function which will be 
-used to parse them, and are: **start** or (equivalent) **begin** , **finish** or (equivalent) **end** , **align** and **offset**.
+Start and end times, and alignments, affecting the returned values. The keywords match the parameters to the `pmParseTimeWindow(3) <https://man7.org/linux/man-pages/man3/pmParseTimeWindow.3.html>`_ 
+function which will be used to parse them, and are: **start** or (equivalent) **begin** , **finish** or (equivalent) **end** , **align** and **offset**.
 
 Time zones
 ============
 
 The resulting timestamps can be returned having been evaluated for a specific timezone, using the **timezone** or **hostzone** keywords. The *value* 
-associated with **timezone** will be interpreted by pmNewZone(3). A **true** or **false** value should be associated with **hostzone** , and when set to 
-**true** this has the same effect as described by pmNewContextZone(3).
+associated with **timezone** will be interpreted by `pmNewZone(3) <https://man7.org/linux/man-pages/man3/pmNewZone.3.html>`_. A **true** or **false** 
+value should be associated with **hostzone** , and when set to **true** this has the same effect as described by `pmNewContextZone(3) <https://man7.org/linux/man-pages/man3/pmNewContextZone.3.html>`_.
 
-EXPRESSIONS
+Expressions
 *************
 
 As described above, operands are the leaves of a query expression tree.
@@ -194,7 +204,7 @@ This grammar shows expressions may be nested, e.g. using the addition ( **+** ) 
 Rules governing compatibility of operands in an expression generally depend on the function and/or operators and are described below individually. 
 An important rule is that if any time windows are specified, then all operands must cover the same number of samples, though the time windows may differ 
 individually. If no time windows or sample counts are given, then **pmseries** will return a series identifier (SID) instead of a series of timestamps and 
-values. This SID may be used in subsequent **/series/values?series**= *SID* RESTAPI calls, along with a specific time window.
+values. This SID may be used in subsequent ``/series/values?series= SID`` RESTAPI calls, along with a specific time window.
 
 Arithmetic Operators
 =======================
@@ -219,12 +229,12 @@ Note the resulting time series of values has one less sample than the expression
 
 Other rules for arithmetic expressions:
 
-1. if both operands have the semantics of a counter, then only addition and subtraction are allowed
-2. if the left operand is a counter and the right operand is not, then only multiplication or division are allowed
-3. if the left operand is not a counter and the right operand is a counter, then only multiplication is allowed.
-4. addition and subtraction - the dimensions of the result are the same as the dimensions of the operands.
-5. multiplication - the dimensions of the result are the sum of the dimensions of the operands.
-6. division - the dimensions of the result are the difference of the dimensions of the operands.
+1. If both operands have the semantics of a counter, then only addition and subtraction are allowed.
+2. If the left operand is a counter and the right operand is not, then only multiplication or division are allowed
+3. If the left operand is not a counter and the right operand is a counter, then only multiplication is allowed.
+4. Addition and subtraction - the dimensions of the result are the same as the dimensions of the operands.
+5. Multiplication - the dimensions of the result are the sum of the dimensions of the operands.
+6. Division - the dimensions of the result are the difference of the dimensions of the operands.
 
 Functions
 ===========
@@ -283,32 +293,32 @@ instead of time.
 Function Reference
 =====================
 
-* **max**(*expr*) : The maximum value in the time series for each instance of *expr*.
+* **max** (*expr*) : The maximum value in the time series for each instance of *expr*.
 
-* **min**(*expr*) : The minimum value in the time series for each instance of *expr*.
+* **min** (*expr*) : The minimum value in the time series for each instance of *expr*.
 
-* **rate**(*expr*) : The rate with respect to time of each sample. The given *expr* must have counter semantics and the result will have **instant** semantics 
+* **rate** (*expr*) : The rate with respect to time of each sample. The given *expr* must have counter semantics and the result will have **instant** semantics 
   (the time dimension reduced by one). In addition, the result will have one less sample than the operand - this is because the first sample cannot be 
   rate converted (two samples are required).
 
-* **rescale**(*expr* , *scale*) rescale the values in the time series for each instance of *expr* to scale (units). Note that *expr* should have **instant** 
+* **rescale** (*expr* , *scale*) rescale the values in the time series for each instance of *expr* to scale (units). Note that *expr* should have **instant** 
   or **discrete** semantics (not **counter** - rate conversion should be done first if needed). The time, space and count dimensions between *expr* and 
   *scale* must be compatible. Example: rate convert the read throughput counter for each disk instance and then rescale to mbytes per second. Note the 
   native units of **disk.dev.read_bytes** is a **counter** of kbytes read from each device instance since boot.
 
-.. sourcecode:: none
+     .. sourcecode:: none
 
- $ pmseries 'rescale(rate(disk.dev.read_bytes[count:4]), "mbytes/s")'
+         $ pmseries 'rescale(rate(disk.dev.read_bytes[count:4]), "mbytes/s")'
 
-* **abs**(*expr*) : The absolute value of each value in the time series for each instance of *expr* . This has no effect if the type of *expr* is unsigned.
+* **abs** (*expr*) : The absolute value of each value in the time series for each instance of *expr* . This has no effect if the type of *expr* is unsigned.
 
-* **floor**(*expr*) : Rounded down to the nearest integer value of the time series for each instance of *expr*.
+* **floor** (*expr*) : Rounded down to the nearest integer value of the time series for each instance of *expr*.
 
-* **round**(*expr*) : Rounded up or down to the nearest integer for each value in the time series for each instance of *expr*.
+* **round** (*expr*) : Rounded up or down to the nearest integer for each value in the time series for each instance of *expr*.
 
-* **log**(*expr*) : Logarithm of the values in the time series for each instance of *expr*.
+* **log** (*expr*) : Logarithm of the values in the time series for each instance of *expr*.
 
-* **sqrt**(*expr*) : Square root of the values in the time series for each instance of *expr*.
+* **sqrt** (*expr*) : Square root of the values in the time series for each instance of *expr*.
 
 Compatibility
 ==============
@@ -319,15 +329,15 @@ given as the operands.
 
 Operands in an expression must either all have a time window, or none. If no operands have a time window, then instead of a series of time stamps and 
 values, the result will be a time series identifier (*SID*) that may be passed to the **/series/values?series**= *SID* REST API function, along with a 
-time window. For further details, see PMWEBAPI(3).
+time window. For further details, see `PMWEBAPI(3) <https://pcp.readthedocs.io/en/latest/api/>`_.
 
 If the semantics of both operands in an arithmetic expression are not counter (i.e. **PM_SEM_INSTANT** or **PM_SEM_DISCRETE**) then the result will have 
 semantics **PM_SEM_INSTANT** unless both operands are **PM_SEM_DISCRETE** in which case the result is also **PM_SEM_DISCRETE**.
 
-TIMESERIES OPTIONS
+Timeseries Options
 *********************
 
-TIMESERIES METADATA
+Timeseries Metadata
 =====================
 
 Using command line options, **pmseries** can be requested to provide metadata (metric names, instance names, labels, descriptors) associated with either 
@@ -349,29 +359,33 @@ individual timeseries or a group of timeseries, for example:
              "machineid":"295b16e3b6074cc8bdbda8bf96f6930a",\
              "userid":1000}
 
-The complete set of pmseries metadata reporting options are:
+The complete set of **pmseries** metadata reporting options are:
 
-========================================== =========================================================================================================================
+========================================== ===============================================================================================================================
 options                                    Description
-========================================== =========================================================================================================================
--a , --all                                 | Convenience option to report all metadata for the given timeseries, equivalent to -dilms .
--d , --desc                                | Metric descriptions detailing the PMID, data type, data semantics, units, scale and associated instance domain. This 
-                                           | option has a direct pminfo(1) equivalent.
--g *pattern* , **--glob** = *pattern*      | Provide a glob (7) pattern to restrict the report provided by the -i , -l , -m , and -S .
--i , --instances                           | Metric descriptions detailing the PMID, data type, data semantics, units, scale and associated instance domain.
--I , --fullindom                           | Print the InDom in verbose mode. This option has a direct pminfo (1) equivalent.
--l , --labels                              | Print label sets associated with metrics and instances. Labels are optional metric metadata described in detail in 
-                                           | pmLookupLabels (3). This option has a direct pminfo (1) equivalent.
--m , --metrics                             | Print metric names.
--M , --fullpmid                            | Print the PMID in verbose mode. This option has a direct pminfo (1) equivalent.
--n , --names                               | Print comma-separated label names only (not values) for the labels associated with metrics and instances.
--s , --series                              | Print timeseries identifiers associated with metrics, instances and sources. These unique identifiers are calculated 
+========================================== ===============================================================================================================================
+**-a** , **--all**                         | Convenience option to report all metadata for the given timeseries, equivalent to **-dilms**.
+**-d** , **--desc**                        | Metric descriptions detailing the PMID, data type, data semantics, units, scale and associated instance domain. This 
+                                           | option has a direct `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
+**-g** *pattern* , **--glob** = *pattern*  | Provide a `glob(7) <https://man7.org/linux/man-pages/man7/glob.7.html>`_ pattern to restrict the report provided by the 
+                                           | **-i** , **-l** , **-m** and **-S**.
+**-i** , **--instances**                   | Metric descriptions detailing the PMID, data type, data semantics, units, scale and associated instance domain.
+**-I** , **--fullindom**                   | Print the InDom in verbose mode. This option has a direct `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
+**-l** , **--labels**                      | Print label sets associated with metrics and instances. Labels are optional metric metadata described in detail in 
+                                           | `pmLookupLabels(3) <https://man7.org/linux/man-pages/man3/pmLookupLabels.3.html>`_. This option has a direct 
+                                           | `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
+**-m** , **--metrics**                     | Print metric names.
+**-M** , **--fullpmid**                    | Print the PMID in verbose mode. This option has a direct `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
+**-n** , **--names**                       | Print comma-separated label names only (not values) for the labels associated with metrics and instances.
+**-s** , **--series**                      | Print timeseries identifiers associated with metrics, instances and sources. These unique identifiers are calculated 
                                            | from intrinsic (non-optional) labels and other metric metadata associated with each PMAPI context (sources), metrics 
-                                           | and instances. Archive, local context or pmcd (1) connections for the same host all produce the same source identifier. 
-                                           | This option has a direct pminfo (1) equivalent. See also pmLookupLabels (3) and the -l/--labels option.
-========================================== =========================================================================================================================
+                                           | and instances. Archive, local context or `pmcd(1) <https://man7.org/linux/man-pages/man1/pmcd.1.html>`_ connections for 
+                                           | the same host all produce the same source identifier. This option has a direct 
+                                           | `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent. See also 
+                                           | `pmLookupLabels(3) <https://man7.org/linux/man-pages/man3/pmLookupLabels.3.html>`_ and the **-l/--labels** option.
+========================================== ===============================================================================================================================
 
-TIMESERIES SOURCES
+Timeseries Sources
 ====================
 
 A source is a unique identifier (represented externally as a 40-byte hexadecimal SHA-1 hash) that represents both the live host and/or archives from 
@@ -380,13 +394,13 @@ which each timeseries originated. The context for a source identifier (obtained 
 **-S** , **--sources** : Print names for timeseries sources. These names are either hostnames or fully qualified archive paths.
 
 It is important to note that live and archived sources can and will generate the same SHA-1 source identifier hash, provided that the context labels 
-remain the same for that host (labels are stored in PCP archives and can also be fetched live from pmcd (1)).
+remain the same for that host (labels are stored in PCP archives and can also be fetched live from `pmcd(1) <https://man7.org/linux/man-pages/man1/pmcd.1.html>`_ ).
 
-TIMESERIES LOADING
+Timeseries Loading
 =====================
 
-Timeseries metadata and data are loaded either automatically by a local pmproxy(1), or manually using a specially crafted **pmseries** query and the **-L**/ **--load** 
-option:
+Timeseries metadata and data are loaded either automatically by a local `pmproxy(1) <https://man7.org/linux/man-pages/man1/pmproxy.1.html>`_, or manually using a 
+specially crafted **pmseries** query and the **-L**/ **--load** option:
 
 .. sourcecode:: none
 
@@ -396,13 +410,14 @@ option:
 This query must specify a source archive path, but can also restrict the import to specific timeseries (using metric names, labels, etc) and to a specific 
 time window using the time specification component of the query language.
 
-As a convenience, if the argument to load is a valid file path as determined by access (2), then a short-hand form can be used:
+As a convenience, if the argument to load is a valid file path as determined by `access(2) <https://man7.org/linux/man-pages/man2/access.2.html>`_, then 
+a short-hand form can be used:
 
 .. sourcecode:: none
 
  $ pmseries --load $PCP_LOG_DIR/pmlogger/acme.0
 
-OPTIONS
+Options
 =========
 
 The available command line options, in addition to timeseries metadata and sources options described above, are:
@@ -419,11 +434,11 @@ options                                         Description
 **-v** , **--values**                           | Report all of the known values for given *label* name(s).
 **-V** , **--version**                          | Display version number and exit.
 **-Z** *timezone* , **--timezone** = *timezone* | Use timezone for the date and time. Timezone is in the format of the environment variable TZ as 
-                                                | described in environ (7).
+                                                | described in `environ(7) <https://man7.org/linux/man-pages/man7/environ.7.html>`_.
 **-?** , **--help**                             | Display usage message and exit.
 =============================================== ==================================================================================================
 
-EXAMPLES
+Examples
 ==========
 
 The following sample query shows several fundamental aspects of the **pmseries** query language:
@@ -462,12 +477,21 @@ instances, so six rows are returned). The metadata for these timeseries can then
      inst [5 or "5 minute"] labels {"agent":"linux","hostname":"toium"}
      inst [15 or "15 minute"] labels {"agent":"linux","hostname":"toium"}
 
-PCP ENVIRONMENT
+PCP Environment
 ******************
 
 Environment variables with the prefix **PCP_** are used to parameterize the file and directory names used by PCP. On each installation, the file 
 */etc/pcp.conf* contains the local values for these variables. The ``$PCP_CONF`` variable may be used to specify an alternative configuration file, as 
-described in pcp.conf(5).
+described in `pcp.conf(5) <https://man7.org/linux/man-pages/man5/pcp.conf.5.html>`_.
 
-For environment variables affecting PCP tools, see pmGetOptions(3).
+For environment variables affecting PCP tools, see `pmGetOptions(3) <https://man7.org/linux/man-pages/man3/pmGetOptions.3.html>`_.
 
+PCP Redis
+***********
+
+This data source queries the fast, scalable time series capabilities provided by the **pmseries** functionality. It is intended to query historical data 
+across multiple hosts and supports filtering based on labels. This data source also provides a native interface between `Grafana <https://grafana.com/>`_ and 
+`Performance Co-Pilot <https://pcp.io>`_ (PCP), allowing PCP metric data to be presented in Grafana panels, such as graphs, tables, heatmaps, etc. Under the hood, 
+the data source makes REST API query requests to the PCP `pmproxy(1) <https://man7.org/linux/man-pages/man1/pmproxy.1.html>`_ service, which can be running either 
+locally or on a remote host. The pmproxy daemon can be local or remote and uses the Redis time-series database (local or remote) for persistent storage. For more 
+information on PCP Grafana Plugin, visit `PCP Grafana Plugin Documentation <https://grafana-pcp.readthedocs.io/en/latest/index.html#>`_ .
