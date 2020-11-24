@@ -3,7 +3,7 @@
 Fast, Scalable Time Series Querying - pmseries
 ################################################
 
-**pmseries** is a fast and scalable time series querying which displays information about performance metrics.
+**pmseries** is a fast, scalable time series querying which displays information about performance metrics.
 
 The major sections in this chapter are as follows:
 
@@ -90,7 +90,7 @@ syntax extends on that of **pminfo** and allows for `glob(7) <https://man7.org/l
 metric name. The above describes operands available as the leaves of **pmseries** expressions, which may include functions, arithmetic operators and other 
 features. See the `EXPRESSIONS`_ section below for further details.
 
-Metadata Qualifiers and Metadata Operators
+Metadata Qualifiers and Metatdata Operators
 ********************************************
 
 Metadata qualifiers are enclosed by "curly" braces ( **{}** ), and further restrict the query results to timeseries operands with various metadata 
@@ -328,7 +328,7 @@ series from today from that of yesterday by giving different time windows and di
 given as the operands.
 
 Operands in an expression must either all have a time window, or none. If no operands have a time window, then instead of a series of time stamps and 
-values, the result will be a time series identifier (*SID*) that may be passed to the **/series/values?series**= *SID* REST API function, along with a 
+values, the result will be a time series identifier (*SID*) that may be passed to the ``/series/values?series= SID`` REST API function, along with a 
 time window. For further details, see `PMWEBAPI(3) <https://pcp.readthedocs.io/en/latest/api/>`_.
 
 If the semantics of both operands in an arithmetic expression are not counter (i.e. **PM_SEM_INSTANT** or **PM_SEM_DISCRETE**) then the result will have 
@@ -372,7 +372,7 @@ options                                    Description
 **-i** , **--instances**                   | Metric descriptions detailing the PMID, data type, data semantics, units, scale and associated instance domain.
 **-I** , **--fullindom**                   | Print the InDom in verbose mode. This option has a direct `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
 **-l** , **--labels**                      | Print label sets associated with metrics and instances. Labels are optional metric metadata described in detail in 
-                                           | `pmLookupLabels(3) <https://man7.org/linux/man-pages/man3/pmLookupLabels.3.html>`_. This option has a direct 
+                                           | `pmLookupLabels(3) <https://man7.org/linux/man-pages/man3/pmLookupLabels.3.html>`_.  This option has a direct 
                                            | `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
 **-m** , **--metrics**                     | Print metric names.
 **-M** , **--fullpmid**                    | Print the PMID in verbose mode. This option has a direct `pminfo(1) <https://pcp.io/man/man1/pminfo.1.html>`_ equivalent.
@@ -493,5 +493,6 @@ This data source queries the fast, scalable time series capabilities provided by
 across multiple hosts and supports filtering based on labels. This data source also provides a native interface between `Grafana <https://grafana.com/>`_ and 
 `Performance Co-Pilot <https://pcp.io>`_ (PCP), allowing PCP metric data to be presented in Grafana panels, such as graphs, tables, heatmaps, etc. Under the hood, 
 the data source makes REST API query requests to the PCP `pmproxy(1) <https://man7.org/linux/man-pages/man1/pmproxy.1.html>`_ service, which can be running either 
-locally or on a remote host. The pmproxy daemon can be local or remote and uses the Redis time-series database (local or remote) for persistent storage. For more 
-information on PCP Grafana Plugin, visit `PCP Grafana Plugin Documentation <https://grafana-pcp.readthedocs.io/en/latest/index.html#>`_ .
+locally or on a remote host. The pmproxy daemon can be local or remote and uses the Redis time-series database (local or remote) for persistent storage. 
+
+For more information on PCP Grafana Plugin, visit `PCP Grafana Plugin Documentation <https://grafana-pcp.readthedocs.io/en/latest/index.html#>`_ .
