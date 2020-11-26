@@ -78,6 +78,12 @@ pygments_style = None
 #
 html_theme = 'sphinx_rtd_theme'
 
+html_logo = '../images/pcp.svgs'
+html_theme_options = {
+        'logo_only': True,
+}
+
+
 
 
 redoc = [
