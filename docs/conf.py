@@ -84,9 +84,6 @@ html_theme_options = {
         'display_version': False,
 }
 
-
-
-
 redoc = [
     {
         'name': 'PMWEBAPI',

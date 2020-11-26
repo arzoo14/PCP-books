@@ -3,6 +3,8 @@
 Common Conventions and Arguments
 #################################
 
+.. contents::
+
 This chapter deals with the user interface components that are common to most text-based utilities that make up the monitor portion of Performance Co-Pilot (PCP). 
 These are the major sections in this chapter:
 
@@ -28,8 +30,6 @@ In all cases, the man pages for each utility fully describe the supported comman
 Command line options are also relevant when starting PCP applications from the desktop using the **Alt** double-click method. This technique 
 launches the **pmrun** program to collect additional arguments to pass along when starting a PCP application.
 
-.. contents::
-
 Alternate Metrics Source Options
 **********************************
 
@@ -49,7 +49,7 @@ attributes. Refer to the **PCPIntro(1)** man page for full details of these, and
 ======================================
 
 The option **-a** *archive* directs the utility to treat the set of PCP archive logs designated by archive as the principal source of performance metrics 
-and metadata. archive is a comma-sparated list of names, each of which may be the base name of an archive or the name of a directory containing archives.
+and metadata. archive is a comma-separated list of names, each of which may be the base name of an archive or the name of a directory containing archives.
 
 PCP archive logs are created with **pmlogger**. Most PCP utilities operate with equal facility for performance information coming from either a real-time 
 feed via PMCD on some host, or for historical data from a set of PCP archive logs. For more information on archive logs and their use, see Chapter 6, Archive Logging.

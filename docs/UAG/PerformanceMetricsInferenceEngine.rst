@@ -3,6 +3,8 @@
 Performance Metrics Inference Engine
 #####################################
 
+.. contents::
+
 The Performance Metrics Inference Engine (**pmie**) is a tool that provides automated monitoring of, and reasoning about, system performance within the 
 Performance Co-Pilot (PCP) framework.
 
@@ -23,8 +25,6 @@ Section 5.6, “`Caveats and Notes on pmie`_”, presents some important informa
 Section 5.7, “`Creating pmie Rules with pmieconf`_”, describes how to use the **pmieconf** command to generate **pmie** rules.
 
 Section 5.8, “`Management of pmie Processes`_”, provides support for running **pmie** as a daemon.
-
-.. contents::
 
 Introduction to pmie
 *********************
@@ -470,7 +470,7 @@ In fact, this expression defines a point in the three-dimensional (3D) parameter
 
 .. _Figure 5.2. Three-Dimensional Parameter Space:
 
-.. figure:: ../../images/parameter-space.png
+.. figure:: ../../images/parameter-space.svg
 
     Figure 5.2. Three-Dimensional Parameter Space
 
@@ -935,7 +935,7 @@ Source code for the **pmie** examples in this chapter, and many more examples, i
         some_inst (
             $disk.dev.total > 40 count/sec
         )
- ]      -> shell "Mail -s 'Heavy systained disk traffic' sysadm";
+ ]      -> shell "Mail -s 'Heavy sustained disk traffic' sysadm";
  // Try and catch bursts of activity ... more than 60 I/Os per second
  // for at least 25% of 8 consecutive 3 second samples
  //

@@ -3,6 +3,8 @@
 About User's and Administrator's Guide
 #######################################
 
+.. contents::
+
 This guide describes the Performance Co-Pilot (PCP) performance analysis toolkit. PCP provides a systems-level suite of tools that cooperate to deliver 
 distributed performance monitoring and performance management services spanning hardware platforms, operating systems, service layers, database internals, 
 user applications and distributed architectures.
@@ -10,8 +12,6 @@ user applications and distributed architectures.
 PCP is a cross-platform, open source software package - customizations, extensions, source code inspection, and tinkering in general is actively encouraged.
 
 "About User's and Administrator's Guide" includes short descriptions of the chapters in this book, directs you to additional sources of information, and explains typographical conventions.
-
-.. contents::
 
 ⁠What This Guide Contains
 *************************
@@ -34,7 +34,7 @@ Chapter 7, :ref:`Performance Co-Pilot Deployment Strategies`, presents the vario
 
 Chapter 8, :ref:`Customizing and Extending PCP Services`, describes the procedures necessary to ensure that the PCP configuration is customized in ways that maximize the coverage and quality of performance monitoring and management services.
 
-Chapter 9, :ref:`TimeSeriesQuerying`, describes the concepts of pmseries and laids off a path for Performance Co-Pilot (PCP) Grafana Plugin.
+Chapter 9, :ref:`TimeSeriesQuerying`, describes the concepts of pmseries and lays out the path to the Performance Co-Pilot (PCP) Grafana Plugin.
 
 Audience for This Guide
 ************************
@@ -110,7 +110,7 @@ The following conventions are used throughout this document:
    * - ALL CAPS
      - All capital letters denote environment variables, operator names, directives, defined constants, and macros in C programs.                         
    * - ()
-     - Parentheses that follow function names surround function arguments or are empty if the function has no arguments; parentheses that follow commands surround man page section numbers.                                                                                         
+     - Parentheses that follow function names surround function arguments or are empty if the function has no arguments; parentheses that follow commands surround man page section numbers.
 
 
 Reader Comments

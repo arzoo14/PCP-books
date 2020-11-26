@@ -3,6 +3,8 @@
 Installing and Configuring Performance Co-Pilot
 ################################################
 
+.. contents::
+
 The sections in this chapter describe the basic installation and configuration steps necessary to run Performance Co-Pilot (PCP) on your systems. The following major sections are included:
 
 Section 2.1, “`Product Structure`_” describes the main packages of PCP software and how they must be installed on each system.
@@ -12,8 +14,6 @@ Section 2.2, “`Performance Metrics Collection Daemon (PMCD)`_”, describes th
 Section 2.3, “`Managing Optional PMDAs`_”, describes the basics of installing a new Performance Metrics Domain Agent (PMDA) to collect metric data and pass it to the PMCD.
 
 Section 2.4, “`Troubleshooting`_”, offers advice on problems involving the PMCD.
-
-.. contents::
 
 Product Structure
 ******************
@@ -250,7 +250,7 @@ Pipe entries in the **pmcd.conf** file follow this syntax::
 The following rules apply to the pipe syntax:
 
 +------------------+-----------------------------------------------------------------------+
-| pipe             |    The entry type.                                                    |
+| **pipe**         | The entry type.                                                       |
 +------------------+-----------------------------------------------------------------------+
 | protocol         | Specifies whether a text-based or a binary PCP protocol should be used|
 |                  | over the pipes. Historically, this parameter was able to be “text” or |
@@ -515,7 +515,7 @@ to the host is over a slow network, then successful establishment of the connect
 
 Alternatively, there may be a firewall in-between the client tool and PMCD which is blocking the connection attempt.
 
-Finally, PMCD may be running in a mode where it does not acept remote connections, or only listening on certain interface.
+Finally, PMCD may be running in a mode where it does not accept remote connections, or only listening on certain interface.
 
 **Resolution:**
 
