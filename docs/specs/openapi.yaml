@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: PMWEBAPI
   x-logo:
-    url: 'https://redocly.github.io/redoc/petstore-logo.png'
+    url: 'https://pcp.io/images/pcp-logo.png'
   description: |
     ## ABOUT PMWEBAPI
     ### PMWEBAPI
