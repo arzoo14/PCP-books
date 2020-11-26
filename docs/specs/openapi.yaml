@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
   title: PMWEBAPI
-  image:
-    url: ../../images/pcp.svg
+  x-logo:
+    url: '../../images/pcpicon.png'
   description: |
     ## ABOUT PMWEBAPI
     ### PMWEBAPI
