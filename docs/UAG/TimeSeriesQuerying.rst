@@ -21,7 +21,7 @@ Section 9.6, “`Timeseries Options`_”, explains the various timeseries option
 
 Section 9.7, “`PCP Environment`_”, describes environment variables used to parameterize the file and directory names used by PCP.
 
-Section 9.8, “`Grafana`_”, explains the PCP Redis data source and laids off a path for PCP Grafana Plugin.
+Section 9.8, “`PCP Grafana Plugin`_”, explains the PCP Redis data source and laids off a path for PCP Grafana Plugin.
 
 
 .. contents::
@@ -486,8 +486,8 @@ described in `pcp.conf(5) <https://man7.org/linux/man-pages/man5/pcp.conf.5.html
 
 For environment variables affecting PCP tools, see `pmGetOptions(3) <https://man7.org/linux/man-pages/man3/pmGetOptions.3.html>`_.
 
-Grafana
-***********
+PCP Grafana Plugin
+********************
 
 The PCP Redis Grafana datasource from the PCP Grafana plugin queries the fast, scalable time series capabilities provided by the **pmseries** functionality. It is intended to query historical data 
 across multiple hosts and supports filtering based on labels. This data source also provides a native interface between `Grafana <https://grafana.com/>`_ and 
