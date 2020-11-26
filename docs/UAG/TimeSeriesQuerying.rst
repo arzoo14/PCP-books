@@ -11,7 +11,7 @@ Section 9.1, “`Introduction to pmseries`_”, provides an introduction to the 
 
 Section 9.2, “`Timeseries Queries`_”, explains how query expressions are formed using the **pmseries** query language.
 
-Section 9.3, “`Metadata Qualifiers and Metatdata Operators`_”, explains various metadata properties.
+Section 9.3, “`Metadata Qualifiers and Metadata Operators`_”, explains various metadata properties.
 
 Section 9.4, “`Time Specification`_”, specifies a specific time window of interest.
 
@@ -21,7 +21,7 @@ Section 9.6, “`Timeseries Options`_”, explains the various timeseries option
 
 Section 9.7, “`PCP Environment`_”, describes environment variables used to parameterize the file and directory names used by PCP.
 
-Section 9.8, “`PCP Redis`_”, explains the PCP Redis data source and laids off a path for PCP Grafana Plugin.
+Section 9.8, “`Grafana`_”, explains the PCP Redis data source and laids off a path for PCP Grafana Plugin.
 
 
 .. contents::
@@ -30,7 +30,7 @@ Introduction to pmseries
 *************************
 
 **pmseries** displays various types of information about performance metrics available through the scalable timeseries facilities of the Performance 
-Co-Pilot (PCP) and the Redis distributed data store.
+Co-Pilot (PCP) using the `Redis <https://redis.io/>`_ distributed data store.
 
 By default **pmseries** communicates with a local redis-server(1), however the **-h** and **-p** options can be used to specify an alternate Redis 
 instance. If this instance is a node of a Redis cluster, all other instances in the cluster will be discovered and used automatically.
@@ -90,7 +90,7 @@ syntax extends on that of **pminfo** and allows for `glob(7) <https://man7.org/l
 metric name. The above describes operands available as the leaves of **pmseries** expressions, which may include functions, arithmetic operators and other 
 features. See the `EXPRESSIONS`_ section below for further details.
 
-Metadata Qualifiers and Metatdata Operators
+Metadata Qualifiers and Metadata Operators
 ********************************************
 
 Metadata qualifiers are enclosed by "curly" braces ( **{}** ), and further restrict the query results to timeseries operands with various metadata 
@@ -204,7 +204,7 @@ This grammar shows expressions may be nested, e.g. using the addition ( **+** ) 
 Rules governing compatibility of operands in an expression generally depend on the function and/or operators and are described below individually. 
 An important rule is that if any time windows are specified, then all operands must cover the same number of samples, though the time windows may differ 
 individually. If no time windows or sample counts are given, then **pmseries** will return a series identifier (SID) instead of a series of timestamps and 
-values. This SID may be used in subsequent ``/series/values?series= SID`` RESTAPI calls, along with a specific time window.
+values. This SID may be used in subsequent ``/series/values?series= SID`` REST API calls, along with a specific time window.
 
 Arithmetic Operators
 =======================
@@ -486,10 +486,10 @@ described in `pcp.conf(5) <https://man7.org/linux/man-pages/man5/pcp.conf.5.html
 
 For environment variables affecting PCP tools, see `pmGetOptions(3) <https://man7.org/linux/man-pages/man3/pmGetOptions.3.html>`_.
 
-PCP Redis
+Grafana
 ***********
 
-This data source queries the fast, scalable time series capabilities provided by the **pmseries** functionality. It is intended to query historical data 
+The PCP Redis Grafana datasource from the PCP Grafana plugin queries the fast, scalable time series capabilities provided by the **pmseries** functionality. It is intended to query historical data 
 across multiple hosts and supports filtering based on labels. This data source also provides a native interface between `Grafana <https://grafana.com/>`_ and 
 `Performance Co-Pilot <https://pcp.io>`_ (PCP), allowing PCP metric data to be presented in Grafana panels, such as graphs, tables, heatmaps, etc. Under the hood, 
 the data source makes REST API query requests to the PCP `pmproxy(1) <https://man7.org/linux/man-pages/man1/pmproxy.1.html>`_ service, which can be running either 
