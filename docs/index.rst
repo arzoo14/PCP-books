@@ -13,7 +13,7 @@ makes it especially useful for those seeking centralized monitoring of distribut
 **Table of Contents**
 
 * :doc:`HowTos/installation/index`
-* :doc:`HowTo/HowToGuide`
+* :doc:`HowDoI/HowDoIGuide`
 * :doc:`UAG/AboutUserAdministratorsGuide`
 * :doc:`PG/AboutProgrammersGuide`
 * :doc:`HowTos/scaling/index`
@@ -24,21 +24,37 @@ makes it especially useful for those seeking centralized monitoring of distribut
    :hidden:
    
    HowTos/installation/index
-   HowTo/HowToGuide
+   HowDoI/HowDoIGuide
    UAG/AboutUserAdministratorsGuide
    PG/AboutProgrammersGuide
    HowTos/scaling/index
    REST API Specification <https://pcp.readthedocs.io/en/latest/api/>
 
 .. toctree::
-   :caption: How To Guide
+   :caption: How Do I Guide
    :numbered:
    :hidden:
 
-   HowTo/ListAvailableMetrics
-   HowTo/AddNewMetrics
-   HowTo/RecordMetricsOnLocalSystem
-   HowTo/RecordMetricsFromRemoteSystem
+   HowDoI/ListAvailableMetrics
+   HowDoI/AddNewMetrics
+   HowDoI/RecordMetricsOnLocalSystem
+   HowDoI/RecordMetricsFromRemoteSystem
+   HowDoI/GraphPerformanceMetric
+   HowDoI/AutomateProblemDetection
+   HowDoI/SetupAutomatedRules
+   HowDoI/RecordHistoricalValues
+   HowDoI/ExportMetricValues
+   HowDoI/UseCharts
+   HowDoI/LoggingBasics
+   HowDoI/AutomatedReasoningBasics
+   HowDoI/ConfigureAutomatedReasoning
+   HowDoI/AnalyzeLinuxContainers
+   HowDoI/SecureConnections
+   HowDoI/SecureClientConnections
+   HowDoI/AuthenticatedConnections
+   HowDoI/ImportData
+   HowDoI/Use3DViews
+
 
 .. toctree::
    :caption: User's and Administrator's Guide
