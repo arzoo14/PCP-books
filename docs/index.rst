@@ -13,7 +13,7 @@ makes it especially useful for those seeking centralized monitoring of distribut
 **Table of Contents**
 
 * :doc:`HowTos/installation/index`
-* :doc:`HowDoI/HowDoIGuide`
+* :doc:`QG/QuickGuides`
 * :doc:`UAG/AboutUserAdministratorsGuide`
 * :doc:`PG/AboutProgrammersGuide`
 * :doc:`HowTos/scaling/index`
@@ -24,36 +24,36 @@ makes it especially useful for those seeking centralized monitoring of distribut
    :hidden:
    
    HowTos/installation/index
-   HowDoI/HowDoIGuide
+   QG/QuickGuides
    UAG/AboutUserAdministratorsGuide
    PG/AboutProgrammersGuide
    HowTos/scaling/index
    REST API Specification <https://pcp.readthedocs.io/en/latest/api/>
 
 .. toctree::
-   :caption: How Do I Guide
+   :caption: Quick Guides
    :numbered:
    :hidden:
 
-   HowDoI/ListAvailableMetrics
-   HowDoI/AddNewMetrics
-   HowDoI/RecordMetricsOnLocalSystem
-   HowDoI/RecordMetricsFromRemoteSystem
-   HowDoI/GraphPerformanceMetric
-   HowDoI/AutomateProblemDetection
-   HowDoI/SetupAutomatedRules
-   HowDoI/RecordHistoricalValues
-   HowDoI/ExportMetricValues
-   HowDoI/UseCharts
-   HowDoI/LoggingBasics
-   HowDoI/AutomatedReasoningBasics
-   HowDoI/ConfigureAutomatedReasoning
-   HowDoI/AnalyzeLinuxContainers
-   HowDoI/SecureConnections
-   HowDoI/SecureClientConnections
-   HowDoI/AuthenticatedConnections
-   HowDoI/ImportData
-   HowDoI/Use3DViews
+   QG/ListAvailableMetrics
+   QG/AddNewMetrics
+   QG/RecordMetricsOnLocalSystem
+   QG/RecordMetricsFromRemoteSystem
+   QG/GraphPerformanceMetric
+   QG/AutomateProblemDetection
+   QG/SetupAutomatedRules
+   QG/RecordHistoricalValues
+   QG/ExportMetricValues
+   QG/UseCharts
+   QG/LoggingBasics
+   QG/AutomatedReasoningBasics
+   QG/ConfigureAutomatedReasoning
+   QG/AnalyzeLinuxContainers
+   QG/SecureConnections
+   QG/SecureClientConnections
+   QG/AuthenticatedConnections
+   QG/ImportData
+   QG/Use3DViews
 
 
 .. toctree::
